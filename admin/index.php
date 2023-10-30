@@ -294,7 +294,7 @@
                                     <div class="card-body">
                                         <h5 class="text-muted">Ethnic Group (Husband)</h5>
                                         <div>
-                                            <canvas id="myChart2"></canvas>
+                                            <!-- <canvas id="myChart2"></canvas>
                                             <script>
                                             (function() {
                                                 const ctx = document.getElementById('myChart2');
@@ -346,19 +346,19 @@
                                                 };
                                                 new Chart(ctx, config);
                                             })();
-                                            </script>
+                                            </script> -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
                                 <?php 
-                            $percentages = getEthnicGroupPercentages("survey_form_records_wife");
-                            ?>
+                                    $percentages = getEthnicGroupPercentages("survey_form_records_wife");
+                                ?>
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-muted">Ethnic Group (Wife)</h5>
-                                        <div>
+                                        <!-- <div>
                                             <canvas id="myChart"></canvas>
                                             <script>
                                             (function() {
@@ -393,18 +393,18 @@
                                                 new Chart(ctx, config);
                                             })();
                                             </script>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
                                 <?php 
-                            $percentages = getEthnicGroupPercentages("survey_form_records_children");
-                            ?>
+                                    $percentages = getEthnicGroupPercentages("survey_form_records_children");
+                                ?>
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-muted">Ethnic Group (Children)</h5>
-                                        <div>
+                                        <!-- <div>
                                             <canvas id="myChart4"></canvas>
                                             <script>
                                             (function() {
@@ -438,18 +438,18 @@
                                                 new Chart(ctx, config);
                                             })();
                                             </script>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
                                 <?php 
-                            $percentages = getEthnicGroupPercentages("survey_form_records_household_member");
-                            ?>
+                                    $percentages = getEthnicGroupPercentages("survey_form_records_household_member");
+                                ?>
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-muted">Ethnic Group (Other Household)</h5>
-                                        <div>
+                                        <!-- <div>
                                             <canvas id="myChart3"></canvas>
                                             <script>
                                             (function() {
@@ -483,7 +483,7 @@
                                                 new Chart(ctx, config);
                                             })();
                                             </script>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -494,8 +494,8 @@
 
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
                                 <?php 
-                            $percentages = getCivilStatusPercentages("survey_form_records_husband");
-                            ?>
+                                    $percentages = getCivilStatusPercentages("survey_form_records_husband");
+                                ?>
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-muted">Civil status(Husband)</h5>
