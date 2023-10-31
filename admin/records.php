@@ -743,14 +743,6 @@
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
-                                        <form action="./add_record_by.php" method="post">
-                                            <input type="hidden" name="added_by" value="<?php echo $row['id'];  ?>">
-                                            <button <?php echo isset($row['belongs_to']) ? 'disabled' : '' ?> type="submit"
-                                                class="btn btn-sm btn-primary d-flex align-items-center justify-content-center p-1"><span
-                                                    class="material-symbols-outlined fs-6">
-                                                    add
-                                                </span> family</button>
-                                        </form>
 
                                     </td>
                                 </tr>
