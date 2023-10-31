@@ -91,12 +91,17 @@
     <div class="container-fluid bg-white">
         <br><br>
         <form action="" method="post" class="px-4 pr-0">
-            <h1 class="text-center fs-3 text-success fw-bolder">FAMILY PROFILE SURVEY FORM
-            </h1>
+            <br>
+            <h1 class="text-center fs-3 text-success fw-bolder">FAMILY PROFILE SURVEY FORM</h1>
+            <a href="./add_record.php" target="_blank" class="btn btn-sm btn-primary mx-auto" style="
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            ">Add Family</a>
             <p class="text-center">Date Accomplished: <strong><?php echo date('m/d/Y') ?></strong></p>
-            <div class="mt-5">
-                <div class="row justify-content-between">
-                    <div class="row p-3 border  rounded bg-white col-12 col-md-6 my-2">
+            <div class="mt-5 position-relative">
+                <div id="fixed_input" class="row justify-content-center p-0" style="width: 100%;">
+                    <div class="row p-3 rounded bg-white col-12 col-md-6 my-2">
                         <div class="container my-2">
                             <label for="purok" class="">PUROK</label>
                             <input value="" required type="text" class="form-control form-control-lg" id="purok"
@@ -111,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="row p-3 border  rounded bg-white col-12 col-md-6 my-2">
+                    <div class="row p-3 rounded bg-white col-12 col-md-6 my-2">
                         <div class="container my-2">
                             <label for="municipality" class="">MUNICIPALITY</label>
                             <input title="This can't be change, read-only" readonly
@@ -125,6 +130,22 @@
                                 class="form-control form-control-lg" id="province" name="province">
                         </div>
                     </div>
+                </div>
+                <style>
+                @media(min-width: 673px) {
+                    #form {
+                        margin-top: 14rem;
+                    }
+
+                    #fixed_input {
+                        position: fixed;
+                        top: 7.8rem;
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+                }
+                </style>
+                <div class="row justify-content-between" id="form">
 
                     <div class="row border  py-5 p-3 rounded bg-white col-12 col-md-6 my-2">
                         <h5 class="col-12 fw-bold">Husband Information</h5>
@@ -355,13 +376,14 @@
                                     children form</button>
                                 <!-- custom js -->
                                 <script>
-                                let currentCount = 1, time = 5;
+                                let currentCount = 1,
+                                    time = 5;
 
                                 function removeThisForm(parent) {
                                     $(parent).toggle("bounce", {
                                         times: 5
                                     }, "slow");
-                                    setTimeout(()=> {
+                                    setTimeout(() => {
                                         $(parent).remove();
                                         $('div.ui-effects-placeholder').remove();
                                     }, (time + 1) * 60);
@@ -1278,13 +1300,13 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input id="othersTransportFacility" class="form-check-input"
-                                    type="checkbox">
+                                <input id="othersTransportFacility" class="form-check-input" type="checkbox">
                                 <label class="form-check-label">
                                     Others, specify
                                 </label>
-                                <input disabled name="transportFacility[]" style="display: none;" id="othersTransportFacilityInput"
-                                    class="form-control form-control-sm" type="text" required>
+                                <input disabled name="transportFacility[]" style="display: none;"
+                                    id="othersTransportFacilityInput" class="form-control form-control-sm" type="text"
+                                    required>
                             </div>
                             <script>
                             $("#othersTransportFacility").on("change", function() {
@@ -1515,9 +1537,9 @@
                                 <label class="form-check-label">
                                     With
                                 </label>
-                                <input disabled name="fishpondOwnedArea" placeholder="Enter area" disabled style="display: none;"
-                                    id="othersFishpondOwnedInput" class="form-control form-control-sm" type="text"
-                                    required>
+                                <input disabled name="fishpondOwnedArea" placeholder="Enter area" disabled
+                                    style="display: none;" id="othersFishpondOwnedInput"
+                                    class="form-control form-control-sm" type="text" required>
                             </div>
                             <div class="form-check">
                                 <input id="wt" class="form-check-input" type="radio" required name="fishpondOwned"
@@ -1546,8 +1568,9 @@
                                 <label class="form-check-label">
                                     Rice Field
                                 </label>
-                                <input name="landOwnedRiceFieldArea" placeholder="Enter area" disabled style="display: none;"
-                                    id="rice_area" class="form-control form-control-sm" type="text" required>
+                                <input name="landOwnedRiceFieldArea" placeholder="Enter area" disabled
+                                    style="display: none;" id="rice_area" class="form-control form-control-sm"
+                                    type="text" required>
                             </div>
                             <div class="form-check">
                                 <input id="abb" class="form-check-input" type="checkbox" name="landOwned[]"
@@ -1555,8 +1578,9 @@
                                 <label class="form-check-label">
                                     Corn Field
                                 </label>
-                                <input name="landOwnedCornFieldArea" placeholder="Enter area" disabled style="display: none;"
-                                    id="corn_area" class="form-control form-control-sm" type="text" required>
+                                <input name="landOwnedCornFieldArea" placeholder="Enter area" disabled
+                                    style="display: none;" id="corn_area" class="form-control form-control-sm"
+                                    type="text" required>
                             </div>
                             <div class="form-check">
                                 <input id="abbb" class="form-check-input" type="checkbox">
@@ -1610,8 +1634,9 @@
                                         <label class="form-check-label">
                                             Rice Field
                                         </label>
-                                        <input name="caretakerRiceArea" placeholder="Enter area" disabled style="display: none;"
-                                            id="_rice_area" class="form-control form-control-sm" type="text" required>
+                                        <input name="caretakerRiceArea" placeholder="Enter area" disabled
+                                            style="display: none;" id="_rice_area" class="form-control form-control-sm"
+                                            type="text" required>
                                     </div>
                                     <div class="form-check">
                                         <input id="_abb" class="form-check-input" type="checkbox" name="land[]"
@@ -1619,34 +1644,35 @@
                                         <label class="form-check-label">
                                             Corn Field
                                         </label>
-                                        <input name="caretakerCornArea" placeholder="Enter area" disabled style="display: none;"
-                                            id="_corn_area" class="form-control form-control-sm" type="text" required>
+                                        <input name="caretakerCornArea" placeholder="Enter area" disabled
+                                            style="display: none;" id="_corn_area" class="form-control form-control-sm"
+                                            type="text" required>
                                     </div>
                                     <div class="form-check">
                                         <input id="_abbb" class="form-check-input" type="checkbox">
                                         <label class="form-check-label">
                                             Others, specify
                                         </label>
-                                        <input name="caretakerOthersLandOwned" placeholder="Specify"
-                                            disabled style="display: none;" id="_othersLandOwned"
+                                        <input name="caretakerOthersLandOwned" placeholder="Specify" disabled
+                                            style="display: none;" id="_othersLandOwned"
                                             class="form-control form-control-sm" type="text" required>
                                     </div>
                                     <script>
                                     $("#_aba").on("change", function() {
                                         $("#_rice_area").toggle(0, function() {
-                                    $(this).attr('disabled', !$(this).attr('disabled'));
-                                })
+                                            $(this).attr('disabled', !$(this).attr('disabled'));
+                                        })
                                     })
                                     $("#_abb").on("change", function() {
                                         $("#_corn_area").toggle(0, function() {
-                                    $(this).attr('disabled', !$(this).attr('disabled'));
-                                })
+                                            $(this).attr('disabled', !$(this).attr('disabled'));
+                                        })
                                     })
 
                                     $("#_abbb").on("change", function() {
                                         $("#_othersLandOwned").toggle(0, function() {
-                                    $(this).attr('disabled', !$(this).attr('disabled'));
-                                })
+                                            $(this).attr('disabled', !$(this).attr('disabled'));
+                                        })
                                     })
                                     </script>
                                 </div>

@@ -2,14 +2,14 @@
 
 require_once( '../global.php' );
 
-if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && !isset($_POST['added_by'])) {
+if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
 
     $purok = filter_and_implode( $_POST[ 'purok' ] ?? '' );
     $barangay = $_SESSION[ 'barangay' ];
     $municipality = $_SESSION[ 'municipality' ];
     $province = $_SESSION[ 'province' ];
     $unique_id = $_SESSION[ 'unique_id' ];
-    $household_id = uniqid();
+    $household_id = $_POST['household_id'] ?? NULL;
 
     $belongs_to = $_POST['belongs_to'] ?? NULL;
 

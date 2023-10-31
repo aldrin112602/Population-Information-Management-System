@@ -197,7 +197,10 @@
                                                 keyboard_voice
                                             </span>
                                         </div>
-                                        <a role="button" href="./add_record.php" class="btn text-white btn-lg" style="
+                                        <?php 
+                                         $household_id = uniqid();
+                                        ?>
+                                        <a role="button" href="./add_record.php?household_id=<?php echo $household_id ?>" class="btn text-white btn-lg" style="
                                             background-color: #1D5B79;
                                             border-radius: 50px;
                                         ">+ Add Record</a>
