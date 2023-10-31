@@ -15,6 +15,9 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && !isset($_POST['added_by'])) {
     $name = $_POST[ 'name' ] ?? [];
     $name = explode( ', ', filter_and_implode( $name ) );
 
+    $life_status = $_POST[ 'option' ] ?? [];
+    $life_status = explode( ', ', filter_and_implode( $option ) );
+
     $status = $_POST[ 'status' ] ?? [];
     $status = explode( ', ', filter_and_implode( $status ) );
 
@@ -121,28 +124,29 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && !isset($_POST['added_by'])) {
     $success = true;
 
     // husband, wife, children, household
-    for ( $i = 0; $i < count( $type );
-    $i++ ) {
+    for ( $i = 0; $i < count( $type ); $i++ ) {
+        $stat = $life_status[$i] ?? NULL;
+
         switch( trim( strtolower( $type[ $i ] ) ) ) {
             case 'husband':
-            $sql = "INSERT INTO survey_form_records_husband (unique_id, belongs_to, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
-                        VALUES ('$unique_id', $belongs_to, '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
+            $sql = "INSERT INTO survey_form_records_husband (unique_id, belongs_to, life_status, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
+                        VALUES ('$unique_id', $belongs_to, '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
             if ( !mysqli_query( $conn, $sql ) ) $success = false;
             break;
             case 'wife':
-            $sql = "INSERT INTO survey_form_records_wife (unique_id, belongs_to, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
-                        VALUES ('$unique_id', $belongs_to, '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
+            $sql = "INSERT INTO survey_form_records_wife (unique_id, belongs_to, life_status, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
+                        VALUES ('$unique_id', $belongs_to, '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
             if ( !mysqli_query( $conn, $sql ) ) $success = false;
             break;
             case 'children':
-            $sql = "INSERT INTO survey_form_records_children (unique_id, belongs_to, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
-                        VALUES ('$unique_id', $belongs_to, '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
+            $sql = "INSERT INTO survey_form_records_children (unique_id, belongs_to, life_status, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
+                        VALUES ('$unique_id', $belongs_to, '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
             if ( !mysqli_query( $conn, $sql ) ) $success = false;
             break;
             default:
             // household
-            $sql = "INSERT INTO survey_form_records_household_member (unique_id, belongs_to, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
-                        VALUES ('$unique_id', $belongs_to, '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
+            $sql = "INSERT INTO survey_form_records_household_member (unique_id, belongs_to, life_status, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
+                        VALUES ('$unique_id', $belongs_to, '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
             if ( !mysqli_query( $conn, $sql ) ) $success = false;
 
             break;

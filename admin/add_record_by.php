@@ -244,14 +244,12 @@
                             <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
-                            <fieldset>
-                                <legend class="fs-6">Choose an option:</legend>
-                                <input required type="radio" name="option" id="living" value="living">
-                                <label for="living">Living</label>
-
-                                <input required type="radio" name="option" id="disease" value="disease">
-                                <label for="disease">Disease</label>
-                            </fieldset>
+                            <label class="">Choose an option:</label>
+                            <select required class="form-select form-select-lg" name="option[]">
+                                <option value="" disabled selected></option>
+                                <option value="Living">Living</option>
+                                <option value="Disease">Disease</option>
+                            </select>
                         </div>
 
 
@@ -366,14 +364,12 @@
                             <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
-                            <fieldset>
-                                <legend class="fs-6">Choose an option:</legend>
-                                <input required type="radio" name="option" id="living" value="living">
-                                <label for="living">Living</label>
-
-                                <input required type="radio" name="option" id="disease" value="disease">
-                                <label for="disease">Disease</label>
-                            </fieldset>
+                            <label class="">Choose an option:</label>
+                            <select required class="form-select form-select-lg" name="option[]">
+                                <option value="" disabled selected></option>
+                                <option value="Living">Living</option>
+                                <option value="Disease">Disease</option>
+                            </select>
                         </div>
                     </div>
 
@@ -480,14 +476,12 @@
                                             <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
                                         </div>
                                         <div class="col-12 col-md-6 my-2">
-                                            <fieldset>
-                                                <legend class="fs-6">Choose an option:</legend>
-                                                <input required type="radio" name="option" id="living" value="living">
-                                                <label for="living">Living</label>
-
-                                                <input required type="radio" name="option" id="disease" value="disease">
-                                                <label for="disease">Disease</label>
-                                            </fieldset>
+                                            <label class="">Choose an option:</label>
+                                            <select required class="form-select form-select-lg" name="option[]">
+                                                <option value="" disabled selected></option>
+                                                <option value="Living">Living</option>
+                                                <option value="Disease">Disease</option>
+                                            </select>
                                         </div>
                                     </div>
                                     `;
@@ -610,14 +604,12 @@
                                 <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
                             </div>
                             <div class="col-12 col-md-6 my-2">
-                                <fieldset>
-                                    <legend class="fs-6">Choose an option:</legend>
-                                    <input required type="radio" name="option" id="living" value="living">
-                                    <label for="living">Living</label>
-
-                                    <input required type="radio" name="option" id="disease" value="disease">
-                                    <label for="disease">Disease</label>
-                                </fieldset>
+                                <label class="">Choose an option:</label>
+                                <select required class="form-select form-select-lg" name="option[]">
+                                    <option value="" disabled selected></option>
+                                    <option value="Living">Living</option>
+                                    <option value="Disease">Disease</option>
+                                </select>
                             </div>
                         </div>
 
@@ -715,14 +707,12 @@
                                             <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
                                         </div>
                                         <div class="col-12 col-md-6 my-2">
-                                            <fieldset>
-                                                <legend class="fs-6">Choose an option:</legend>
-                                                <input required type="radio" name="option" id="living" value="living">
-                                                <label for="living">Living</label>
-
-                                                <input required type="radio" name="option" id="disease" value="disease">
-                                                <label for="disease">Disease</label>
-                                            </fieldset>
+                                            <label class="">Choose an option:</label>
+                                            <select required class="form-select form-select-lg" name="option[]">
+                                                <option value="" disabled selected></option>
+                                                <option value="Living">Living</option>
+                                                <option value="Disease">Disease</option>
+                                            </select>
                                         </div>
                                     </div>
                                     `;
@@ -845,14 +835,12 @@
                                 <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
                             </div>
                             <div class="col-12 col-md-6 my-2">
-                                <fieldset>
-                                    <legend class="fs-6">Choose an option:</legend>
-                                    <input required type="radio" name="option" id="living" value="living">
-                                    <label for="living">Living</label>
-
-                                    <input required type="radio" name="option" id="disease" value="disease">
-                                    <label for="disease">Disease</label>
-                                </fieldset>
+                                <label class="">Choose an option:</label>
+                                <select required class="form-select form-select-lg" name="option[]">
+                                    <option value="" disabled selected></option>
+                                    <option value="Living">Living</option>
+                                    <option value="Disease">Disease</option>
+                                </select>
                             </div>
                         </div>
 
