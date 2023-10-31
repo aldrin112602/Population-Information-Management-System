@@ -94,8 +94,8 @@
             <?php 
             if(isset($_POST['added_by']) || isset($_POST['belongs_to'])) {
                 ?>
-                <input type="hidden" name="belongs_to" value="<?php echo $_POST['added_by'] ?? $_POST['belongs_to'] ?>">
-                <?php
+            <input type="hidden" name="belongs_to" value="<?php echo $_POST['added_by'] ?? $_POST['belongs_to'] ?>">
+            <?php
             }
             
             
@@ -246,10 +246,10 @@
                         <div class="col-12 col-md-6 my-2">
                             <fieldset>
                                 <legend class="fs-6">Choose an option:</legend>
-                                <input type="radio" name="option" id="living" value="living">
+                                <input required type="radio" name="option" id="living" value="living">
                                 <label for="living">Living</label>
 
-                                <input type="radio" name="option" id="disease" value="disease">
+                                <input required type="radio" name="option" id="disease" value="disease">
                                 <label for="disease">Disease</label>
                             </fieldset>
                         </div>
@@ -361,9 +361,19 @@
                                         ?>
                             </datalist>
                         </div>
-                        <div class="col my-2">
+                        <div class="col-12 col-md-6 my-2">
                             <label class="">Ethnic Group</label>
                             <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                        </div>
+                        <div class="col-12 col-md-6 my-2">
+                            <fieldset>
+                                <legend class="fs-6">Choose an option:</legend>
+                                <input required type="radio" name="option" id="living" value="living">
+                                <label for="living">Living</label>
+
+                                <input required type="radio" name="option" id="disease" value="disease">
+                                <label for="disease">Disease</label>
+                            </fieldset>
                         </div>
                     </div>
 
@@ -465,9 +475,19 @@
                                             <datalist id="religion_list">
                                                 <option value="Roman Catholicism"></option><option value="Protestantism"></option><option value="Islam"></option><option value="Buddhism"></option><option value="Iglesia ni Cristo"></option><option value="Aglipayan Church"></option><option value="Seventh-day Adventist Church"></option><option value="Jehovah's Witnesses"></option><option value="The Church of Jesus Christ of Latter-day Saints"></option><option value="Hinduism"></option><option value="Judaism"></option><option value="Taoism"></option><option value="Members of the Church of God International"></option><option value="Anitism"></option><option value="Bahá'í Faith"></option><option value="Confucianism"></option><option value="Shinto"></option><option value="Soka Gakkai"></option><option value="Eckankar"></option><option value="Rastafarianism"></option><option value="Brahma Kumaris"></option><option value="Theosophy"></option><option value="Scientology"></option><option value="Jewish">                            </option></datalist>
                                         </div>
-                                        <div class="col my-2">
+                                        <div class="col-12 col-md-6 my-2">
                                             <label class="">Ethnic Group</label>
-                                            <input required="" type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                                            <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                                        </div>
+                                        <div class="col-12 col-md-6 my-2">
+                                            <fieldset>
+                                                <legend class="fs-6">Choose an option:</legend>
+                                                <input required type="radio" name="option" id="living" value="living">
+                                                <label for="living">Living</label>
+
+                                                <input required type="radio" name="option" id="disease" value="disease">
+                                                <label for="disease">Disease</label>
+                                            </fieldset>
                                         </div>
                                     </div>
                                     `;
@@ -585,9 +605,19 @@
                                         ?>
                                 </datalist>
                             </div>
-                            <div class="col my-2">
+                            <div class="col-12 col-md-6 my-2">
                                 <label class="">Ethnic Group</label>
                                 <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                            </div>
+                            <div class="col-12 col-md-6 my-2">
+                                <fieldset>
+                                    <legend class="fs-6">Choose an option:</legend>
+                                    <input required type="radio" name="option" id="living" value="living">
+                                    <label for="living">Living</label>
+
+                                    <input required type="radio" name="option" id="disease" value="disease">
+                                    <label for="disease">Disease</label>
+                                </fieldset>
                             </div>
                         </div>
 
@@ -680,9 +710,19 @@
                                             <datalist id="religion_list">
                                                 <option value="Roman Catholicism"></option><option value="Protestantism"></option><option value="Islam"></option><option value="Buddhism"></option><option value="Iglesia ni Cristo"></option><option value="Aglipayan Church"></option><option value="Seventh-day Adventist Church"></option><option value="Jehovah's Witnesses"></option><option value="The Church of Jesus Christ of Latter-day Saints"></option><option value="Hinduism"></option><option value="Judaism"></option><option value="Taoism"></option><option value="Members of the Church of God International"></option><option value="Anitism"></option><option value="Bahá'í Faith"></option><option value="Confucianism"></option><option value="Shinto"></option><option value="Soka Gakkai"></option><option value="Eckankar"></option><option value="Rastafarianism"></option><option value="Brahma Kumaris"></option><option value="Theosophy"></option><option value="Scientology"></option><option value="Jewish">                            </option></datalist>
                                         </div>
-                                        <div class="col my-2">
+                                        <div class="col-12 col-md-6 my-2">
                                             <label class="">Ethnic Group</label>
-                                            <input required="" type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                                            <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                                        </div>
+                                        <div class="col-12 col-md-6 my-2">
+                                            <fieldset>
+                                                <legend class="fs-6">Choose an option:</legend>
+                                                <input required type="radio" name="option" id="living" value="living">
+                                                <label for="living">Living</label>
+
+                                                <input required type="radio" name="option" id="disease" value="disease">
+                                                <label for="disease">Disease</label>
+                                            </fieldset>
                                         </div>
                                     </div>
                                     `;
@@ -800,9 +840,19 @@
                                         ?>
                                 </datalist>
                             </div>
-                            <div class="col my-2">
+                            <div class="col-12 col-md-6 my-2">
                                 <label class="">Ethnic Group</label>
                                 <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                            </div>
+                            <div class="col-12 col-md-6 my-2">
+                                <fieldset>
+                                    <legend class="fs-6">Choose an option:</legend>
+                                    <input required type="radio" name="option" id="living" value="living">
+                                    <label for="living">Living</label>
+
+                                    <input required type="radio" name="option" id="disease" value="disease">
+                                    <label for="disease">Disease</label>
+                                </fieldset>
                             </div>
                         </div>
 

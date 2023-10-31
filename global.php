@@ -230,6 +230,31 @@ function getEthnicGroupPercentages($tableName) {
     }
 }
 
+function getEthnicGroupCounts($tableName) {
+    global $conn;
+    $sessionId = $_SESSION['unique_id'] ?? '';
+    if (!empty($sessionId)) {
+        $ethnicGroupsQuery = "
+            SELECT ethnicGroup, COUNT(*) AS count
+            FROM $tableName
+            WHERE unique_id = '$sessionId'
+            GROUP BY ethnicGroup";
+        $result = $conn->query($ethnicGroupsQuery);
+        $data = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $ethnicGroup = $row['ethnicGroup'];
+                $count = $row['count'];
+                $data[$ethnicGroup] = $count;
+            }
+        }
+        return $data;
+    } else {
+        return array();
+    }
+}
+
+
 function getCivilStatusPercentages($tableName) {
     global $conn;
     $sessionId = $_SESSION['unique_id'] ?? '';

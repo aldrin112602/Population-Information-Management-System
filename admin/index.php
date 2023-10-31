@@ -289,6 +289,7 @@
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
                                 <?php 
                             $percentages = getEthnicGroupPercentages("survey_form_records_husband");
+                            $ethnicGroupCounts = getEthnicGroupCounts("survey_form_records_husband");
                             ?>
                                 <div class="card">
                                     <div class="card-body">
@@ -347,6 +348,11 @@
                                                 new Chart(ctx, config);
                                             })();
                                             </script> -->
+                                            <?php
+                                        foreach ($ethnicGroupCounts as $ethnicGroup => $count) {
+                                            echo "<b>$ethnicGroup:</b> $count<br>";
+                                        }
+                                        ?>
                                         </div>
                                     </div>
                                 </div>
@@ -354,6 +360,7 @@
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
                                 <?php 
                                     $percentages = getEthnicGroupPercentages("survey_form_records_wife");
+                                    $ethnicGroupCounts = getEthnicGroupCounts("survey_form_records_wife");
                                 ?>
                                 <div class="card">
                                     <div class="card-body">
@@ -394,12 +401,18 @@
                                             })();
                                             </script>
                                         </div> -->
+                                        <?php
+                                        foreach ($ethnicGroupCounts as $ethnicGroup => $count) {
+                                            echo "<b>$ethnicGroup:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
                                 <?php 
                                     $percentages = getEthnicGroupPercentages("survey_form_records_children");
+                                    $ethnicGroupCounts = getEthnicGroupCounts("survey_form_records_children");
                                 ?>
                                 <div class="card">
                                     <div class="card-body">
@@ -439,12 +452,18 @@
                                             })();
                                             </script>
                                         </div> -->
+                                        <?php
+                                        foreach ($ethnicGroupCounts as $ethnicGroup => $count) {
+                                            echo "<b>$ethnicGroup:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
                                 <?php 
                                     $percentages = getEthnicGroupPercentages("survey_form_records_household_member");
+                                    $ethnicGroupCounts = getEthnicGroupCounts("survey_form_records_household_member");
                                 ?>
                                 <div class="card">
                                     <div class="card-body">
@@ -484,6 +503,11 @@
                                             })();
                                             </script>
                                         </div> -->
+                                        <?php
+                                        foreach ($ethnicGroupCounts as $ethnicGroup => $count) {
+                                            echo "<b>$ethnicGroup:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
