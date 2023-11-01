@@ -221,25 +221,27 @@
                     <div class="container mt-5 mx-0 px-0">
                         <div class="input-group mb-3 gap-2 mx-0">
                             <div class="input-group-prepend">
-                                <button data-btn="1" id="btn" class="btn border btn-light shadow border-primary">Husband
-                                    data</button>
+                                <button data-btn="1" id="btn" class="btn border btn-light shadow border-primary">Household</button>
                             </div>
                             <div class="input-group-prepend">
-                                <button data-btn="2" id="btn" class="btn border btn-light shadow border-primary">Wife
-                                    data</button>
+                                <button data-btn="2" id="btn" class="btn border btn-light shadow border-primary">Families</button>
                             </div>
                             <div class="input-group-prepend">
-                                <button data-btn="3" id="btn"
-                                    class="btn border btn-light shadow border-primary">Children
-                                    data</button>
+                                <button data-btn="3" id="btn" class="btn border btn-light shadow border-primary">Husband</button>
                             </div>
                             <div class="input-group-prepend">
-                                <button data-btn="4" id="btn"
-                                    class="btn border btn-light shadow border-primary">Other-Household data</button>
+                                <button data-btn="4" id="btn" class="btn border btn-light shadow border-primary">Wife</button>
                             </div>
                             <div class="input-group-prepend">
-                                <button data-btn="5" id="btn" class="btn border btn-light shadow border-primary">All
-                                    data</button>
+                                <button data-btn="5" id="btn"
+                                    class="btn border btn-light shadow border-primary">Children</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button data-btn="6" id="btn"
+                                    class="btn border btn-light shadow border-primary">Other-Household</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button data-btn="7" id="btn" class="btn border btn-light shadow border-primary">All</button>
                             </div>
                         </div>
                         <script>
@@ -265,6 +267,156 @@
                     </div>
 
                     <div class="table-responsive mt-3" style="display: none;" id="container1">
+
+                        <h5 class="fw-bold text-primary">Household data:</h5>
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col fw-bold">ID</th>
+                                    <th scope="col fw-bold">Name</th>
+                                    <th scope="col fw-bold">Household number</th>
+                                    <th scope="col fw-bold">Household</th>
+                                    <th scope="col fw-bold">Sex</th>
+                                    <th scope="col fw-bold">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl">
+                                <?php
+                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' AND belongs_to IS NULL OR belongs_to = ''", "survey_form_records_husband");
+                                 
+                                 $rows_count = 1;
+                                 foreach($data as $row) {
+                                    ?>
+                                <tr>
+                                    <th scope="row" spellcheck="false">
+                                        <?php echo $row['id'] ?>
+                                    </th>
+                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                        data-original-value="<?php echo $row['name']  ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_husband')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_husband')">
+                                        <?php echo $row['name'] ?>
+                                    </th>
+                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                        data-original-value="<?php echo $row['household_id'] ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')">
+                                        <?php echo $row['household_id'] ?>
+                                    </th>
+
+
+                                    <!-- household -->
+                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                        data-original-value="<?php echo $row['household']  ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')">
+                                        <?php echo $row['household'] ?>
+                                    </th>
+                                    
+                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                        data-original-value="<?php echo $row['sex'] ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')">
+                                        <?php echo $row['sex']  ?>
+                                    </th>
+                                    
+                                    
+
+                                    <td class="d-flex align-items-center justify-content-start gap-2">
+                                        <button data-type="husband" data-action="remove" style="height: 33px"
+                                            data-id="<?php echo $row['id'] ?>" id="action_btn"
+                                            class="btn btn-danger btn-sm fs-6 d-flex align-items-center justify-content-center">
+                                            <span class="material-symbols-outlined fs-6">
+                                                close
+                                            </span></button>
+                                        <button class="btn btn-sm btn-primary">View more</button>
+
+                                    </td>
+                                </tr>
+                                <?php
+                                    $rows_count++;
+                                 }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive mt-3" style="display: none;" id="container2">
+
+                        <h5 class="fw-bold text-primary">Families data:</h5>
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col fw-bold">ID</th>
+                                    <th scope="col fw-bold">Name</th>
+                                    <th scope="col fw-bold">Household number</th>
+                                    <th scope="col fw-bold">Household</th>
+                                    <th scope="col fw-bold">Sex</th>
+                                    <th scope="col fw-bold">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl">
+                                <?php
+                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}'", "survey_form_records_husband");
+                                 
+                                 $rows_count = 1;
+                                 foreach($data as $row) {
+                                    ?>
+                                <tr>
+                                    <th scope="row" spellcheck="false">
+                                        <?php echo $row['id'] ?>
+                                    </th>
+                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                        data-original-value="<?php echo $row['name']  ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_husband')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_husband')">
+                                        <?php echo $row['name'] ?>
+                                    </th>
+                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                        data-original-value="<?php echo $row['household_id'] ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')">
+                                        <?php echo $row['household_id'] ?>
+                                    </th>
+
+
+                                    <!-- household -->
+                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                        data-original-value="<?php echo $row['household']  ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')">
+                                        <?php echo $row['household'] ?>
+                                    </th>
+                                    
+                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                        data-original-value="<?php echo $row['sex'] ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')">
+                                        <?php echo $row['sex']  ?>
+                                    </th>
+                                    
+                                    
+
+                                    <td class="d-flex align-items-center justify-content-start gap-2">
+                                        <button data-type="husband" data-action="remove" style="height: 33px"
+                                            data-id="<?php echo $row['id'] ?>" id="action_btn"
+                                            class="btn btn-danger btn-sm fs-6 d-flex align-items-center justify-content-center">
+                                            <span class="material-symbols-outlined fs-6">
+                                                close
+                                            </span></button>
+                                        <button class="btn btn-sm btn-primary">View more</button>
+
+                                    </td>
+                                </tr>
+                                <?php
+                                    $rows_count++;
+                                 }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-responsive mt-3" style="display: none;" id="container3">
 
                         <h5 class="fw-bold text-primary">Husband data:</h5>
                         <table class="table table-hover table-striped">
@@ -338,7 +490,9 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="table-responsive mt-3" style="display: none;" id="container2">
+
+
+                    <div class="table-responsive mt-3" style="display: none;" id="container4">
                         <h5 class="fw-bold text-primary">Wife data:</h5>
                         <table class="table table-hover table-striped">
                             <thead>
@@ -412,7 +566,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="table-responsive mt-3" style="display: none;" id="container3">
+
+
+
+                    <div class="table-responsive mt-3" style="display: none;" id="container5">
                         <h5 class="fw-bold text-primary">Children data:</h5>
                         <table class="table table-hover table-striped">
                             <thead>
@@ -485,7 +642,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="table-responsive mt-3" style="display: none;" id="container4">
+                    <div class="table-responsive mt-3" style="display: none;" id="container6">
                         <h5 class="fw-bold text-primary">Other household data:</h5>
                         <table class="table table-hover table-striped">
                             <thead>
