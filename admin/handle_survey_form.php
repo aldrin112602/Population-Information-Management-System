@@ -8,9 +8,11 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
     $barangay = $_SESSION[ 'barangay' ];
     $municipality = $_SESSION[ 'municipality' ];
     $province = $_SESSION[ 'province' ];
-    $unique_id = $_SESSION[ 'unique_id' ];
-    $household_id = $_POST['household_id'] ?? NULL;
 
+    $unique_id = $_SESSION[ 'unique_id' ];
+
+    
+    $household_id = $_POST['household_id'] ?? NULL;
     $belongs_to = $_POST['belongs_to'] ?? NULL;
 
     $name = $_POST[ 'name' ] ?? [];

@@ -108,6 +108,8 @@
                 top: 20px;
                 ">Add Family</a>
 
+                <input type="hidden" value="<?php echo $_GET['sup_household_id'] ?>" name="belongs_to">
+
                 <?php
             } else {  ?>
 
@@ -116,6 +118,8 @@
                 right: 20px;
                 top: 20px;
                 ">Add Family</a>
+
+                <input type="hidden" value="<?php echo $_GET['household_id'] ?>" name="household_id">
 
             <?php 
             }
