@@ -102,29 +102,31 @@
             if(isset($_GET['sup_household_id'])) {
                 ?>
 
-                <a href="./add_record.php?sup_household_id=<?php echo $_GET['sup_household_id']; ?>" target="_blank" class="btn btn-sm btn-primary mx-auto" style="
+            <a href="./add_record.php?sup_household_id=<?php echo $_GET['sup_household_id']; ?>" target="_blank"
+                class="btn btn-sm btn-primary mx-auto" style="
                 position: absolute;
                 right: 20px;
                 top: 20px;
                 ">Add Family</a>
 
-                <input type="hidden" value="<?php echo $_GET['sup_household_id'] ?>" name="belongs_to">
+            <input type="hidden" value="<?php echo $_GET['sup_household_id'] ?>" name="belongs_to">
 
-                <?php
+            <?php
             } else {  ?>
 
-                <a href="./add_record.php?sup_household_id=<?php echo $_GET['household_id']; ?>" target="_blank" class="btn btn-sm btn-primary mx-auto" style="
+            <a href="./add_record.php?sup_household_id=<?php echo $_GET['household_id']; ?>" target="_blank"
+                class="btn btn-sm btn-primary mx-auto" style="
                 position: absolute;
                 right: 20px;
                 top: 20px;
                 ">Add Family</a>
 
-                <input type="hidden" value="<?php echo $_GET['household_id'] ?>" name="household_id">
+            <input type="hidden" value="<?php echo $_GET['household_id'] ?>" name="household_id">
 
             <?php 
             }
             ?>
-            
+
             <p class="text-center">Date Accomplished: <strong><?php echo date('m/d/Y') ?></strong></p>
             <div class="mt-5 position-relative">
                 <div id="fixed_input" class="row justify-content-center p-0" style="width: 100%;">
@@ -278,9 +280,17 @@
                                         ?>
                             </datalist>
                         </div>
-                        <div class="col my-2">
+                        <div class="col-12 col-md-6 my-2">
                             <label class="">Ethnic Group</label>
                             <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                        </div>
+                        <div class="col-12 col-md-6 my-2">
+                            <label class="">Choose an option:</label>
+                            <select required class="form-select form-select-lg" name="option[]">
+                                <option value="" disabled selected></option>
+                                <option value="Living">Living</option>
+                                <option value="Disease">Disease</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row border  py-5 p-3 rounded bg-white col-12 col-md-6 my-2">
@@ -388,9 +398,17 @@
                                         ?>
                             </datalist>
                         </div>
-                        <div class="col my-2">
+                        <div class="col-12 col-md-6 my-2">
                             <label class="">Ethnic Group</label>
                             <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                        </div>
+                        <div class="col-12 col-md-6 my-2">
+                            <label class="">Choose an option:</label>
+                            <select required class="form-select form-select-lg" name="option[]">
+                                <option value="" disabled selected></option>
+                                <option value="Living">Living</option>
+                                <option value="Disease">Disease</option>
+                            </select>
                         </div>
                     </div>
 
@@ -492,9 +510,17 @@
                                             <datalist id="religion_list">
                                                 <option value="Roman Catholicism"></option><option value="Protestantism"></option><option value="Islam"></option><option value="Buddhism"></option><option value="Iglesia ni Cristo"></option><option value="Aglipayan Church"></option><option value="Seventh-day Adventist Church"></option><option value="Jehovah's Witnesses"></option><option value="The Church of Jesus Christ of Latter-day Saints"></option><option value="Hinduism"></option><option value="Judaism"></option><option value="Taoism"></option><option value="Members of the Church of God International"></option><option value="Anitism"></option><option value="Bahá'í Faith"></option><option value="Confucianism"></option><option value="Shinto"></option><option value="Soka Gakkai"></option><option value="Eckankar"></option><option value="Rastafarianism"></option><option value="Brahma Kumaris"></option><option value="Theosophy"></option><option value="Scientology"></option><option value="Jewish">                            </option></datalist>
                                         </div>
-                                        <div class="col my-2">
+                                        <div class="col-12 col-md-6 my-2">
                                             <label class="">Ethnic Group</label>
-                                            <input required="" type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                                            <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                                        </div>
+                                        <div class="col-12 col-md-6 my-2">
+                                            <label class="">Choose an option:</label>
+                                            <select required class="form-select form-select-lg" name="option[]">
+                                                <option value="" disabled selected></option>
+                                                <option value="Living">Living</option>
+                                                <option value="Disease">Disease</option>
+                                            </select>
                                         </div>
                                     </div>
                                     `;
@@ -612,9 +638,17 @@
                                         ?>
                                 </datalist>
                             </div>
-                            <div class="col my-2">
+                            <div class="col-12 col-md-6 my-2">
                                 <label class="">Ethnic Group</label>
                                 <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                            </div>
+                            <div class="col-12 col-md-6 my-2">
+                                <label class="">Choose an option:</label>
+                                <select required class="form-select form-select-lg" name="option[]">
+                                    <option value="" disabled selected></option>
+                                    <option value="Living">Living</option>
+                                    <option value="Disease">Disease</option>
+                                </select>
                             </div>
                         </div>
 
@@ -707,9 +741,17 @@
                                             <datalist id="religion_list">
                                                 <option value="Roman Catholicism"></option><option value="Protestantism"></option><option value="Islam"></option><option value="Buddhism"></option><option value="Iglesia ni Cristo"></option><option value="Aglipayan Church"></option><option value="Seventh-day Adventist Church"></option><option value="Jehovah's Witnesses"></option><option value="The Church of Jesus Christ of Latter-day Saints"></option><option value="Hinduism"></option><option value="Judaism"></option><option value="Taoism"></option><option value="Members of the Church of God International"></option><option value="Anitism"></option><option value="Bahá'í Faith"></option><option value="Confucianism"></option><option value="Shinto"></option><option value="Soka Gakkai"></option><option value="Eckankar"></option><option value="Rastafarianism"></option><option value="Brahma Kumaris"></option><option value="Theosophy"></option><option value="Scientology"></option><option value="Jewish">                            </option></datalist>
                                         </div>
-                                        <div class="col my-2">
+                                        <div class="col-12 col-md-6 my-2">
                                             <label class="">Ethnic Group</label>
-                                            <input required="" type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                                            <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                                        </div>
+                                        <div class="col-12 col-md-6 my-2">
+                                            <label class="">Choose an option:</label>
+                                            <select required class="form-select form-select-lg" name="option[]">
+                                                <option value="" disabled selected></option>
+                                                <option value="Living">Living</option>
+                                                <option value="Disease">Disease</option>
+                                            </select>
                                         </div>
                                     </div>
                                     `;
@@ -827,9 +869,17 @@
                                         ?>
                                 </datalist>
                             </div>
-                            <div class="col my-2">
+                            <div class="col-12 col-md-6 my-2">
                                 <label class="">Ethnic Group</label>
                                 <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                            </div>
+                            <div class="col-12 col-md-6 my-2">
+                                <label class="">Choose an option:</label>
+                                <select required class="form-select form-select-lg" name="option[]">
+                                    <option value="" disabled selected></option>
+                                    <option value="Living">Living</option>
+                                    <option value="Disease">Disease</option>
+                                </select>
                             </div>
                         </div>
 
