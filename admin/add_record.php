@@ -174,8 +174,14 @@
                     }
                 }
                 </style>
-                <div class="row justify-content-between" id="form">
 
+                <div class="row justify-content-between" id="form">
+                    <div class="container my-2">
+                        <label for="purok" class="">Household</label>
+                        <input value="" required type="text" class="form-control form-control-lg" id="household"
+                            name="household">
+
+                    </div>
                     <div class="row border  py-5 p-3 rounded bg-white col-12 col-md-6 my-2">
                         <h5 class="col-12 fw-bold">Husband Information</h5>
                         <div class="col-12 col-md-6 my-2">

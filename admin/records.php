@@ -270,19 +270,11 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col fw-bold">#</th>
+                                    <th scope="col fw-bold">ID</th>
                                     <th scope="col fw-bold">Name</th>
-                                    <th scope="col fw-bold">Status</th>
-                                    <th scope="col fw-bold">Birthdate</th>
-                                    <th scope="col fw-bold">Age</th>
+                                    <th scope="col fw-bold">Household number</th>
+                                    <th scope="col fw-bold">Household</th>
                                     <th scope="col fw-bold">Sex</th>
-                                    <th scope="col fw-bold">Birth-place</th>
-                                    <th scope="col fw-bold">Education</th>
-                                    <th scope="col fw-bold">Occupation</th>
-                                    <th scope="col fw-bold">Work place</th>
-                                    <th scope="col fw-bold">Religon</th>
-                                    <th scope="col fw-bold">Ethnic-Group</th>
-                                    <th scope="col fw-bold">Purok</th>
                                     <th scope="col fw-bold">Actions</th>
                                 </tr>
                             </thead>
@@ -295,7 +287,7 @@
                                     ?>
                                 <tr>
                                     <th scope="row" spellcheck="false">
-                                        <?php echo $rows_count ?>
+                                        <?php echo $row['id'] ?>
                                     </th>
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
                                         data-original-value="<?php echo $row['name']  ?>"
@@ -304,80 +296,38 @@
                                         <?php echo $row['name'] ?>
                                     </th>
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['status'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'status', 'survey_form_records_husband')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'status', 'survey_form_records_husband')">
-                                        <?php echo $row['status'] ?>
+                                        data-original-value="<?php echo $row['household_id'] ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')">
+                                        <?php echo $row['household_id'] ?>
                                     </th>
+
+
+                                    <!-- household -->
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['dateOfBirth'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'dateOfBirth', 'survey_form_records_husband')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'dateOfBirth', 'survey_form_records_husband')">
-                                        <?php echo $row['dateOfBirth']  ?>
+                                        data-original-value="<?php echo $row['household']  ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')">
+                                        <?php echo $row['household'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['age'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'age', 'survey_form_records_husband')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'age', 'survey_form_records_husband')">
-                                        <?php echo $row['age']  ?>
-                                    </th>
+                                    
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')">
                                         <?php echo $row['sex']  ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['birthPlace'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'birthPlace', 'survey_form_records_husband')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'birthPlace', 'survey_form_records_husband')">
-                                        <?php echo $row['birthPlace']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['educationalAttainment'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'educationalAttainment', 'survey_form_records_husband')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'educationalAttainment', 'survey_form_records_husband')">
-                                        <?php echo $row['educationalAttainment']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['occupation'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'occupation', 'survey_form_records_husband')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'occupation', 'survey_form_records_husband')">
-                                        <?php echo $row['occupation']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['placeOfWork'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'placeOfWork', 'survey_form_records_husband')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'placeOfWork', 'survey_form_records_husband')">
-                                        <?php echo $row['placeOfWork']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['religion'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'religion', 'survey_form_records_husband')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'religion', 'survey_form_records_husband')">
-                                        <?php echo $row['religion']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['ethnicGroup'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'ethnicGroup', 'survey_form_records_husband')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'ethnicGroup', 'survey_form_records_husband')">
-                                        <?php echo $row['ethnicGroup']  ?>
-                                    </th>
+                                    
+                                    
 
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['purok'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'purok', 'survey_form_records_husband')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'purok', 'survey_form_records_husband')">
-                                        <?php echo $row['purok']  ?>
-                                    </th>
-
-                                    <td class="d-flex align-items-center justify-content-center gap-2">
-                                        <button data-type="husband" data-action="remove"
+                                    <td class="d-flex align-items-center justify-content-start gap-2">
+                                        <button data-type="husband" data-action="remove" style="height: 33px"
                                             data-id="<?php echo $row['id'] ?>" id="action_btn"
                                             class="btn btn-danger btn-sm fs-6 d-flex align-items-center justify-content-center">
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
+                                        <button class="btn btn-sm btn-primary">View more</button>
 
                                     </td>
                                 </tr>
@@ -393,19 +343,11 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col fw-bold">#</th>
+                                    <th scope="col fw-bold">ID</th>
                                     <th scope="col fw-bold">Name</th>
-                                    <th scope="col fw-bold">Status</th>
-                                    <th scope="col fw-bold">Birthdate</th>
-                                    <th scope="col fw-bold">Age</th>
+                                    <th scope="col fw-bold">Household number</th>
+                                    <th scope="col fw-bold">Household</th>
                                     <th scope="col fw-bold">Sex</th>
-                                    <th scope="col fw-bold">Birth-place</th>
-                                    <th scope="col fw-bold">Education</th>
-                                    <th scope="col fw-bold">Occupation</th>
-                                    <th scope="col fw-bold">Work place</th>
-                                    <th scope="col fw-bold">Religon</th>
-                                    <th scope="col fw-bold">Ethnic-Group</th>
-                                    <th scope="col fw-bold">Purok</th>
                                     <th scope="col fw-bold">Actions</th>
                                 </tr>
                             </thead>
@@ -418,88 +360,48 @@
                                     ?>
                                 <tr>
                                     <th scope="row" spellcheck="false">
-                                        <?php echo $rows_count ?>
+                                        <?php echo $row['id'] ?>
                                     </th>
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['name'] ?>"
+                                        data-original-value="<?php echo $row['name']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_wife')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_wife')">
                                         <?php echo $row['name'] ?>
                                     </th>
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['status']  ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'status', 'survey_form_records_wife')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'status', 'survey_form_records_wife')">
-                                        <?php echo $row['status'] ?>
+                                        data-original-value="<?php echo $row['household_id'] ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_wife')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_wife')">
+                                        <?php echo $row['household_id'] ?>
                                     </th>
+
+
+                                    <!-- household -->
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['dateOfBirth']  ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'dateOfBirth', 'survey_form_records_wife')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'dateOfBirth', 'survey_form_records_wife')">
-                                        <?php echo $row['dateOfBirth']  ?>
+                                        data-original-value="<?php echo $row['household']  ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_wife')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_wife')">
+                                        <?php echo $row['household'] ?>
                                     </th>
+                                    
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['age']  ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'age', 'survey_form_records_wife')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_wife')">
-                                        <?php echo $row['age']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['sex']  ?>"
+                                        data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_wife')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_wife')">
                                         <?php echo $row['sex']  ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['birthPlace']  ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'birthPlace', 'survey_form_records_wife')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'birthPlace', 'survey_form_records_wife')">
-                                        <?php echo $row['birthPlace']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['educationalAttainment']  ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'educationalAttainment', 'survey_form_records_wife')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'educationalAttainment', 'survey_form_records_wife')">
-                                        <?php echo $row['educationalAttainment']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['occupation']  ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'occupation', 'survey_form_records_wife')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'occupation', 'survey_form_records_wife')">
-                                        <?php echo $row['occupation']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['placeOfWork']  ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'placeOfWork', 'survey_form_records_wife')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'placeOfWork', 'survey_form_records_wife')">
-                                        <?php echo $row['placeOfWork']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['religion'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'religion', 'survey_form_records_wife')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'religion', 'survey_form_records_wife')">
-                                        <?php echo $row['religion']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['ethnicGroup']  ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'ethnicGroup', 'survey_form_records_wife')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'ethnicGroup', 'survey_form_records_wife')">
-                                        <?php echo $row['ethnicGroup']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['purok']  ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'purok', 'survey_form_records_wife')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'purok', 'survey_form_records_wife')">
-                                        <?php echo $row['purok']  ?>
-                                    </th>
+                                    
+                                    
 
-                                    <td class="d-flex align-items-center justify-content-center gap-2">
-                                        <button data-type="wife" data-action="remove" data-id="<?php echo $row['id'] ?>"
-                                            id="action_btn"
-                                            class="btn btn-danger btn-sm fs-6 d-flex align-items-center justify-content-center">
+                                    <td class="d-flex align-items-center justify-content-start gap-2">
+                                        <button data-type="wife" data-action="remove" style="height: 33px"
+                                            data-id="<?php echo $row['id'] ?>" id="action_btn"
+                                            class="btn btn-danger btn-sm d-flex align-items-center justify-content-center">
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
+                                        <button class="btn btn-primary btn-sm">View more</button>
+
                                     </td>
                                 </tr>
                                 <?php
@@ -515,19 +417,11 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col fw-bold">#</th>
+                                    <th scope="col fw-bold">ID</th>
                                     <th scope="col fw-bold">Name</th>
-                                    <th scope="col fw-bold">Status</th>
-                                    <th scope="col fw-bold">Birthdate</th>
-                                    <th scope="col fw-bold">Age</th>
+                                    <th scope="col fw-bold">Household number</th>
+                                    <th scope="col fw-bold">Household</th>
                                     <th scope="col fw-bold">Sex</th>
-                                    <th scope="col fw-bold">Birth-place</th>
-                                    <th scope="col fw-bold">Education</th>
-                                    <th scope="col fw-bold">Occupation</th>
-                                    <th scope="col fw-bold">Work place</th>
-                                    <th scope="col fw-bold">Religon</th>
-                                    <th scope="col fw-bold">Ethnic-Group</th>
-                                    <th scope="col fw-bold">Purok</th>
                                     <th scope="col fw-bold">Actions</th>
                                 </tr>
                             </thead>
@@ -540,89 +434,47 @@
                                     ?>
                                 <tr>
                                     <th scope="row" spellcheck="false">
-                                        <?php echo $rows_count ?>
+                                        <?php echo $row['id'] ?>
                                     </th>
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['name'] ?>"
+                                        data-original-value="<?php echo $row['name']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_children')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_children')">
                                         <?php echo $row['name'] ?>
                                     </th>
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['status']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'status', 'survey_form_records_children')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'status', 'survey_form_records_children')">
-                                        <?php echo $row['status'] ?>
+                                        data-original-value="<?php echo $row['household_id'] ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_children')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_children')">
+                                        <?php echo $row['household_id'] ?>
                                     </th>
+
+
+                                    <!-- household -->
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['dateOfBirth']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'dateOfBirth', 'survey_form_records_children')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'dateOfBirth', 'survey_form_records_children')">
-                                        <?php echo $row['dateOfBirth']  ?>
+                                        data-original-value="<?php echo $row['household']  ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_children')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_children')">
+                                        <?php echo $row['household'] ?>
                                     </th>
+                                    
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['age']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'age', 'survey_form_records_children')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_children')">
-                                        <?php echo $row['age']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['sex']?>"
+                                        data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_children')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_children')">
                                         <?php echo $row['sex']  ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['birthPlace']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'birthPlace', 'survey_form_records_children')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'birthPlace', 'survey_form_records_children')">
-                                        <?php echo $row['birthPlace']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['educationalAttainment']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'educationalAttainment', 'survey_form_records_children')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'educationalAttainment', 'survey_form_records_children')">
-                                        <?php echo $row['educationalAttainment']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['occupation']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'occupation', 'survey_form_records_children')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'occupation', 'survey_form_records_children')">
-                                        <?php echo $row['occupation']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['placeOfWork']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'placeOfWork', 'survey_form_records_children')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'placeOfWork', 'survey_form_records_children')">
-                                        <?php echo $row['placeOfWork']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['religion']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'religion', 'survey_form_records_children')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'religion', 'survey_form_records_children')">
-                                        <?php echo $row['religion']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['ethnicGroup']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'ethnicGroup', 'survey_form_records_children')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'ethnicGroup', 'survey_form_records_children')">
-                                        <?php echo $row['ethnicGroup']  ?>
-                                    </th>
+                                    
+                                    
 
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['purok']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'purok', 'survey_form_records_children')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'purok', 'survey_form_records_children')">
-                                        <?php echo $row['purok']  ?>
-                                    </th>
-
-                                    <td class="d-flex align-items-center justify-content-center gap-2">
-                                        <button data-type="children" data-action="remove"
+                                    <td class="d-flex align-items-center justify-content-start gap-2">
+                                        <button data-type="children" data-action="remove" style="height: 33px"
                                             data-id="<?php echo $row['id'] ?>" id="action_btn"
                                             class="btn btn-danger btn-sm fs-6 d-flex align-items-center justify-content-center">
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
+                                        <button class="btn btn-sm btn-primary">View more</button>
 
                                     </td>
                                 </tr>
@@ -638,19 +490,11 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col fw-bold">#</th>
+                                    <th scope="col fw-bold">ID</th>
                                     <th scope="col fw-bold">Name</th>
-                                    <th scope="col fw-bold">Status</th>
-                                    <th scope="col fw-bold">Birthdate</th>
-                                    <th scope="col fw-bold">Age</th>
+                                    <th scope="col fw-bold">Household number</th>
+                                    <th scope="col fw-bold">Household</th>
                                     <th scope="col fw-bold">Sex</th>
-                                    <th scope="col fw-bold">Birth-place</th>
-                                    <th scope="col fw-bold">Education</th>
-                                    <th scope="col fw-bold">Occupation</th>
-                                    <th scope="col fw-bold">Work place</th>
-                                    <th scope="col fw-bold">Religon</th>
-                                    <th scope="col fw-bold">Ethnic-Group</th>
-                                    <th scope="col fw-bold">Purok</th>
                                     <th scope="col fw-bold">Actions</th>
                                 </tr>
                             </thead>
@@ -663,89 +507,47 @@
                                     ?>
                                 <tr>
                                     <th scope="row" spellcheck="false">
-                                        <?php echo $rows_count ?>
+                                        <?php echo $row['id'] ?>
                                     </th>
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['name'] ?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_household_member')">
+                                        data-original-value="<?php echo $row['name']  ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_household')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_household')">
                                         <?php echo $row['name'] ?>
                                     </th>
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['status']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'status', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'status', 'survey_form_records_household_member')">
-                                        <?php echo $row['status'] ?>
+                                        data-original-value="<?php echo $row['household_id'] ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_household')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_household')">
+                                        <?php echo $row['household_id'] ?>
                                     </th>
+
+
+                                    <!-- household -->
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['dateOfBirth']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'dateOfBirth', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'dateOfBirth', 'survey_form_records_household_member')">
-                                        <?php echo $row['dateOfBirth']  ?>
+                                        data-original-value="<?php echo $row['household']  ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_household')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_household')">
+                                        <?php echo $row['household'] ?>
                                     </th>
+                                    
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['age']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'age', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_household_member')">
-                                        <?php echo $row['age']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['sex']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_household_member')">
+                                        data-original-value="<?php echo $row['sex'] ?>"
+                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_household')"
+                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_household')">
                                         <?php echo $row['sex']  ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['birthPlace']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'birthPlace', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'birthPlace', 'survey_form_records_household_member')">
-                                        <?php echo $row['birthPlace']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['educationalAttainment']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'educationalAttainment', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'educationalAttainment', 'survey_form_records_household_member')">
-                                        <?php echo $row['educationalAttainment']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['occupation']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'occupation', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'occupation', 'survey_form_records_household_member')">
-                                        <?php echo $row['occupation']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['placeOfWork']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'placeOfWork', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'placeOfWork', 'survey_form_records_household_member')">
-                                        <?php echo $row['placeOfWork']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo $row['religion']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'religion', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'religion', 'survey_form_records_household_member')">
-                                        <?php echo $row['religion']  ?>
-                                    </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['ethnicGroup']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'ethnicGroup', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'ethnicGroup', 'survey_form_records_household_member')">
-                                        <?php echo $row['ethnicGroup']  ?>
-                                    </th>
+                                    
+                                    
 
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
-                                        data-original-value="<?php echo  $row['purok']?>"
-                                        onblur="updateContent(this, <?php echo $row['id']; ?>, 'purok', 'survey_form_records_household_member')"
-                                        onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'purok', 'survey_form_records_household_member')">
-                                        <?php echo $row['purok']  ?>
-                                    </th>
-
-                                    <td class="d-flex align-items-center justify-content-center gap-2">
-                                        <button data-type="household" data-action="remove"
+                                    <td class="d-flex align-items-center justify-content-start gap-2">
+                                        <button data-type="household" data-action="remove" style="height: 33px"
                                             data-id="<?php echo $row['id'] ?>" id="action_btn"
-                                            class="btn btn-danger btn-sm py-1 fs-6 d-flex align-items-center justify-content-center">
+                                            class="btn btn-danger btn-sm fs-6 d-flex align-items-center justify-content-center">
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
+                                        <button class="btn btn-sm btn-primary">View more</button>
 
                                     </td>
                                 </tr>
@@ -762,7 +564,7 @@
                         <table class="table table-hover table-striped" style="min-width: 1000vw;">
                             <thead>
                                 <tr>
-                                    <th scope="col fw-bold">#</th>
+                                    <th scope="col fw-bold">ID</th>
                                     <th scope="col" class="fw-bold">Purok</th>
                                     <th scope="col" class="fw-bold">Barangay</th>
                                     <th scope="col" class="fw-bold">Municipality</th>
@@ -865,8 +667,8 @@
                                     <th scope="row"><?php echo $row['caretakerOthersLandOwned']; ?></th>
                                     <th scope="row"><?php echo $row['monthlyAverageFamilyIncome']; ?></th>
 
-                                    <td class="d-flex align-items-center justify-content-center gap-2">
-                                        <button data-type="survey_form_records" data-action="remove"
+                                    <td class="d-flex align-items-center justify-content-start gap-2">
+                                        <button data-type="survey_form_records" data-action="remove" style="height: 33px"
                                             data-id="<?php echo $row['id'] ?>" id="action_btn"
                                             class="btn btn-danger btn-sm fs-6 d-flex align-items-center justify-content-center">
                                             <span class="material-symbols-outlined fs-6">
