@@ -10,6 +10,11 @@
     } else {
         header('location: ../');
     }
+
+    if(!isset($_GET['household_id']) && !isset($_GET['sup_household_id'])) {
+     header('location: records.php');
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -93,11 +98,29 @@
         <form action="" method="post" class="px-4 pr-0">
             <br>
             <h1 class="text-center fs-3 text-success fw-bolder">FAMILY PROFILE SURVEY FORM</h1>
-            <a href="./add_record.php" target="_blank" class="btn btn-sm btn-primary mx-auto" style="
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            ">Add Family</a>
+            <?php 
+            if(isset($_GET['sup_household_id'])) {
+                ?>
+
+                <a href="./add_record.php?sup_household_id=<?php echo $_GET['sup_household_id']; ?>" target="_blank" class="btn btn-sm btn-primary mx-auto" style="
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                ">Add Family</a>
+
+                <?php
+            } else {  ?>
+
+                <a href="./add_record.php?sup_household_id=<?php echo $_GET['household_id']; ?>" target="_blank" class="btn btn-sm btn-primary mx-auto" style="
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                ">Add Family</a>
+
+            <?php 
+            }
+            ?>
+            
             <p class="text-center">Date Accomplished: <strong><?php echo date('m/d/Y') ?></strong></p>
             <div class="mt-5 position-relative">
                 <div id="fixed_input" class="row justify-content-center p-0" style="width: 100%;">
