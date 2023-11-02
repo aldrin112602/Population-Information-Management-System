@@ -188,37 +188,37 @@
                                     alt="Profile avatar" class="img-fluid rounded-circle" width="100px"><br>
                                 <h3 class="text-white py-2"><?php echo $_SESSION['username']; ?></h3>
                             </li>
-                            <li class="nav-item my-2">
+                            <li class="nav-item my-1">
                                 <a href="./index.php"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-5">
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">dashboard</span>
                                     Dashboard
                                 </a>
                             </li>
-                            <li class="nav-item my-2">
+                            <li class="nav-item my-1">
                                 <a href="./records.php"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-5">
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">bar_chart_4_bars</span>
                                     Records
                                 </a>
                             </li>
-                            <!-- <li class="nav-item my-2">
-                                <a href="#"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-5">
-                                    <span class="material-symbols-outlined">donut_large</span>
-                                    Reports
+                            <li class="nav-item my-1">
+                                <a href="javascript:void(0)"
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                    <span class="material-symbols-outlined">print</span>
+                                    Print report
                                 </a>
-                            </li> -->
-                            <li class="nav-item my-2  current-page">
+                            </li>
+                            <li class="nav-item my-1  current-page">
                                 <a href=""
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-5">
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">settings</span>
                                     Settings
                                 </a>
                             </li>
                             <li class="nav-item mt-3">
                                 <a href="../logout.php"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-5">
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">logout</span>
                                     Logout
                                 </a>
