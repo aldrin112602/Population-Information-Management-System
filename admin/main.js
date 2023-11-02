@@ -129,27 +129,7 @@ $(document).ready(function () {
     let action = $(this).attr("data-action");
     showConfirmation(id, type, action);
   });
-  if (!localStorage.getItem("tab")) localStorage.setItem("tab", 0);
-  $(".table-responsive").hide();
-  if (localStorage.getItem("tab") == 4) {
-    $(".table-responsive").show();
-  }
-  $("#tbl-last").show();
-  $(".table-responsive").eq(localStorage.getItem("tab")).show();
-  $("button#btn").eq(localStorage.getItem("tab")).addClass("active");
-  $("button#btn").on("click", function () {
-    let containerNumber = $(this).attr("data-btn");
-    $(".table-responsive").hide();
-    $("#container" + containerNumber).show();
-    localStorage.setItem("tab", containerNumber - 1);
-    if(containerNumber == 5) {
-      $(".table-responsive").show();
-    }
-    $("button#btn").removeClass("active");
-    $("button#btn").eq(localStorage.getItem("tab")).addClass("active");
-    $("#tbl-last").show();
-  });
-
+  
   $('th[contenteditable="true"]')
     .on("focus", function () {
       $(this).addClass("resize_th form-control");

@@ -116,37 +116,37 @@
                                     width="100px"><br>
                                 <h3 class="text-white py-2"><?php echo $username ?></h3>
                             </li>
-                            <li class="nav-item my-2">
+                            <li class="nav-item my-1">
                                 <a href="./index.php"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-5">
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">dashboard</span>
                                     Dashboard
                                 </a>
                             </li>
-                            <li class="nav-item my-2 current-page">
+                            <li class="nav-item my-1 current-page">
                                 <a href=""
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-5">
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">bar_chart_4_bars</span>
                                     Records
                                 </a>
                             </li>
-                            <!-- <li class="nav-item my-2">
-                                <a href=""
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-5">
-                                    <span class="material-symbols-outlined">donut_large</span>
-                                    Reports
+                            <li class="nav-item my-1">
+                                <a href="javascript:void(0)"
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                    <span class="material-symbols-outlined">print</span>
+                                    Print report
                                 </a>
-                            </li> -->
-                            <li class="nav-item my-2">
+                            </li>
+                            <li class="nav-item my-1">
                                 <a href="setting.php"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-5">
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">settings</span>
                                     Settings
                                 </a>
                             </li>
                             <li class="nav-item mt-3">
                                 <a href="../logout.php"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-5">
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">logout</span>
                                     Logout
                                 </a>
@@ -200,7 +200,9 @@
                                         <?php 
                                          $household_id = uniqid();
                                         ?>
-                                        <a role="button" href="./add_record.php?household_id=<?php echo $household_id ?>" class="btn text-white btn-lg" style="
+                                        <a role="button"
+                                            href="./add_record.php?household_id=<?php echo $household_id ?>"
+                                            class="btn text-white btn-lg" style="
                                             background-color: #1D5B79;
                                             border-radius: 50px;
                                         ">+ Add Record</a>
@@ -221,40 +223,65 @@
                     <div class="container mt-5 mx-0 px-0">
                         <div class="input-group mb-3 gap-2 mx-0">
                             <div class="input-group-prepend">
-                                <button data-btn="1" id="btn" class="btn border btn-light shadow border-primary">Household</button>
+                                <button data-btns="1" id="btns"
+                                    class="btn border btn-light shadow border-primary">Household</button>
                             </div>
                             <div class="input-group-prepend">
-                                <button data-btn="2" id="btn" class="btn border btn-light shadow border-primary">Families</button>
+                                <button data-btns="2" id="btns"
+                                    class="btn border btn-light shadow border-primary">Families</button>
                             </div>
                             <div class="input-group-prepend">
-                                <button data-btn="3" id="btn" class="btn border btn-light shadow border-primary">Husband</button>
+                                <button data-btns="3" id="btns"
+                                    class="btn border btn-light shadow border-primary">Husband</button>
                             </div>
                             <div class="input-group-prepend">
-                                <button data-btn="4" id="btn" class="btn border btn-light shadow border-primary">Wife</button>
+                                <button data-btns="4" id="btns"
+                                    class="btn border btn-light shadow border-primary">Wife</button>
                             </div>
                             <div class="input-group-prepend">
-                                <button data-btn="5" id="btn"
+                                <button data-btns="5" id="btns"
                                     class="btn border btn-light shadow border-primary">Children</button>
                             </div>
                             <div class="input-group-prepend">
-                                <button data-btn="6" id="btn"
+                                <button data-btns="6" id="btns"
                                     class="btn border btn-light shadow border-primary">Other-Household</button>
                             </div>
                             <div class="input-group-prepend">
-                                <button data-btn="7" id="btn" class="btn border btn-light shadow border-primary">All</button>
+                                <button data-btns="7" id="btns"
+                                    class="btn border btn-light shadow border-primary">All</button>
                             </div>
                         </div>
                         <script>
                         $(document).ready(function() {
+                            // Hide all tables except the first one
                             $('.table-responsive:gt(0)').hide();
-                            $('button#btn').on('click', function() {
-                                let containerNumber = $(this).attr('data-btn');
+
+                            // Function to show/hide tables
+                            function toggleTable(containerNumber) {
                                 $('.table-responsive').hide();
                                 $('#container' + containerNumber).show();
-                                $('button#btn').removeClass('active');
-                                $(this).addClass($(this).attr('data-btn') == containerNumber ?
-                                    'active' : '');
-                            })
+                                $('button#btns').removeClass('active');
+                                $('button#btns[data-btns="' + containerNumber + '"]').addClass('active');
+                                localStorage.setItem("tabs", containerNumber);
+                                if (containerNumber == 7) {
+                                    $(".table-responsive").show();
+                                }
+                                $("#tbl-last").show();
+                            }
+
+                            // Click event handler for buttons
+                            $('button#btns').on('click', function() {
+                                let containerNumber = $(this).attr('data-btns');
+                                toggleTable(containerNumber);
+                            });
+
+                            // Initialize based on localStorage
+                            if (!localStorage.getItem("tabs")) {
+                                localStorage.setItem("tabs", 1);
+                            }
+
+                            const initialTab = localStorage.getItem("tabs");
+                            toggleTable(initialTab);
                         });
                         </script>
                     </div>
@@ -312,15 +339,15 @@
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')">
                                         <?php echo $row['household'] ?>
                                     </th>
-                                    
+
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')">
                                         <?php echo $row['sex']  ?>
                                     </th>
-                                    
-                                    
+
+
 
                                     <td class="d-flex align-items-center justify-content-start gap-2">
                                         <button data-type="husband" data-action="remove" style="height: 33px"
@@ -387,15 +414,15 @@
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')">
                                         <?php echo $row['household'] ?>
                                     </th>
-                                    
+
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')">
                                         <?php echo $row['sex']  ?>
                                     </th>
-                                    
-                                    
+
+
 
                                     <td class="d-flex align-items-center justify-content-start gap-2">
                                         <button data-type="husband" data-action="remove" style="height: 33px"
@@ -462,15 +489,15 @@
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')">
                                         <?php echo $row['household'] ?>
                                     </th>
-                                    
+
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')">
                                         <?php echo $row['sex']  ?>
                                     </th>
-                                    
-                                    
+
+
 
                                     <td class="d-flex align-items-center justify-content-start gap-2">
                                         <button data-type="husband" data-action="remove" style="height: 33px"
@@ -537,15 +564,15 @@
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_wife')">
                                         <?php echo $row['household'] ?>
                                     </th>
-                                    
+
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_wife')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_wife')">
                                         <?php echo $row['sex']  ?>
                                     </th>
-                                    
-                                    
+
+
 
                                     <td class="d-flex align-items-center justify-content-start gap-2">
                                         <button data-type="wife" data-action="remove" style="height: 33px"
@@ -614,15 +641,15 @@
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_children')">
                                         <?php echo $row['household'] ?>
                                     </th>
-                                    
+
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_children')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_children')">
                                         <?php echo $row['sex']  ?>
                                     </th>
-                                    
-                                    
+
+
 
                                     <td class="d-flex align-items-center justify-content-start gap-2">
                                         <button data-type="children" data-action="remove" style="height: 33px"
@@ -687,15 +714,15 @@
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_household')">
                                         <?php echo $row['household'] ?>
                                     </th>
-                                    
+
                                     <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_household')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_household')">
                                         <?php echo $row['sex']  ?>
                                     </th>
-                                    
-                                    
+
+
 
                                     <td class="d-flex align-items-center justify-content-start gap-2">
                                         <button data-type="household" data-action="remove" style="height: 33px"
@@ -825,8 +852,8 @@
                                     <th scope="row"><?php echo $row['monthlyAverageFamilyIncome']; ?></th>
 
                                     <td class="d-flex align-items-center justify-content-start gap-2">
-                                        <button data-type="survey_form_records" data-action="remove" style="height: 33px"
-                                            data-id="<?php echo $row['id'] ?>" id="action_btn"
+                                        <button data-type="survey_form_records" data-action="remove"
+                                            style="height: 33px" data-id="<?php echo $row['id'] ?>" id="action_btn"
                                             class="btn btn-danger btn-sm fs-6 d-flex align-items-center justify-content-center">
                                             <span class="material-symbols-outlined fs-6">
                                                 close
@@ -857,7 +884,148 @@
     <!-- end main wrapper  -->
     <!-- ============================================================== -->
 
-    <script src="./main.js"></script>
+    <script>
+    !(function e() {
+        let n = document.getElementById("searchInput"),
+            t = document.getElementById("startButton");
+        if ("webkitSpeechRecognition" in window)
+            var r = new webkitSpeechRecognition();
+        else if (!("SpeechRecognition" in window)) return;
+        else var r = new SpeechRecognition();
+        (r.continuous = !1),
+        (r.interimResults = !1),
+        (r.lang = "en-US"),
+        (r.onresult = function(e) {
+            let t = e.results[0][0].transcript;
+            n.value = t;
+            w3.filterHTML("#tbl", "tr", t);
+        }),
+        (r.onerror = function(e) {
+            console.error("Speech recognition error:", e.error);
+        }),
+        t.addEventListener("click", function() {
+            r.start();
+        });
+    })();
+
+    function updateContent(cell, id, column, tableName) {
+        const newValue = cell.innerText.trim(),
+            originalValue = cell.getAttribute("data-original-value").trim();
+        if (newValue && newValue != originalValue) {
+            fetch("./update_script.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: `id=${id}&column=${column}&value=${encodeURIComponent(
+        newValue
+      )}&table=${tableName}`,
+                })
+                .then((response) => {
+                    if (response.ok) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener("mouseenter", Swal.stopTimer);
+                                toast.addEventListener("mouseleave", Swal.resumeTimer);
+                            },
+                        });
+
+                        Toast.fire({
+                            icon: "success",
+                            title: "Updated successfully",
+                        });
+                        cell.setAttribute("data-original-value", newValue);
+                    } else {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener("mouseenter", Swal.stopTimer);
+                                toast.addEventListener("mouseleave", Swal.resumeTimer);
+                            },
+                        });
+
+                        Toast.fire({
+                            icon: "error",
+                            title: "Sorry, failed to update content",
+                        });
+                    }
+                })
+                .catch((error) => {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener("mouseenter", Swal.stopTimer);
+                            toast.addEventListener("mouseleave", Swal.resumeTimer);
+                        },
+                    });
+
+                    Toast.fire({
+                        icon: "error",
+                        title: error,
+                    });
+                });
+        }
+    }
+
+    function handleKeyPress(event, cell, id, column, tableName) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            updateContent(cell, id, column, tableName);
+            cell.blur();
+        }
+    }
+
+    function showConfirmation(id, type, action) {
+        (action.trim() != "update" &&
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action cannot be undone.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, proceed!",
+                cancelButtonText: "Cancel",
+                onclose: function() {
+                    window.open(`./records.php`, "_self");
+                },
+                reverseButtons: true,
+            }).then(
+                (result) =>
+                result.isConfirmed &&
+                window.open(`?id=${id}&type=${type}&action=${action}`, "_self")
+            )) ||
+        window.open(`?id=${id}&type=${type}&action=${action}`, "_self");
+    }
+
+    $(document).ready(function() {
+        $('button[id="action_btn"]').on("click", function() {
+            let id = $(this).attr("data-id");
+            let type = $(this).attr("data-type");
+            let action = $(this).attr("data-action");
+            showConfirmation(id, type, action);
+        });
+
+        $('th[contenteditable="true"]')
+            .on("focus", function() {
+                $(this).addClass("resize_th form-control");
+            })
+            .on("blur", function() {
+                $(this).removeClass("resize_th form-control");
+            });
+    });
+    </script>
 
     <!-- <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
