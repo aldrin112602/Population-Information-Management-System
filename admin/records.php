@@ -356,7 +356,9 @@
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
-                                        <button class="btn btn-sm btn-primary">View more</button>
+                                        <button class="btn btn-sm btn-primary"
+                                            onclick="showMoreData(<?php echo $row['id'] ?>, 'survey_form_records_husband')">View
+                                            more</button>
 
                                     </td>
                                 </tr>
@@ -367,7 +369,6 @@
                             </tbody>
                         </table>
                     </div>
-
                     <div class="table-responsive mt-3" style="display: none;" id="container2">
 
                         <h5 class="fw-bold text-primary">Families data:</h5>
@@ -431,7 +432,9 @@
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
-                                        <button class="btn btn-sm btn-primary">View more</button>
+                                        <button class="btn btn-sm btn-primary"
+                                            onclick="showMoreData(<?php echo $row['id'] ?>, 'survey_form_records_husband')">View
+                                            more</button>
 
                                     </td>
                                 </tr>
@@ -442,7 +445,6 @@
                             </tbody>
                         </table>
                     </div>
-
                     <div class="table-responsive mt-3" style="display: none;" id="container3">
 
                         <h5 class="fw-bold text-primary">Husband data:</h5>
@@ -506,7 +508,9 @@
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
-                                        <button class="btn btn-sm btn-primary">View more</button>
+                                        <button class="btn btn-sm btn-primary"
+                                            onclick="showMoreData(<?php echo $row['id'] ?>, 'survey_form_records_husband')">View
+                                            more</button>
 
                                     </td>
                                 </tr>
@@ -517,8 +521,6 @@
                             </tbody>
                         </table>
                     </div>
-
-
                     <div class="table-responsive mt-3" style="display: none;" id="container4">
                         <h5 class="fw-bold text-primary">Wife data:</h5>
                         <table class="table table-hover table-striped">
@@ -581,7 +583,9 @@
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
-                                        <button class="btn btn-primary btn-sm">View more</button>
+                                        <button class="btn btn-primary btn-sm"
+                                            onclick="showMoreData(<?php echo $row['id'] ?>, 'survey_form_records_wife')">View
+                                            more</button>
 
                                     </td>
                                 </tr>
@@ -593,9 +597,6 @@
                             </tbody>
                         </table>
                     </div>
-
-
-
                     <div class="table-responsive mt-3" style="display: none;" id="container5">
                         <h5 class="fw-bold text-primary">Children data:</h5>
                         <table class="table table-hover table-striped">
@@ -658,7 +659,9 @@
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
-                                        <button class="btn btn-sm btn-primary">View more</button>
+                                        <button class="btn btn-sm btn-primary"
+                                            onclick="showMoreData(<?php echo $row['id'] ?>, 'survey_form_records_children')">View
+                                            more</button>
 
                                     </td>
                                 </tr>
@@ -731,7 +734,9 @@
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
-                                        <button class="btn btn-sm btn-primary">View more</button>
+                                        <button class="btn btn-sm btn-primary"
+                                            onclick="showMoreData(<?php echo $row['id'] ?>, 'survey_form_records_household_member')">View
+                                            more</button>
 
                                     </td>
                                 </tr>
@@ -742,7 +747,6 @@
                             </tbody>
                         </table>
                     </div>
-
                     <div id="tbl-last" style="display: none;" class="mt-4 table-responsive">
                         <h5 class="fw-bold text-primary">Survey form records</h5>
                         <table class="table table-hover table-striped" style="min-width: 1000vw;">
@@ -885,6 +889,115 @@
     <!-- ============================================================== -->
 
     <script>
+    'use strict'
+    function expandCamelCase(input) {
+        return input.replace(/([A-Z])/g, ' $1')
+            .replace(/^./, function(str) {
+                return str.toUpperCase();
+            })
+            .trim();
+    }
+
+    function showMoreData(id, table_name) {
+        fetchDatabaseData(id, table_name).then((data) => {
+            if (data.length == 0) return
+            let keyPairs = Object.entries(data[0])
+            let form_template = `<form id="editForm" class="swal2-form text-left">
+            <h5 class="fs-4 text-center">More details</h5>
+            `;
+            for (const [k, v] of keyPairs) {
+                if (!v || ['unique_id', 'id'].includes(k)) continue
+                form_template += `
+                <label class="text-left mt-2 fw-bold" style="">${expandCamelCase(k)}</label>
+                <input id="${k}" value="${v}" name="${k}" type="text" class="swal2-input my-0" required>`;
+            }
+            form_template += `</form>`;
+            Swal.fire({
+                html: form_template,
+                showCancelButton: true,
+                cancelButtonText: 'Cancel',
+                showConfirmButton: true,
+                confirmButtonText: 'Save',
+                focusConfirm: false,
+                preConfirm: () => {
+                    const data = $('#editForm').serialize()
+                    $.ajax({
+                        url: './update_data.php',
+                        method: 'POST',
+                        data,
+                        success: function(data) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter',
+                                        Swal.stopTimer)
+                                    toast.addEventListener('mouseleave',
+                                        Swal.resumeTimer)
+                                }
+                            })
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: 'Record updated successfully!'
+                            })
+                        },
+                        error: function(error) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter',
+                                        Swal.stopTimer)
+                                    toast.addEventListener('mouseleave',
+                                        Swal.resumeTimer)
+                                }
+                            })
+
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: "Something went wrong, please try again!"
+                            })
+                        }
+                    });
+                }
+            });
+
+
+        });
+    }
+
+
+    function fetchDatabaseData(id, table_name) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: './show_more_data.php',
+                method: 'POST',
+                data: {
+                    id,
+                    table_name
+                },
+                success: function(data) {
+                    resolve(data);
+                },
+                error: function(error) {
+                    reject(error);
+                }
+            });
+        });
+    }
+
+
+
+
+
     !(function e() {
         let n = document.getElementById("searchInput"),
             t = document.getElementById("startButton");
