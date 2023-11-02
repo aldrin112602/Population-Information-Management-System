@@ -890,6 +890,7 @@
 
     <script>
     'use strict'
+
     function expandCamelCase(input) {
         return input.replace(/([A-Z])/g, ' $1')
             .replace(/^./, function(str) {
@@ -904,6 +905,8 @@
             let keyPairs = Object.entries(data[0])
             let form_template = `<form id="editForm" class="swal2-form text-left">
             <h5 class="fs-4 text-center">More details</h5>
+            <input type="hidden" name="table_name" value="${table_name}">
+            <input type="hidden" name="id" value="${id}">
             `;
             for (const [k, v] of keyPairs) {
                 if (!v || ['unique_id', 'id'].includes(k)) continue
@@ -944,6 +947,10 @@
                                 icon: 'success',
                                 title: 'Record updated successfully!'
                             })
+
+                            setTimeout(() => {
+                                location.reload()
+                            }, 2000);
                         },
                         error: function(error) {
                             const Toast = Swal.mixin({
