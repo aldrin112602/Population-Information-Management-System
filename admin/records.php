@@ -412,7 +412,12 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}'", "survey_form_records_husband");
+
+                                 $families_page_number = (int)($_GET['families_page'] ?? 1);
+                                 
+                                 $limit = 5;
+                                 $initial_page = ($families_page_number - 1) * $limit; 
+                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' LIMIT $initial_page, $limit", "survey_form_records_husband");
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -474,22 +479,22 @@
                         <nav class="d-flex align-items-center justify-content-end py-3">
                             <ul class="pagination gap-0">
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
-                                    if ($household_page_number > 1) {
-                                        $household_page_number--;
+                                    <a class="page-link bg-primary" href="?families_page=<?php 
+                                    if ($families_page_number > 1) {
+                                        $families_page_number--;
                                     }
-                                    echo $household_page_number;
+                                    echo $families_page_number;
                                     ?>">Previous</a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
-                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    <a class="page-link bg-primary" href="?families_page=<?php echo $families_page_number; ?>">
+                                        <?php echo $_GET['families_page'] ?? $families_page_number ?>
                                     </a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
-                                    $household_page_number++;
-                                    echo $household_page_number;
+                                    <a class="page-link bg-primary" href="?families_page=<?php 
+                                    $families_page_number++;
+                                    echo $families_page_number;
                                     ?>">Next</a>
                                 </li>
                             </ul>
@@ -511,7 +516,12 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}'", "survey_form_records_husband");
+
+                                 $husband_page_number = (int)($_GET['husband_page'] ?? 1);
+                                 
+                                 $limit = 5;
+                                 $initial_page = ($husband_page_number - 1) * $limit; 
+                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' LIMIT $initial_page, $limit", "survey_form_records_husband");
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -573,22 +583,22 @@
                         <nav class="d-flex align-items-center justify-content-end py-3">
                             <ul class="pagination gap-0">
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
-                                    if ($household_page_number > 1) {
-                                        $household_page_number--;
+                                    <a class="page-link bg-primary" href="?husband_page=<?php 
+                                    if ($husband_page_number > 1) {
+                                        $husband_page_number--;
                                     }
-                                    echo $household_page_number;
+                                    echo $husband_page_number;
                                     ?>">Previous</a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
-                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    <a class="page-link bg-primary" href="?husband_page=<?php echo $husband_page_number; ?>">
+                                        <?php echo $_GET['husband_page'] ?? $husband_page_number ?>
                                     </a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
-                                    $household_page_number++;
-                                    echo $household_page_number;
+                                    <a class="page-link bg-primary" href="?husband_page=<?php 
+                                    $husband_page_number++;
+                                    echo $husband_page_number;
                                     ?>">Next</a>
                                 </li>
                             </ul>
@@ -609,7 +619,12 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}'", "survey_form_records_wife");
+
+                                 $wife_page_number = (int)($_GET['wife_page'] ?? 1);
+                                 
+                                 $limit = 5;
+                                 $initial_page = ($wife_page_number - 1) * $limit; 
+                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' LIMIT $initial_page, $limit", "survey_form_records_wife");
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -672,22 +687,22 @@
                         <nav class="d-flex align-items-center justify-content-end py-3">
                             <ul class="pagination gap-0">
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
-                                    if ($household_page_number > 1) {
-                                        $household_page_number--;
+                                    <a class="page-link bg-primary" href="?wife_page=<?php 
+                                    if ($wife_page_number > 1) {
+                                        $wife_page_number--;
                                     }
-                                    echo $household_page_number;
+                                    echo $wife_page_number;
                                     ?>">Previous</a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
-                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    <a class="page-link bg-primary" href="?wife_page=<?php echo $wife_page_number; ?>">
+                                        <?php echo $_GET['wife_page'] ?? $wife_page_number ?>
                                     </a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
-                                    $household_page_number++;
-                                    echo $household_page_number;
+                                    <a class="page-link bg-primary" href="?wife_page=<?php 
+                                    $wife_page_number++;
+                                    echo $wife_page_number;
                                     ?>">Next</a>
                                 </li>
                             </ul>
@@ -708,7 +723,12 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}'", "survey_form_records_children");
+
+                                 $children_page_number = (int)($_GET['children_page'] ?? 1);
+                                 
+                                 $limit = 5;
+                                 $initial_page = ($children_page_number - 1) * $limit; 
+                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' LIMIT $initial_page, $limit", "survey_form_records_children");
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -770,22 +790,22 @@
                         <nav class="d-flex align-items-center justify-content-end py-3">
                             <ul class="pagination gap-0">
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
-                                    if ($household_page_number > 1) {
-                                        $household_page_number--;
+                                    <a class="page-link bg-primary" href="?children_page=<?php 
+                                    if ($children_page_number > 1) {
+                                        $children_page_number--;
                                     }
-                                    echo $household_page_number;
+                                    echo $children_page_number;
                                     ?>">Previous</a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
-                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    <a class="page-link bg-primary" href="?children_page=<?php echo $children_page_number; ?>">
+                                        <?php echo $_GET['children_page'] ?? $children_page_number ?>
                                     </a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
-                                    $household_page_number++;
-                                    echo $household_page_number;
+                                    <a class="page-link bg-primary" href="?children_page=<?php 
+                                    $children_page_number++;
+                                    echo $children_page_number;
                                     ?>">Next</a>
                                 </li>
                             </ul>
@@ -806,7 +826,13 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}'", "survey_form_records_household_member");
+                                 
+
+                                 $otherhousehold_page_number = (int)($_GET['otherhousehold_page'] ?? 1);
+                                 
+                                 $limit = 5;
+                                 $initial_page = ($otherhousehold_page_number - 1) * $limit; 
+                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' LIMIT $initial_page, $limit", "survey_form_records_household_member");
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -868,22 +894,22 @@
                         <nav class="d-flex align-items-center justify-content-end py-3">
                             <ul class="pagination gap-0">
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
-                                    if ($household_page_number > 1) {
-                                        $household_page_number--;
+                                    <a class="page-link bg-primary" href="?otherhousehold_page=<?php 
+                                    if ($otherhousehold_page_number > 1) {
+                                        $otherhousehold_page_number--;
                                     }
-                                    echo $household_page_number;
+                                    echo $otherhousehold_page_number;
                                     ?>">Previous</a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
-                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    <a class="page-link bg-primary" href="?otherhousehold_page=<?php echo $otherhousehold_page_number; ?>">
+                                        <?php echo $_GET['otherhousehold_page'] ?? $otherhousehold_page_number ?>
                                     </a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
-                                    $household_page_number++;
-                                    echo $household_page_number;
+                                    <a class="page-link bg-primary" href="?otherhousehold_page=<?php 
+                                    $otherhousehold_page_number++;
+                                    echo $otherhousehold_page_number;
                                     ?>">Next</a>
                                 </li>
                             </ul>
