@@ -309,7 +309,11 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' AND belongs_to IS NULL OR belongs_to = ''", "survey_form_records_husband");
+                                 $household_page_number = (int)($_GET['household_page'] ?? 1);
+                                 
+                                 $limit = 5;
+                                 $initial_page = ($household_page_number - 1) * $limit; 
+                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' AND belongs_to IS NULL OR belongs_to = '' LIMIT $initial_page, $limit", "survey_form_records_husband");
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -368,6 +372,29 @@
                                 ?>
                             </tbody>
                         </table>
+                        <nav class="d-flex align-items-center justify-content-end py-3">
+                            <ul class="pagination gap-0">
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    if ($household_page_number > 1) {
+                                        $household_page_number--;
+                                    }
+                                    echo $household_page_number;
+                                    ?>">Previous</a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
+                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    </a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    $household_page_number++;
+                                    echo $household_page_number;
+                                    ?>">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     <div class="table-responsive mt-3" style="display: none;" id="container2">
 
@@ -444,6 +471,29 @@
                                 ?>
                             </tbody>
                         </table>
+                        <nav class="d-flex align-items-center justify-content-end py-3">
+                            <ul class="pagination gap-0">
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    if ($household_page_number > 1) {
+                                        $household_page_number--;
+                                    }
+                                    echo $household_page_number;
+                                    ?>">Previous</a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
+                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    </a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    $household_page_number++;
+                                    echo $household_page_number;
+                                    ?>">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     <div class="table-responsive mt-3" style="display: none;" id="container3">
 
@@ -520,6 +570,29 @@
                                 ?>
                             </tbody>
                         </table>
+                        <nav class="d-flex align-items-center justify-content-end py-3">
+                            <ul class="pagination gap-0">
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    if ($household_page_number > 1) {
+                                        $household_page_number--;
+                                    }
+                                    echo $household_page_number;
+                                    ?>">Previous</a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
+                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    </a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    $household_page_number++;
+                                    echo $household_page_number;
+                                    ?>">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     <div class="table-responsive mt-3" style="display: none;" id="container4">
                         <h5 class="fw-bold text-primary">Wife data:</h5>
@@ -596,6 +669,29 @@
 
                             </tbody>
                         </table>
+                        <nav class="d-flex align-items-center justify-content-end py-3">
+                            <ul class="pagination gap-0">
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    if ($household_page_number > 1) {
+                                        $household_page_number--;
+                                    }
+                                    echo $household_page_number;
+                                    ?>">Previous</a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
+                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    </a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    $household_page_number++;
+                                    echo $household_page_number;
+                                    ?>">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     <div class="table-responsive mt-3" style="display: none;" id="container5">
                         <h5 class="fw-bold text-primary">Children data:</h5>
@@ -671,6 +767,29 @@
                                 ?>
                             </tbody>
                         </table>
+                        <nav class="d-flex align-items-center justify-content-end py-3">
+                            <ul class="pagination gap-0">
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    if ($household_page_number > 1) {
+                                        $household_page_number--;
+                                    }
+                                    echo $household_page_number;
+                                    ?>">Previous</a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
+                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    </a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    $household_page_number++;
+                                    echo $household_page_number;
+                                    ?>">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     <div class="table-responsive mt-3" style="display: none;" id="container6">
                         <h5 class="fw-bold text-primary">Other household data:</h5>
@@ -746,6 +865,29 @@
                                 ?>
                             </tbody>
                         </table>
+                        <nav class="d-flex align-items-center justify-content-end py-3">
+                            <ul class="pagination gap-0">
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    if ($household_page_number > 1) {
+                                        $household_page_number--;
+                                    }
+                                    echo $household_page_number;
+                                    ?>">Previous</a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
+                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    </a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    $household_page_number++;
+                                    echo $household_page_number;
+                                    ?>">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                     <div id="tbl-last" style="display: none;" class="mt-4 table-responsive">
                         <h5 class="fw-bold text-primary">Survey form records</h5>
