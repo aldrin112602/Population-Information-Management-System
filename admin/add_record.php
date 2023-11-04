@@ -221,6 +221,7 @@
                             <label class="">Birth Place</label>
                             <input required type="text" class="form-control form-control-lg" name="birthPlace[]">
                         </div>
+                        
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Educational attainment</label>
                             <select required class="form-select form-select-lg" name="educationalAttainment[]">

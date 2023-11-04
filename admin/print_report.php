@@ -12,6 +12,8 @@
         header('location: ../index.php');
     }
 
+    $barangay = $_GET[ 'barangay' ] ?? null;
+
 ?>
 
 <!DOCTYPE html>
@@ -56,24 +58,294 @@
     main.hidden {
         display: none;
     }
+
+    @import url('https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Spectral&display=swap');
+
+    .dd {
+        font-family: 'Lobster Two', sans-serif;
+        font-size: 30px;
+    }
+
+    .cc {
+        font-family: 'Spectral', serif;
+        font-weight: bold;
+    }
     </style>
 </head>
 
 <body>
-    <main>
+    <main class="px-5">
 
-        <div class="table-responsive mt-3">
-            <h3>Religion of the Couple and Single</h3>
+        <div class="table-responsive mt-3 px-md-5">
+            <p class="text-center fs-5">
+                Republic of the Philippines <br>
+                Province of <?php echo $_SESSION['province'] ?> <br>
+                Municipality of <?php echo $_SESSION['municipality'] ?> <br>
+                <span class="fw-bold dd">Barangay <?php echo $_SESSION['barangay'] ?></span><br>
+                -ooOoo-
+            </p>
+            <h3 class="text-center fw-bold"><i>OFFICE OF THE PUNONG BARANGAY</i></h3>
+            <hr style="padding: 2px; background-color: #000;">
+            <h3 class="text-center text-decoration-underline cc">CONSOLIDATION OF FAMILY PROFILE</h3>
+            <h5 class="text-center">As of <?php echo date('F, Y', strtotime('2023-12-01')) ?></h5>
+            <br>
+            <h5>Barangay: <b><?php echo $_SESSION[ 'barangay' ] ?? '' ?></b></h5>
+            <h5>No of Purok: <b><?php 
+            $query = "
+                SELECT COUNT(*) AS purok_count
+                FROM (
+                    SELECT DISTINCT purok FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'
+                    UNION
+                    SELECT DISTINCT purok FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'
+                    UNION
+                    SELECT DISTINCT purok FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}'
+                    UNION
+                    SELECT DISTINCT purok FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}'
+                ) AS distinct_purok
+            ";
+
+            $result = mysqli_query($conn, $query);
+            $row = mysqli_fetch_assoc($result);
+            $purokCount = $row['purok_count'];
+
+            echo $purokCount;
+            ?></b></h5>
+
+            <table border="0">
+                <tr>
+                    <td width="300">
+                        Total # OF <b>FAMILIES</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php echo getCount( 'survey_form_records_husband', $barangay ) ?>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        Total # OF <b>HOUSEHOLD</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php echo getCount( 'survey_form_records_husband', $barangay ) ?>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        Total # OF <b>MALE</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php   
+                            $query = "
+                                SELECT COUNT(*) AS male_count
+                                FROM (
+                                    SELECT sex FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+                                    UNION ALL
+                                    SELECT sex FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+                                    UNION ALL
+                                    SELECT sex FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+                                ) AS count_sex
+
+                            ";
+
+                            $result = mysqli_query($conn, $query);
+                            $row = mysqli_fetch_assoc($result);
+                            echo $row['male_count'];
+                            ?>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        Total # OF <b>FEMALE</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php   
+                            $query = "
+                                SELECT COUNT(*) AS female_count
+                                FROM (
+                                    SELECT sex FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                                    UNION ALL
+                                    SELECT sex FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                                    UNION ALL
+                                    SELECT sex FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                                ) AS count_sex
+
+                            ";
+
+                            $result = mysqli_query($conn, $query);
+                            $row = mysqli_fetch_assoc($result);
+                            echo $row['female_count'];
+                            ?>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        Total # OF <b>POPULATION</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp; <?php echo getPopulation( $barangay ) ?>
+                        </b>
+                    </td>
+                </tr>
+            </table>
+
+            <h3 class="mt-4 fs-5">&gt; Civil Status of the Couple or Household Owner</h3>
+            <table border="0">
+                <tr>
+                    <td width="300">
+                        <b>MARRIED</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND status = 'Married'", "survey_form_records_husband");
+                            echo count( $rows );
+                            ?>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        <b>SINGLE</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND status = 'Single'", "survey_form_records_husband");
+                            echo count( $rows );
+                            ?>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        <b>WIDOW</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND status = 'Widow'", "survey_form_records_husband");
+                            echo count( $rows );
+                            ?>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        <b>LIVE-IN</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND status = 'Live-in'", "survey_form_records_husband");
+                            echo count( $rows );
+                            ?>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        <b>SEPARATED</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND status = 'Separated'", "survey_form_records_husband");
+                            echo count( $rows );
+                            ?>
+                        </b>
+                    </td>
+                </tr>
+
+            </table>
+
+            <h3 class="mt-4 fs-5">&gt; Educational Attainment</h3>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" style="font-size: 14px;">PUROK</th>
+                        <th scope="col fw-bold" style="font-size: 14px;">NO SCHOOLING</th>
+                        <th scope="col fw-bold" style="font-size: 14px;">ELEMENTARY SCHOOL</th>
+                        <th scope="col fw-bold" style="font-size: 14px;">HIGH SCHOOL</th>
+                        <th scope="col fw-bold" style="font-size: 14px;">VOCATIONAL SCHOOL</th>
+                        <th scope="col fw-bold" style="font-size: 14px;">SOME COLLEGE</th>
+                        <th scope="col fw-bold" style="font-size: 14px;">ASSOCIATE DEGREE</th>
+                        <th scope="col fw-bold" style="font-size: 14px;">BACHELOR'S DEGREE</th>
+                        <th scope="col fw-bold" style="font-size: 14px;">MASTERS DEGREE</th>
+                        <th scope="col fw-bold" style="font-size: 14px;">DOCTORAL DEGREE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                $educ_att = ['no-schooling', 'elementary-school', 'high-school', 'vocational-school', 'some-college', 'associate-degree', 'bachelor-degree', 'master-degree', 'doctoral-degree'];
+
+                for ($i = 0; $i < 6; $i++) {
+                    $unique_id = $_SESSION['unique_id'];
+                    ?>
+                    <tr>
+                        <td><?php echo $i + 1; ?></td>
+                        <?php
+                        $pr = $i + 1;
+                        foreach($educ_att as $att) {
+
+                            $sqlQuery = "SELECT
+                                        COUNT(*) AS total_count
+                                    FROM
+                                    (
+                                        SELECT unique_id FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}' AND purok = $pr AND educationalAttainment = '$att'
+                                        UNION ALL
+                                        SELECT unique_id FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}' AND purok = $pr AND educationalAttainment = '$att'
+                                        UNION ALL
+                                        SELECT unique_id FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}' AND purok = $pr AND educationalAttainment = '$att'
+                                        UNION ALL
+                                        SELECT unique_id FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}' AND purok = $pr AND educationalAttainment = '$att'
+                                    ) AS subquery";
+
+                        $result = mysqli_query($conn, $sqlQuery);
+                        $row = mysqli_fetch_assoc($result);
+                        echo '<td>' . $row['total_count'] . '</td>';
+
+                        }
+
+                        ?>
+                </tr>
+                    <?php
+                }
+                ?>
+
+
+                </tbody>
+
+            </table>
+
             <?php 
                 $sql = "SELECT DISTINCT religion FROM ( 
                     SELECT DISTINCT religion FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'
                     UNION SELECT DISTINCT religion FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'
-                    UNION SELECT DISTINCT religion FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}' ) AS distinct_religion;";
+                    UNION SELECT DISTINCT religion FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}' ) AS distinct_religion";
                 
                 $result = mysqli_query($conn, $sql);
                 
             
             ?>
+            <h3 class="mt-4 fs-4">Religion of the Couple and Single</h3>
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
@@ -83,43 +355,40 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php
-while ($row = mysqli_fetch_assoc($result)) {
-    $religion = $row['religion'];
+                    <?php
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $religion = $row['religion'];
+                        $unique_id = mysqli_real_escape_string($conn, $_SESSION['unique_id']);
 
-    // Count rows in survey_form_records_husband and survey_form_records_wife
-    $queryHusbandWife = "
-        SELECT 'Husband/Wife' AS source, COUNT(*) AS count
-        FROM survey_form_records_husband
-        WHERE religion = '$religion'
-        UNION ALL
-        SELECT 'Children' AS source, COUNT(*) AS count
-        FROM survey_form_records_children
-        WHERE religion = '$religion'
-    ";
-    $resultHusbandWife = mysqli_query($conn, $queryHusbandWife);
+                    $queryHusbandWife = "SELECT source, COUNT(religion) as count FROM (
+                        SELECT 'Husband/Wife' as source, religion FROM survey_form_records_husband WHERE unique_id = '$unique_id' AND religion = '$religion'
+                        UNION ALL
+                        SELECT 'Husband/Wife' as source, religion FROM survey_form_records_wife WHERE unique_id = '$unique_id' AND religion = '$religion'
+                        UNION ALL
+                        SELECT 'Children' as source, religion FROM survey_form_records_children WHERE unique_id = '$unique_id' AND religion = '$religion'
+                    ) AS combined_religion_counts GROUP BY source";
 
-    // Process the results
-    $counts = array();
-    while ($countRow = mysqli_fetch_assoc($resultHusbandWife)) {
-        $counts[$countRow['source']] = $countRow['count'];
-    }
+                        $resultHusbandWife = mysqli_query($conn, $queryHusbandWife);
 
-    ?>
-    <tr>
-        <td>
-            <?php echo $religion; ?>
-        </td>
-        <td>
-            <?php echo isset($counts['Husband/Wife']) ? $counts['Husband/Wife'] : 0; ?>
-        </td>
-        <td>
-            <?php echo isset($counts['Children']) ? $counts['Children'] : 0; ?>
-        </td>
-    </tr>
-    <?php
-}
+                        $counts = array();
+                        while ($countRow = mysqli_fetch_assoc($resultHusbandWife)) {
+                            $counts[$countRow['source']] = $countRow['count'];
+                        }
 
+                        ?>
+                    <tr>
+                        <td>
+                            <?php echo $religion; ?>
+                        </td>
+                        <td>
+                            <?php echo isset($counts['Husband/Wife']) ? $counts['Husband/Wife'] : 0; ?>
+                        </td>
+                        <td>
+                            <?php echo isset($counts['Children']) ? $counts['Children'] : 0; ?>
+                        </td>
+                    </tr>
+                    <?php
+                    }
                 ?>
                 </tbody>
 

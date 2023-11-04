@@ -19,7 +19,7 @@ fputcsv( $csvFile, [ '' ] );
 fputcsv( $csvFile, [ 'Month: ',  date( 'F' ) ] );
 fputcsv( $csvFile, [ 'Year: ',  date( 'Y' ) ] );
 fputcsv( $csvFile, [ '' ] );
-
+ 
 $query = "SELECT DISTINCT purok
 FROM (
     SELECT purok FROM survey_form_records_household_member WHERE barangay = '$barangay'
