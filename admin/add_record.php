@@ -1028,6 +1028,7 @@
                                     Caretaker
                                 </label>
                             </div>
+                            
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
                                     value="Permanent - concrete">

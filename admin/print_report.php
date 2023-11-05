@@ -276,6 +276,10 @@
 
             </table>
 
+
+
+
+
             <h3 class="mt-4 fs-5">&gt; Educational Attainment</h3>
             <table class="table table-hover table-striped">
                 <thead>
@@ -335,6 +339,154 @@
 
             </table>
 
+            <h3 class="mt-4 fs-5">&gt; Occupation of Couple and Children</h3>
+            <?php 
+                $sql = "SELECT DISTINCT occupation FROM ( 
+                    SELECT DISTINCT occupation FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'
+                    UNION SELECT DISTINCT occupation FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'
+                    UNION SELECT DISTINCT occupation FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}' ) AS distinct_occupation";
+                
+                $result = mysqli_query($conn, $sql);
+            ?>
+
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold">OCCUPATION</th>
+                        <th scope="col fw-bold">HUSBAND</th>
+                        <th scope="col fw-bold">WIFE</th>
+                        <th scope="col fw-bold">CHILDREN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $occupation = $row['occupation'];
+                        $unique_id = mysqli_real_escape_string($conn, $_SESSION['unique_id']);
+
+                        $queryHusbandWife = "SELECT source, COUNT(occupation) as count FROM (
+                            SELECT 'Husband' as source, occupation FROM survey_form_records_husband WHERE unique_id = '$unique_id' AND occupation = '$occupation'
+                            UNION ALL
+                            SELECT 'Wife' as source, occupation FROM survey_form_records_wife WHERE unique_id = '$unique_id' AND occupation = '$occupation'
+                            UNION ALL
+                            SELECT 'Children' as source, occupation FROM survey_form_records_children WHERE unique_id = '$unique_id' AND occupation = '$occupation'
+                        ) AS combined_occupation_counts GROUP BY source";
+
+                        $resultHusbandWife = mysqli_query($conn, $queryHusbandWife);
+
+                        $counts = array();
+                        while ($countRow = mysqli_fetch_assoc($resultHusbandWife)) {
+                            $counts[$countRow['source']] = $countRow['count'];
+                        }
+
+                        ?>
+                    <tr>
+                        <td>
+                            <?php echo $occupation; ?>
+                        </td>
+                        <td>
+                            <?php echo isset($counts['Husband']) ? $counts['Husband'] : 0; ?>
+                        </td>
+                        <td>
+                            <?php echo isset($counts['Wife']) ? $counts['Wife'] : 0; ?>
+                        </td>
+                        <td>
+                            <?php echo isset($counts['Children']) ? $counts['Children'] : 0; ?>
+                        </td>
+                    </tr>
+                    <?php
+                    }
+                ?>
+                </tbody>
+
+            </table>
+
+            
+
+            <h3 class="mt-4 fs-5">&gt; Place of Work of the Couple and Single <br>
+                <span class="text-decoration-underline ml-5 pl-5">WITHIN THE PHILIPPINES</span>
+            </h3>
+
+            <table border="0">
+                <tr>
+                    <td width="300">
+                        <b>Husband</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND occupation NOT IN ('', 'NA', 'na', 'n/a', 'n/a', 'N/a')", "survey_form_records_husband");
+                            echo count( $rows );
+                            ?>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        <b>Wife</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND occupation NOT IN ('', 'NA', 'na', 'n/a', 'n/a', 'N/a')", "survey_form_records_wife");
+                            echo count( $rows );
+                            ?>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        <b>Children</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND occupation NOT IN ('', 'NA', 'na', 'n/a', 'n/a', 'N/a')", "survey_form_records_children");
+                            echo count( $rows );
+                            ?>
+                        </b>
+                    </td>
+                </tr>
+            </table>
+            <span class="text-decoration-underline ml-5 pl-5 fs-5">ABROAD</span>
+            <table border="0">
+                <tr>
+                    <td width="300">
+                        <b>Husband</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;0
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        <b>Wife</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;0
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="300">
+                        <b>Children</b>
+                    </td>
+                    <td width="200">
+                        <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;0
+                        </b>
+                    </td>
+                </tr>
+            </table>
+
+
+            <h3 class="mt-4 fs-5">&gt;Religion of the Couple and Single</h3>
             <?php 
                 $sql = "SELECT DISTINCT religion FROM ( 
                     SELECT DISTINCT religion FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'
@@ -345,7 +497,6 @@
                 
             
             ?>
-            <h3 class="mt-4 fs-4">Religion of the Couple and Single</h3>
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
@@ -390,6 +541,795 @@
                     <?php
                     }
                 ?>
+                </tbody>
+
+            </table>
+
+
+
+            <h3 class="mt-4 fs-5 fw-bold">&gt; Ethnic Group<br>
+                    <span class="text-decoration-underline ml-5 pl-5">HUSBAND</span>
+            </h3>
+            <?php 
+                $sql = "SELECT DISTINCT ethnicGroup FROM ( 
+                    SELECT DISTINCT ethnicGroup FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}') AS distinct_ethnicGroup";
+                
+                $result = mysqli_query($conn, $sql);
+                
+            
+            ?>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $ethnicGroup = $row['ethnicGroup'];
+                        $unique_id = mysqli_real_escape_string($conn, $_SESSION['unique_id']);
+
+                        $queryHusbandWife = "SELECT source, COUNT(ethnicGroup) as count FROM (
+                        SELECT 'ethnicGroup' as source, ethnicGroup FROM survey_form_records_husband WHERE unique_id = '$unique_id' AND ethnicGroup = '$ethnicGroup'
+                    ) AS combined_ethnicGroup_counts GROUP BY source";
+
+                        $resultHusbandWife = mysqli_query($conn, $queryHusbandWife);
+
+                        $counts = array();
+                        while ($countRow = mysqli_fetch_assoc($resultHusbandWife)) {
+                            $counts[$countRow['source']] = $countRow['count'];
+                        }
+
+                        ?>
+                    <tr>
+                        <td>
+                            <?php echo $ethnicGroup; ?>
+                        </td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php echo isset($counts['ethnicGroup']) ? $counts['ethnicGroup'] : 0; ?>
+                        </b>
+                        </td>
+                        
+                    </tr>
+                    <?php
+                    }
+                ?>
+                </tbody>
+
+            </table>
+
+
+            <h3 class="mt-4 fs-5 fw-bold">
+                    <span class="text-decoration-underline ml-5 pl-5">WIFE</span>
+            </h3>
+            <?php 
+                $sql = "SELECT DISTINCT ethnicGroup FROM ( 
+                    SELECT DISTINCT ethnicGroup FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}') AS distinct_ethnicGroup";
+                
+                $result = mysqli_query($conn, $sql);
+                
+            
+            ?>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $ethnicGroup = $row['ethnicGroup'];
+                        $unique_id = mysqli_real_escape_string($conn, $_SESSION['unique_id']);
+
+                        $queryWifeWife = "SELECT source, COUNT(ethnicGroup) as count FROM (
+                        SELECT 'ethnicGroup' as source, ethnicGroup FROM survey_form_records_wife WHERE unique_id = '$unique_id' AND ethnicGroup = '$ethnicGroup'
+                    ) AS combined_ethnicGroup_counts GROUP BY source";
+
+                        $resultWifeWife = mysqli_query($conn, $queryWifeWife);
+
+                        $counts = array();
+                        while ($countRow = mysqli_fetch_assoc($resultWifeWife)) {
+                            $counts[$countRow['source']] = $countRow['count'];
+                        }
+
+                        ?>
+                    <tr>
+                        <td>
+                            <?php echo $ethnicGroup; ?>
+                        </td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php echo isset($counts['ethnicGroup']) ? $counts['ethnicGroup'] : 0; ?>
+                        </b>
+                        </td>
+                        
+                    </tr>
+                    <?php
+                    }
+                ?>
+                </tbody>
+
+            </table>
+
+            <h3 class="mt-4 fs-5 fw-bold">&gt; Family Planning/Method used by the Couple</h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">Artificial Family Planning Method</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                                $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND artificialFamilyPlanningMethod NOT IN (NULL, '')");
+
+                                
+                                $stmt->bind_param("s", $_SESSION['unique_id']);
+
+                                
+                                $stmt->execute();
+
+                                
+                                $result = $stmt->get_result();
+
+                                
+                                $count = $result->num_rows;
+
+                                
+                                $stmt->close();
+                               
+
+                                
+                                echo $count;
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Permanent Family Planning Method</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                                $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND permanentFamilyPlanningMethod NOT IN (NULL, '')");
+                                $stmt->bind_param("s", $_SESSION['unique_id']);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                $count = $result->num_rows;
+                                $stmt->close();
+                                echo $count;
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Natural Family Planning Method</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                                $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND naturalFamilyPlanningMethod NOT IN (NULL, '')");
+
+                                
+                                $stmt->bind_param("s", $_SESSION['unique_id']);
+
+                                
+                                $stmt->execute();
+
+                                
+                                $result = $stmt->get_result();
+
+                                
+                                $count = $result->num_rows;
+
+                                
+                                $stmt->close();
+                               
+
+                                
+                                echo $count;
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold"><i>No. of Couple Attending RPM</i></td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND attendedResponsibleParentingMovementClass = 'Yes'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+
+                            </b>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+
+            <h3 class="mt-4 fs-5 fw-bold">&gt; Household Unit Occupied<br>
+                    <span class="text-decoration-underline ml-5 pl-4">OWNERSHIP</span>
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">Owner</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfHousingUnitOccupied = 'Owned'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Rented</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfHousingUnitOccupied = 'Rented'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Caretaker</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfHousingUnitOccupied = 'Caretaker'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+
+            </table>
+
+
+
+            <h3 class="mt-4 fs-5 fw-bold text-decoration-underline ml-5 pl-4">HOUSE STRUCTURE<br>
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td class="fw-bold">Permanent/Concrete</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Permanent - concrete'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Temporary/Wooden</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Temporary - wooden'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Makeshift/Cogon/Bamboo, <br>Barong-barong</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Makeshift - cogon/bamboo'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+
+            </table>
+
+            <h3 class="mt-4 fs-5 fw-bold text-decoration-underline ml-5 pl-4">HOUSE TYPE<br>
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td class="fw-bold">Single</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Single'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Duplex</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Duplex'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Commercial/Industrial/Agricultural</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Commercial/industrial/agricultural'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="fw-bold">Apartment</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Apartment/accessoria/condominium'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+
+            </table>
+
+            <h3 class="mt-4 fs-5 fw-bold ">Type of House Light
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td class="fw-bold">Electricity</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfHouseLightUsed = 'Electricity'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">OTHERS</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfHouseLightUsed <> ''");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+
+            </table>
+
+            <h3 class="mt-4 fs-5 fw-bold ">Type of Water Supply
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td class="fw-bold">TAP</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Tap - (Inside house)'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">SPRING</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Spring'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">DUG WELL</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Dug Well'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">DEEP WELL</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Deep Well'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">PUBLIC WELL</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Public Well'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">PUBLIC FAUCET</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Public Faucet'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">NONE</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'None'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+
+            </table>
+
+
+            <h3 class="mt-4 fs-5 fw-bold ">Type of Toilet
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td class="fw-bold">WATER-SEALED</td>
+                        <td>
+                            <b>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Tap - (Inside house)'");
+                            $stmt->bind_param("s", $_SESSION['unique_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            $count = $result->num_rows;
+
+                            $stmt->close();
+                            
+
+                            echo $count;
+
+                            ?>
+                            </b>
+                        </td>
+                    </tr>
+                    
+                    
                 </tbody>
 
             </table>
