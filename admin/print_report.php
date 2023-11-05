@@ -329,7 +329,7 @@
                         }
 
                         ?>
-                </tr>
+                    </tr>
                     <?php
                 }
                 ?>
@@ -401,7 +401,7 @@
 
             </table>
 
-            
+
 
             <h3 class="mt-4 fs-5">&gt; Place of Work of the Couple and Single <br>
                 <span class="text-decoration-underline ml-5 pl-5">WITHIN THE PHILIPPINES</span>
@@ -548,7 +548,7 @@
 
 
             <h3 class="mt-4 fs-5 fw-bold">&gt; Ethnic Group<br>
-                    <span class="text-decoration-underline ml-5 pl-5">HUSBAND</span>
+                <span class="text-decoration-underline ml-5 pl-5">HUSBAND</span>
             </h3>
             <?php 
                 $sql = "SELECT DISTINCT ethnicGroup FROM ( 
@@ -589,11 +589,11 @@
                         </td>
                         <td>
                             <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php echo isset($counts['ethnicGroup']) ? $counts['ethnicGroup'] : 0; ?>
-                        </b>
+                                - &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo isset($counts['ethnicGroup']) ? $counts['ethnicGroup'] : 0; ?>
+                            </b>
                         </td>
-                        
+
                     </tr>
                     <?php
                     }
@@ -604,7 +604,7 @@
 
 
             <h3 class="mt-4 fs-5 fw-bold">
-                    <span class="text-decoration-underline ml-5 pl-5">WIFE</span>
+                <span class="text-decoration-underline ml-5 pl-5">WIFE</span>
             </h3>
             <?php 
                 $sql = "SELECT DISTINCT ethnicGroup FROM ( 
@@ -645,11 +645,11 @@
                         </td>
                         <td>
                             <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php echo isset($counts['ethnicGroup']) ? $counts['ethnicGroup'] : 0; ?>
-                        </b>
+                                - &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo isset($counts['ethnicGroup']) ? $counts['ethnicGroup'] : 0; ?>
+                            </b>
                         </td>
-                        
+
                     </tr>
                     <?php
                     }
@@ -666,115 +666,61 @@
                         <th scope="col fw-bold" width="300">&nbsp;</th>
                     </tr>
                 </thead>
+                <?php
+                function getCountWithCondition($conn, $unique_id, $field, $condition) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND $field $condition");
+                    $stmt->bind_param("s", $unique_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+
+                ?>
+
                 <tbody>
                     <tr>
                         <td class="fw-bold">Artificial Family Planning Method</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-                                $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND artificialFamilyPlanningMethod NOT IN (NULL, '')");
-
-                                
-                                $stmt->bind_param("s", $_SESSION['unique_id']);
-
-                                
-                                $stmt->execute();
-
-                                
-                                $result = $stmt->get_result();
-
-                                
-                                $count = $result->num_rows;
-
-                                
-                                $stmt->close();
-                               
-
-                                
-                                echo $count;
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountWithCondition($conn, $unique_id, 'artificialFamilyPlanningMethod', 'NOT IN (NULL, "")'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Permanent Family Planning Method</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-                                $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND permanentFamilyPlanningMethod NOT IN (NULL, '')");
-                                $stmt->bind_param("s", $_SESSION['unique_id']);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
-                                $count = $result->num_rows;
-                                $stmt->close();
-                                echo $count;
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountWithCondition($conn, $unique_id, 'permanentFamilyPlanningMethod', 'NOT IN (NULL, "")'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Natural Family Planning Method</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-                                $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND naturalFamilyPlanningMethod NOT IN (NULL, '')");
-
-                                
-                                $stmt->bind_param("s", $_SESSION['unique_id']);
-
-                                
-                                $stmt->execute();
-
-                                
-                                $result = $stmt->get_result();
-
-                                
-                                $count = $result->num_rows;
-
-                                
-                                $stmt->close();
-                               
-
-                                
-                                echo $count;
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountWithCondition($conn, $unique_id, 'naturalFamilyPlanningMethod', 'NOT IN (NULL, "")'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold"><i>No. of Couple Attending RPM</i></td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND attendedResponsibleParentingMovementClass = 'Yes'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountWithCondition($conn, $unique_id, 'attendedResponsibleParentingMovementClass', '= "Yes"'); ?></b>
                         </td>
                     </tr>
                 </tbody>
+
 
             </table>
 
 
             <h3 class="mt-4 fs-5 fw-bold">&gt; Household Unit Occupied<br>
-                    <span class="text-decoration-underline ml-5 pl-4">OWNERSHIP</span>
+                <span class="text-decoration-underline ml-5 pl-4">OWNERSHIP</span>
             </h3>
             <table border="0">
                 <thead>
@@ -783,78 +729,47 @@
                         <th scope="col fw-bold" width="300">&nbsp;</th>
                     </tr>
                 </thead>
+                <?php
+                function getCountByHousingType($conn, $unique_id, $housingType) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND typeOfHousingUnitOccupied = ?");
+                    $stmt->bind_param("ss", $unique_id, $housingType);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
                 <tbody>
                     <tr>
                         <td class="fw-bold">Owner</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfHousingUnitOccupied = 'Owned'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByHousingType($conn, $unique_id, 'Owned'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Rented</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfHousingUnitOccupied = 'Rented'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByHousingType($conn, $unique_id, 'Rented'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Caretaker</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfHousingUnitOccupied = 'Caretaker'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByHousingType($conn, $unique_id, 'Caretaker'); ?></b>
                         </td>
                     </tr>
-                    
                 </tbody>
+
 
             </table>
 
@@ -869,79 +784,47 @@
                         <th scope="col fw-bold" width="300">&nbsp;</th>
                     </tr>
                 </thead>
-                <tbody>
+                <?php
+                function getCountBySubHousingType($conn, $unique_id, $subHousingType) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = ?");
+                    $stmt->bind_param("ss", $unique_id, $subHousingType);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
                     
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
                     <tr>
                         <td class="fw-bold">Permanent/Concrete</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Permanent - concrete'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountBySubHousingType($conn, $unique_id, 'Permanent - concrete'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Temporary/Wooden</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Temporary - wooden'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountBySubHousingType($conn, $unique_id, 'Temporary - wooden'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Makeshift/Cogon/Bamboo, <br>Barong-barong</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Makeshift - cogon/bamboo'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountBySubHousingType($conn, $unique_id, 'Makeshift - cogon/bamboo'); ?></b>
                         </td>
                     </tr>
-                    
                 </tbody>
+
 
             </table>
 
@@ -954,103 +837,54 @@
                         <th scope="col fw-bold" width="300">&nbsp;</th>
                     </tr>
                 </thead>
-                <tbody>
+                <?php
+                function getCountSubHousingType($conn, $unique_id, $subHousingType) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = ?");
+                    $stmt->bind_param("ss", $unique_id, $subHousingType);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
                     
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
                     <tr>
                         <td class="fw-bold">Single</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Single'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountSubHousingType($conn, $unique_id, 'Single'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Duplex</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Duplex'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountSubHousingType($conn, $unique_id, 'Duplex'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Commercial/Industrial/Agricultural</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Commercial/industrial/agricultural'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountSubHousingType($conn, $unique_id, 'Commercial/industrial/agricultural'); ?></b>
                         </td>
                     </tr>
-
                     <tr>
                         <td class="fw-bold">Apartment</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = 'Apartment/accessoria/condominium'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountSubHousingType($conn, $unique_id, 'Apartment/accessoria/condominium'); ?></b>
                         </td>
                     </tr>
-                    
                 </tbody>
+
 
             </table>
 
@@ -1063,56 +897,40 @@
                         <th scope="col fw-bold" width="300">&nbsp;</th>
                     </tr>
                 </thead>
-                <tbody>
+                <?php
+                function getCountByHouseLightType($conn, $unique_id, $houseLightType) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND typeOfHouseLightUsed = ?");
+                    $stmt->bind_param("ss", $unique_id, $houseLightType);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
                     
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
                     <tr>
                         <td class="fw-bold">Electricity</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfHouseLightUsed = 'Electricity'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByHouseLightType($conn, $unique_id, 'Electricity'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">OTHERS</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfHouseLightUsed <> ''");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByHouseLightType($conn, $unique_id, ''); ?></b>
                         </td>
                     </tr>
-                    
                 </tbody>
+
 
             </table>
 
@@ -1125,171 +943,75 @@
                         <th scope="col fw-bold" width="300">&nbsp;</th>
                     </tr>
                 </thead>
-                <tbody>
+                <?php
+                function getCountByWaterSupplyType($conn, $unique_id, $waterSupplyType) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = ?");
+                    $stmt->bind_param("ss", $unique_id, $waterSupplyType);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
                     
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
                     <tr>
                         <td class="fw-bold">TAP</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Tap - (Inside house)'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByWaterSupplyType($conn, $unique_id, 'Tap - (Inside house)'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">SPRING</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Spring'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByWaterSupplyType($conn, $unique_id, 'Spring'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">DUG WELL</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Dug Well'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByWaterSupplyType($conn, $unique_id, 'Dug Well'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">DEEP WELL</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Deep Well'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByWaterSupplyType($conn, $unique_id, 'Deep Well'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">PUBLIC WELL</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Public Well'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByWaterSupplyType($conn, $unique_id, 'Public Well'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">PUBLIC FAUCET</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Public Faucet'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByWaterSupplyType($conn, $unique_id, 'Public Faucet'); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">NONE</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'None'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByWaterSupplyType($conn, $unique_id, 'None'); ?></b>
                         </td>
                     </tr>
-                    
                 </tbody>
+
 
             </table>
 
@@ -1303,36 +1025,567 @@
                         <th scope="col fw-bold" width="300">&nbsp;</th>
                     </tr>
                 </thead>
-                <tbody>
+                <?php
+                function getCountByToiletType($conn, $unique_id, $toiletType) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND typeOfToilet = ?");
+                    $stmt->bind_param("ss", $unique_id, $toiletType);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
                     
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
                     <tr>
                         <td class="fw-bold">WATER-SEALED</td>
                         <td>
-                            <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-
-                            $stmt = $conn->prepare("SELECT COUNT(*) FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = 'Tap - (Inside house)'");
-                            $stmt->bind_param("s", $_SESSION['unique_id']);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-
-                            $count = $result->num_rows;
-
-                            $stmt->close();
-                            
-
-                            echo $count;
-
-                            ?>
-                            </b>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByToiletType($conn, $unique_id, 'Water-sealed'); ?></b>
                         </td>
                     </tr>
-                    
-                    
+                    <tr>
+                        <td class="fw-bold">WATER-SEALED SHARED W/OTHER HOUSEHOLD</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByToiletType($conn, $unique_id, 'Water-sealed shared with other HH'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">CLOSED PIT</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByToiletType($conn, $unique_id, 'Closed Pit'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">OPEN PIT</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByToiletType($conn, $unique_id, 'Open Pit'); ?></b>
+                        </td>
+                    </tr>
                 </tbody>
 
+
             </table>
+
+
+            <h3 class="mt-4 fs-5 fw-bold ">Type of Garbage Disposal
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <?php
+                function getCountByGarbageDisposalType($conn, $unique_id, $garbageDisposalType) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND typeOfGarbageDisposal = ?");
+                    $stmt->bind_param("ss", $unique_id, $garbageDisposalType);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">PICKED UP BY GARBAGE TRUCK</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByGarbageDisposalType($conn, $unique_id, 'Picked By Garbage Truck'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">WASTE SEGREGATION</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByGarbageDisposalType($conn, $unique_id, 'Waste Segregation'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">COMPOSTING</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByGarbageDisposalType($conn, $unique_id, 'Composting'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">BURNING</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByGarbageDisposalType($conn, $unique_id, 'Burning'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">BURYING</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByGarbageDisposalType($conn, $unique_id, 'Burying'); ?></b>
+                        </td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
+
+
+            <h3 class="mt-4 fs-5 fw-bold ">Communication Facility
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <?php
+                function getCountByCommunicationFacility($conn, $unique_id, $communicationFacility) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND communicationFacility = ?");
+                    $stmt->bind_param("ss", $unique_id, $communicationFacility);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">CABLE</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByCommunicationFacility($conn, $unique_id, 'Cable'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">TELEVISION</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByCommunicationFacility($conn, $unique_id, 'Television'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">RADIO</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByCommunicationFacility($conn, $unique_id, 'Radio'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">TWO-WAY RADIO</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByCommunicationFacility($conn, $unique_id, 'Two-way Radio'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">MOBILE PHONE</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByCommunicationFacility($conn, $unique_id, 'Mobile Phone'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">LANDLINE PHONE</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByCommunicationFacility($conn, $unique_id, 'Landline Phone'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">NONE</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByCommunicationFacility($conn, $unique_id, 'None'); ?></b>
+                        </td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
+
+
+            <h3 class="mt-4 fs-5 fw-bold ">Type of Transport Facility
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <?php
+                function getCountByTransportFacility($conn, $unique_id, $transportFacility) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND transportFacility = ?");
+                    $stmt->bind_param("ss", $unique_id, $transportFacility);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">BICYCLE</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByTransportFacility($conn, $unique_id, 'Bicycle'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">MOTORCYCLE</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByTransportFacility($conn, $unique_id, 'Motorcycle'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">TRICYCLE</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByTransportFacility($conn, $unique_id, 'Tricycle'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">HANDTRACTOR</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByTransportFacility($conn, $unique_id, 'Handtractor'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">FOUR-WHEEL</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByTransportFacility($conn, $unique_id, 'Jeep') + getCountByTransportFacility($conn, $unique_id, 'Car') + getCountByTransportFacility($conn, $unique_id, 'Van') + getCountByTransportFacility($conn, $unique_id, 'kuliglig'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Others: TRUCK</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByTransportFacility($conn, $unique_id, 'Truck'); ?></b>
+                        </td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
+            <h3 class="mt-4 fs-5 fw-bold ">Agricultural Product
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <?php
+                function getAgriculturalProductCount($conn, $unique_id, $product) {
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND agriculturalProduct = ?");
+                    $stmt->bind_param("ss", $unique_id, $product);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    
+                    if ($row = $result->fetch_assoc()) {
+                        return $row['count'];
+                    } else {
+                        return 0; // Return 0 if no records are found
+                    }
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+
+                ?>
+
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">RICE</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getAgriculturalProductCount($conn, $unique_id, 'Rice'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">CORN</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getAgriculturalProductCount($conn, $unique_id, 'Corn'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">BANANA</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getAgriculturalProductCount($conn, $unique_id, 'Banana'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">TARO/GABI</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getAgriculturalProductCount($conn, $unique_id, 'Taro/Gabi'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">CASSAVA</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getAgriculturalProductCount($conn, $unique_id, 'Cassava'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">others: VEGETABLES</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getAgriculturalProductCount($conn, $unique_id, 'others: VEGETABLES'); ?></b>
+                        </td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
+            <h3 class="mt-4 fs-5 fw-bold ">Poultry
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <?php
+                function getTotalPoultryHeads($conn, $unique_id, $poultryType) {
+                    $totalHeads = 0;
+                    $stmt = $conn->prepare("SELECT SUM(poultryNumberOfHeads$poultryType) AS total FROM survey_form_records WHERE unique_id = ? AND poultryNumberOfHeads$poultryType IS NOT NULL");
+                    $stmt->bind_param("s", $unique_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($row = $result->fetch_assoc()) {
+                        $totalHeads = $row['total'];
+                    }
+
+                    $stmt->close();
+
+                    return $totalHeads ?? 0;
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">CHICKEN</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalPoultryHeads($conn, $unique_id, 'Chicken'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">DUCK</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalPoultryHeads($conn, $unique_id, 'Duck'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">GEESE</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalPoultryHeads($conn, $unique_id, 'Geese'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">TURKEY</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalPoultryHeads($conn, $unique_id, 'Turkey'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">OTHERS</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalPoultryHeads($conn, $unique_id, 'Others'); ?></b>
+                        </td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
+
+
+            <h3 class="mt-4 fs-5 fw-bold ">Livestock
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <?php
+                function getTotalLivestockHeads($conn, $unique_id, $livestockType) {
+                    $totalHeads = 0;
+                    $stmt = $conn->prepare("SELECT SUM(livestockNumber$livestockType) AS total FROM survey_form_records WHERE unique_id = ? AND livestockNumber$livestockType IS NOT NULL");
+                    $stmt->bind_param("s", $unique_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($row = $result->fetch_assoc()) {
+                        $totalHeads = $row['total'];
+                    }
+
+                    $stmt->close();
+
+                    return $totalHeads ?? 0;
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">Pig</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalLivestockHeads($conn, $unique_id, 'Pig'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Goat</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalLivestockHeads($conn, $unique_id, 'Goat'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Sheep</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalLivestockHeads($conn, $unique_id, 'Sheep'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Horse</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalLivestockHeads($conn, $unique_id, 'Horse'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Carabao</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalLivestockHeads($conn, $unique_id, 'Carabao'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Others</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getTotalLivestockHeads($conn, $unique_id, 'Others'); ?></b>
+                        </td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+
+
+            <h3 class="mt-4 fs-5 fw-bold ">Other Source of Income/Livelihood
+            </h3>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+                <?php
+                function getCountByIncomeSource($conn, $unique_id, $source) {
+                    $count = 0;
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND otherSourceOfIncome = ?");
+                    $stmt->bind_param("ss", $unique_id, $source);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($row = $result->fetch_assoc()) {
+                        $count = $row['count'];
+                    }
+
+                    $stmt->close();
+
+                    return $count;
+                }
+
+                $unique_id = $_SESSION['unique_id'];
+                ?>
+
+                <tbody>
+                    
+                    <tr>
+                        <td class="fw-bold">Sari-sari store</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByIncomeSource($conn, $unique_id, 'Sari-sari store'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Restaurant</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByIncomeSource($conn, $unique_id, 'Restaurant'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Bakeshop</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByIncomeSource($conn, $unique_id, 'Bakeshop'); ?></b>
+                        </td>
+                    </tr>
+                </tbody>
+
+
+
+            </table>
+
 
         </div>
     </main>
