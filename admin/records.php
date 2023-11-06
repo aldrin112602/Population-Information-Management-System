@@ -288,6 +288,7 @@
                         <div class="col-3 p-0 py-4">
                             <label for="">Filter by: </label>
                             <select name="" id="filter_by" class="form-select">
+                                <option value="None">None</option>
                                 <option value="January to June"
                                     <?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'January to June' ? 'selected' : '' ?>>
                                     January to June</option>
@@ -416,7 +417,7 @@
                         <nav class="d-flex align-items-center justify-content-end py-3">
                             <ul class="pagination gap-0">
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    <a class="page-link bg-primary" href="?<?php echo isset($_GET['filter_by']) ? 'filter_by=' . $_GET['filter_by'] . '&' : '' ?>household_page=<?php 
                                     if ($household_page_number > 1) {
                                         $household_page_number--;
                                     }
@@ -425,12 +426,12 @@
                                 </li>
                                 <li class="page-item p-2 bg-light">
                                     <a class="page-link bg-primary"
-                                        href="?household_page=<?php echo $household_page_number; ?>">
+                                        href="?<?php echo isset($_GET['filter_by']) ? 'filter_by=' . $_GET['filter_by'] . '&' : '' ?>household_page=<?php echo $household_page_number; ?>">
                                         <?php echo $_GET['household_page'] ?? $household_page_number ?>
                                     </a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php 
+                                    <a class="page-link bg-primary" href="?<?php echo isset($_GET['filter_by']) ? 'filter_by=' . $_GET['filter_by'] . '&' : '' ?>household_page=<?php 
                                     $household_page_number++;
                                     echo $household_page_number;
                                     ?>">Next</a>
