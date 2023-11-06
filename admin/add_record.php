@@ -160,20 +160,7 @@
                         </div>
                     </div>
                 </div>
-                <style>
-                @media(min-width: 673px) {
-                    #form {
-                        margin-top: 14rem;
-                    }
-
-                    #fixed_input {
-                        position: fixed;
-                        top: 7.8rem;
-                        left: 50%;
-                        transform: translateX(-50%);
-                    }
-                }
-                </style>
+                
 
                 <div class="row justify-content-between" id="form">
                     <div class="container my-2">

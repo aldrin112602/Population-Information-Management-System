@@ -284,6 +284,26 @@
                             toggleTable(initialTab);
                         });
                         </script>
+
+                        <div class="col-3 p-0 py-4">
+                            <label for="">Filter by: </label>
+                            <select name="" id="filter_by" class="form-select">
+                                <option value="January to June"
+                                    <?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'January to June' ? 'selected' : '' ?>>
+                                    January to June</option>
+                                <option value="July to December"
+                                    <?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'July to December' ? 'selected' : '' ?>>
+                                    July to December</option>
+                            </select>
+                        </div>
+                        <script>
+                        $(document).ready(function() {
+                            $('#filter_by').on('change', function(ev) {
+                                location.href = '?filter_by=' + ev.target.value;
+                            });
+                        });
+                        </script>
+
                     </div>
                     <div class="alert alert-info alert-dismissible fade show py-3" role="alert">
                         <strong>
@@ -309,11 +329,32 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
-                                 $household_page_number = (int)($_GET['household_page'] ?? 1);
-                                 
-                                 $limit = 5;
-                                 $initial_page = ($household_page_number - 1) * $limit; 
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' AND belongs_to IS NULL OR belongs_to = '' LIMIT $initial_page, $limit", "survey_form_records_husband");
+                                
+                                $selectedFilter = $_GET['filter_by'] ?? '';
+                                $filterConditions = [
+                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
+                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
+                                ];
+
+                                $sqlCondition = '';
+
+                                if (array_key_exists($selectedFilter, $filterConditions)) {
+                                    $sqlCondition = $filterConditions[$selectedFilter];
+                                }
+
+                                $household_page_number = (int)($_GET['household_page'] ?? 1);
+                                $limit = 5;
+                                $initial_page = ($household_page_number - 1) * $limit;
+
+                                $query = "unique_id = '{$_SESSION['unique_id']}' AND (belongs_to IS NULL OR belongs_to = '')";
+                                if (!empty($sqlCondition)) {
+                                    $query .= " AND $sqlCondition";
+                                }
+                                $query .= " LIMIT $initial_page, $limit";
+
+                                $data = getRows($query, 'survey_form_records_husband');
+
+
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -383,7 +424,8 @@
                                     ?>">Previous</a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?household_page=<?php echo $household_page_number; ?>">
+                                    <a class="page-link bg-primary"
+                                        href="?household_page=<?php echo $household_page_number; ?>">
                                         <?php echo $_GET['household_page'] ?? $household_page_number ?>
                                     </a>
                                 </li>
@@ -413,11 +455,30 @@
                             <tbody id="tbl">
                                 <?php
 
-                                 $families_page_number = (int)($_GET['families_page'] ?? 1);
-                                 
-                                 $limit = 5;
-                                 $initial_page = ($families_page_number - 1) * $limit; 
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' LIMIT $initial_page, $limit", "survey_form_records_husband");
+                                $selectedFilter = $_GET['filter_by'] ?? '';
+                                $filterConditions = [
+                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
+                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
+                                ];
+
+                                $sqlCondition = '';
+
+                                if (array_key_exists($selectedFilter, $filterConditions)) {
+                                    $sqlCondition = $filterConditions[$selectedFilter];
+                                }
+
+                                $families_page_number = (int)($_GET['families_page'] ?? 1);
+                                $limit = 5;
+                                $initial_page = ($families_page_number - 1) * $limit;
+
+                                $query = "unique_id = '{$_SESSION['unique_id']}'";
+                                if (!empty($sqlCondition)) {
+                                    $query .= " AND $sqlCondition";
+                                }
+                                $query .= " LIMIT $initial_page, $limit";
+
+                                $data = getRows($query, 'survey_form_records_husband');
+
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -487,7 +548,8 @@
                                     ?>">Previous</a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?families_page=<?php echo $families_page_number; ?>">
+                                    <a class="page-link bg-primary"
+                                        href="?families_page=<?php echo $families_page_number; ?>">
                                         <?php echo $_GET['families_page'] ?? $families_page_number ?>
                                     </a>
                                 </li>
@@ -516,14 +578,32 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
+                                // Get the selected filter value from the URL parameter
+                                $selectedFilter = $_GET['filter_by'] ?? '';
+                                $filterConditions = [
+                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
+                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
+                                ];
 
-                                 $husband_page_number = (int)($_GET['husband_page'] ?? 1);
-                                 
-                                 $limit = 5;
-                                 $initial_page = ($husband_page_number - 1) * $limit; 
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' LIMIT $initial_page, $limit", "survey_form_records_husband");
-                                 
-                                 $rows_count = 1;
+                                $sqlCondition = '';
+
+                                if (array_key_exists($selectedFilter, $filterConditions)) {
+                                    $sqlCondition = $filterConditions[$selectedFilter];
+                                }
+
+                                $husband_page_number = (int)($_GET['husband_page'] ?? 1);
+                                $limit = 5;
+                                $initial_page = ($husband_page_number - 1) * $limit;
+
+                                $query = "unique_id = '{$_SESSION['unique_id']}'";
+                                if (!empty($sqlCondition)) {
+                                    $query .= " AND $sqlCondition";
+                                }
+                                $query .= " LIMIT $initial_page, $limit";
+
+                                $data = getRows($query, 'survey_form_records_husband');
+
+
                                  foreach($data as $row) {
                                     ?>
                                 <tr>
@@ -591,7 +671,8 @@
                                     ?>">Previous</a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?husband_page=<?php echo $husband_page_number; ?>">
+                                    <a class="page-link bg-primary"
+                                        href="?husband_page=<?php echo $husband_page_number; ?>">
                                         <?php echo $_GET['husband_page'] ?? $husband_page_number ?>
                                     </a>
                                 </li>
@@ -619,12 +700,32 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
+                                // Get the selected filter value from the URL parameter
+                                $selectedFilter = $_GET['filter_by'] ?? '';
+                                $filterConditions = [
+                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
+                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
+                                ];
 
-                                 $wife_page_number = (int)($_GET['wife_page'] ?? 1);
-                                 
-                                 $limit = 5;
-                                 $initial_page = ($wife_page_number - 1) * $limit; 
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' LIMIT $initial_page, $limit", "survey_form_records_wife");
+                                $sqlCondition = '';
+
+                                if (array_key_exists($selectedFilter, $filterConditions)) {
+                                    $sqlCondition = $filterConditions[$selectedFilter];
+                                }
+
+                                $wife_page_number = (int)($_GET['wife_page'] ?? 1);
+                                $limit = 5;
+                                $initial_page = ($wife_page_number - 1) * $limit;
+
+                                $query = "unique_id = '{$_SESSION['unique_id']}'";
+                                if (!empty($sqlCondition)) {
+                                    $query .= " AND $sqlCondition";
+                                }
+                                $query .= " LIMIT $initial_page, $limit";
+
+                                $data = getRows($query, 'survey_form_records_wife');
+
+
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -723,12 +824,31 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
+                                // Get the selected filter value from the URL parameter
+                                $selectedFilter = $_GET['filter_by'] ?? '';
+                                $filterConditions = [
+                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
+                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
+                                ];
 
-                                 $children_page_number = (int)($_GET['children_page'] ?? 1);
-                                 
-                                 $limit = 5;
-                                 $initial_page = ($children_page_number - 1) * $limit; 
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' LIMIT $initial_page, $limit", "survey_form_records_children");
+                                $sqlCondition = '';
+
+                                if (array_key_exists($selectedFilter, $filterConditions)) {
+                                    $sqlCondition = $filterConditions[$selectedFilter];
+                                }
+
+                                $children_page_number = (int)($_GET['children_page'] ?? 1);
+                                $limit = 5;
+                                $initial_page = ($children_page_number - 1) * $limit;
+
+                                $query = "unique_id = '{$_SESSION['unique_id']}'";
+                                if (!empty($sqlCondition)) {
+                                    $query .= " AND $sqlCondition";
+                                }
+                                $query .= " LIMIT $initial_page, $limit";
+
+                                $data = getRows($query, 'survey_form_records_children');
+
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -798,7 +918,8 @@
                                     ?>">Previous</a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?children_page=<?php echo $children_page_number; ?>">
+                                    <a class="page-link bg-primary"
+                                        href="?children_page=<?php echo $children_page_number; ?>">
                                         <?php echo $_GET['children_page'] ?? $children_page_number ?>
                                     </a>
                                 </li>
@@ -826,13 +947,33 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
-                                 
+                                // Get the selected filter value from the URL parameter
+                                $selectedFilter = $_GET['filter_by'] ?? '';
+                                $filterConditions = [
+                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
+                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
+                                ];
 
-                                 $otherhousehold_page_number = (int)($_GET['otherhousehold_page'] ?? 1);
-                                 
-                                 $limit = 5;
-                                 $initial_page = ($otherhousehold_page_number - 1) * $limit; 
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}' LIMIT $initial_page, $limit", "survey_form_records_household_member");
+                                $sqlCondition = '';
+
+                                if (array_key_exists($selectedFilter, $filterConditions)) {
+                                    $sqlCondition = $filterConditions[$selectedFilter];
+                                }
+
+                                $otherhousehold_page_number = (int)($_GET['otherhousehold_page'] ?? 1);
+                                $limit = 5;
+                                $initial_page = ($otherhousehold_page_number - 1) * $limit;
+
+                                $query = "unique_id = '{$_SESSION['unique_id']}'";
+                                if (!empty($sqlCondition)) {
+                                    $query .= " AND $sqlCondition";
+                                }
+                                $query .= " LIMIT $initial_page, $limit";
+
+                                $data = getRows($query, 'survey_form_records_household_member');
+
+
+
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {
@@ -902,7 +1043,8 @@
                                     ?>">Previous</a>
                                 </li>
                                 <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?otherhousehold_page=<?php echo $otherhousehold_page_number; ?>">
+                                    <a class="page-link bg-primary"
+                                        href="?otherhousehold_page=<?php echo $otherhousehold_page_number; ?>">
                                         <?php echo $_GET['otherhousehold_page'] ?? $otherhousehold_page_number ?>
                                     </a>
                                 </li>
@@ -969,7 +1111,25 @@
                             </thead>
                             <tbody id="tbl">
                                 <?php
-                                 $data = getRows("unique_id = '{$_SESSION['unique_id']}'", "survey_form_records");
+                                 // Get the selected filter value from the URL parameter
+                                $selectedFilter = $_GET['filter_by'] ?? '';
+                                $filterConditions = [
+                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
+                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
+                                ];
+
+                                $sqlCondition = '';
+
+                                if (array_key_exists($selectedFilter, $filterConditions)) {
+                                    $sqlCondition = $filterConditions[$selectedFilter];
+                                }
+
+                                $query = "unique_id = '{$_SESSION['unique_id']}'";
+                                if (!empty($sqlCondition)) {
+                                    $query .= " AND $sqlCondition";
+                                }
+
+                                $data = getRows($query, 'survey_form_records');
                                  
                                  $rows_count = 1;
                                  foreach($data as $row) {

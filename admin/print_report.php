@@ -72,11 +72,12 @@
         font-weight: bold;
     }
 
-    /* @media print {
-         body {
-            display: none;
-         }
-      } */
+
+ #img {
+    position: absolute;
+     left: 100px;
+ }
+
 
     </style>
 </head>
@@ -85,6 +86,7 @@
     <main class="px-5">
 
         <div class="table-responsive mt-3 px-md-5">
+            <img id="img" src="./logo.png" alt="" width="150px">
             <p class="text-center fs-5">
                 Republic of the Philippines <br>
                 Province of <?php echo $_SESSION['province'] ?> <br>
