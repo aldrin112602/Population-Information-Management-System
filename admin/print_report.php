@@ -144,7 +144,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                     <td width="200">
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php echo getCount( 'survey_form_records_husband', $barangay ) ?>
+                            <?php echo getCount( 'survey_form_records_husband', $barangay, (!empty($sqlCondition) ? " AND $sqlCondition" : "") ) ?>
                         </b>
                     </td>
                 </tr>
@@ -155,7 +155,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                     <td width="200">
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php echo getCount( 'survey_form_records_husband', $barangay ) ?>
+                            <?php echo getCount( 'survey_form_records_husband', $barangay, (!empty($sqlCondition) ? " AND $sqlCondition" : "") ) ?>
                         </b>
                     </td>
                 </tr>
@@ -191,17 +191,14 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
                             <?php   
-                            $query = "
-                                SELECT COUNT(*) AS female_count
+                            $query = "SELECT COUNT(*) AS female_count
                                 FROM (
                                     SELECT sex FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Female'
                                     UNION ALL
                                     SELECT sex FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Female'
                                     UNION ALL
                                     SELECT sex FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Female'
-                                ) AS count_sex
-
-                            ";
+                                ) AS count_sex ";
 
                             $result = mysqli_query($conn, $query);
                             $row = mysqli_fetch_assoc($result);
@@ -216,7 +213,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                     </td>
                     <td width="200">
                         <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp; <?php echo getPopulation( $barangay ) ?>
+                            - &nbsp;&nbsp;&nbsp;&nbsp; <?php echo getPopulation( $barangay, (!empty($sqlCondition) ? " AND $sqlCondition" : "")) ?>
                         </b>
                     </td>
                 </tr>
@@ -689,7 +686,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getCountWithCondition($conn, $unique_id, $field, $condition) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND $field $condition");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND $field $condition");
                     $stmt->bind_param("s", $unique_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -710,28 +707,28 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                         <td class="fw-bold">Artificial Family Planning Method</td>
                         <td>
                             <b>- &nbsp;&nbsp;&nbsp;&nbsp;
-                                <?php echo getCountWithCondition($conn, $unique_id, 'artificialFamilyPlanningMethod', 'NOT IN (NULL, "")'); ?></b>
+                                <?php echo getCountWithCondition($conn, $unique_id, 'artificialFamilyPlanningMethod', 'NOT IN (NULL, "")'.(!empty($sqlCondition) ? " AND $sqlCondition" : "").''); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Permanent Family Planning Method</td>
                         <td>
                             <b>- &nbsp;&nbsp;&nbsp;&nbsp;
-                                <?php echo getCountWithCondition($conn, $unique_id, 'permanentFamilyPlanningMethod', 'NOT IN (NULL, "")'); ?></b>
+                                <?php echo getCountWithCondition($conn, $unique_id, 'permanentFamilyPlanningMethod', 'NOT IN (NULL, "")'.(!empty($sqlCondition) ? " AND $sqlCondition" : "").''); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold">Natural Family Planning Method</td>
                         <td>
                             <b>- &nbsp;&nbsp;&nbsp;&nbsp;
-                                <?php echo getCountWithCondition($conn, $unique_id, 'naturalFamilyPlanningMethod', 'NOT IN (NULL, "")'); ?></b>
+                                <?php echo getCountWithCondition($conn, $unique_id, 'naturalFamilyPlanningMethod', 'NOT IN (NULL, "")'.(!empty($sqlCondition) ? " AND $sqlCondition" : "").''); ?></b>
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-bold"><i>No. of Couple Attending RPM</i></td>
                         <td>
                             <b>- &nbsp;&nbsp;&nbsp;&nbsp;
-                                <?php echo getCountWithCondition($conn, $unique_id, 'attendedResponsibleParentingMovementClass', '= "Yes"'); ?></b>
+                                <?php echo getCountWithCondition($conn, $unique_id, 'attendedResponsibleParentingMovementClass', '= "Yes"'.(!empty($sqlCondition) ? " AND $sqlCondition" : "").''); ?></b>
                         </td>
                     </tr>
                 </tbody>
@@ -752,7 +749,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getCountByHousingType($conn, $unique_id, $housingType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND typeOfHousingUnitOccupied = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND typeOfHousingUnitOccupied = ?");
                     $stmt->bind_param("ss", $unique_id, $housingType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -807,7 +804,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getCountBySubHousingType($conn, $unique_id, $subHousingType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND subTypeOfHousingUnitOccupied = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND subTypeOfHousingUnitOccupied = ?");
                     $stmt->bind_param("ss", $unique_id, $subHousingType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -860,7 +857,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getCountSubHousingType($conn, $unique_id, $subHousingType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND subTypeOfHousingUnitOccupied = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND subTypeOfHousingUnitOccupied = ?");
                     $stmt->bind_param("ss", $unique_id, $subHousingType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -920,7 +917,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getCountByHouseLightType($conn, $unique_id, $houseLightType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND typeOfHouseLightUsed = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND typeOfHouseLightUsed = ?");
                     $stmt->bind_param("ss", $unique_id, $houseLightType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -966,7 +963,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getCountByWaterSupplyType($conn, $unique_id, $waterSupplyType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND typeOfWaterSupply = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND typeOfWaterSupply = ?");
                     $stmt->bind_param("ss", $unique_id, $waterSupplyType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1048,7 +1045,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getCountByToiletType($conn, $unique_id, $toiletType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND typeOfToilet = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND typeOfToilet = ?");
                     $stmt->bind_param("ss", $unique_id, $toiletType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1109,7 +1106,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getCountByGarbageDisposalType($conn, $unique_id, $garbageDisposalType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND typeOfGarbageDisposal = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND typeOfGarbageDisposal = ?");
                     $stmt->bind_param("ss", $unique_id, $garbageDisposalType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1178,7 +1175,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getCountByCommunicationFacility($conn, $unique_id, $communicationFacility) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND communicationFacility = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND communicationFacility = ?");
                     $stmt->bind_param("ss", $unique_id, $communicationFacility);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1261,7 +1258,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getCountByTransportFacility($conn, $unique_id, $transportFacility) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND transportFacility = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND transportFacility = ?");
                     $stmt->bind_param("ss", $unique_id, $transportFacility);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1335,7 +1332,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </thead>
                 <?php
                 function getAgriculturalProductCount($conn, $unique_id, $product) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND agriculturalProduct = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND agriculturalProduct = ?");
                     $stmt->bind_param("ss", $unique_id, $product);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1411,7 +1408,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 <?php
                 function getTotalPoultryHeads($conn, $unique_id, $poultryType) {
                     $totalHeads = 0;
-                    $stmt = $conn->prepare("SELECT SUM(poultryNumberOfHeads$poultryType) AS total FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND poultryNumberOfHeads$poultryType IS NOT NULL");
+                    $stmt = $conn->prepare("SELECT SUM(poultryNumberOfHeads$poultryType) AS total FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND poultryNumberOfHeads$poultryType IS NOT NULL");
                     $stmt->bind_param("s", $unique_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1483,7 +1480,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 <?php
                 function getTotalLivestockHeads($conn, $unique_id, $livestockType) {
                     $totalHeads = 0;
-                    $stmt = $conn->prepare("SELECT SUM(livestockNumber$livestockType) AS total FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND livestockNumber$livestockType IS NOT NULL");
+                    $stmt = $conn->prepare("SELECT SUM(livestockNumber$livestockType) AS total FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND livestockNumber$livestockType IS NOT NULL");
                     $stmt->bind_param("s", $unique_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1561,7 +1558,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 <?php
                 function getCountByIncomeSource($conn, $unique_id, $source) {
                     $count = 0;
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND otherSourceOfIncome = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND otherSourceOfIncome = ?");
                     $stmt->bind_param("ss", $unique_id, $source);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1613,7 +1610,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
             <?php
             function getCountByFishpondOwnership($conn, $unique_id, $fishpondOwnership) {
                 $count = 0;
-                $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND fishpondOwned = ?");
+                $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND " . $sqlCondition : "") ." AND fishpondOwned = ?");
                 $stmt->bind_param("ss", $unique_id, $fishpondOwnership);
                 $stmt->execute();
                 $result = $stmt->get_result();

@@ -77,13 +77,13 @@
             return $hiddenPart;
         }
     }
-    function getCount($table, $brgy = null) {
+    function getCount($table, $brgy = null, $filter_by = null) {
         $unique_id = $_SESSION[ 'unique_id' ];
         global $conn;
         if(empty($brgy)) {
-            $sql = "SELECT COUNT(*) as count FROM ". $table ." WHERE unique_id = '$unique_id'";
+            $sql = "SELECT COUNT(*) as count FROM ". $table ." WHERE unique_id = '$unique_id'" . $filter_by;
         } else {
-            $sql = "SELECT COUNT(*) as count FROM ". $table ." WHERE barangay = '$brgy'";
+            $sql = "SELECT COUNT(*) as count FROM ". $table ." WHERE barangay = '$brgy'" . $filter_by;
         }
         $result = $conn->query($sql);
         $count = 0;
@@ -94,7 +94,7 @@
         return $count;
     }
 
-function getCountRowsFemale($brgy = null) {
+function getCountRowsFemale($brgy = null, $filter_by = null) {
     global $conn;
     $unique_id = $_SESSION['unique_id'];
     
@@ -136,7 +136,7 @@ function getCountRowsFemale($brgy = null) {
     return $count < 0 ? 0 : $count;
 }
 
-function getCountRowsMale($barangay = null) {
+function getCountRowsMale($barangay = null, $filter_by = null) {
     global $conn;
     $unique_id = $_SESSION['unique_id'];
     if(!empty($barangay)) {
@@ -179,13 +179,13 @@ function getCountRowsMale($barangay = null) {
 }
 
 
-function getPopulation($barangay = null) {
+function getPopulation($barangay = null, $filter_by = null) {
     global $conn;
     $tables = array('survey_form_records_husband', 'survey_form_records_wife', 'survey_form_records_children', 'survey_form_records_household_member');
     // global $barangay;
-    function getRowCount($conn, $table, $barangay) {
+    function getRowCountt($conn, $table, $barangay, $f) {
         if(!empty($barangay)) {
-            $sql = "SELECT COUNT(*) AS count FROM $table WHERE barangay = '$barangay'";
+            $sql = "SELECT COUNT(*) AS count FROM $table WHERE barangay = '$barangay'" . $f;
         } else {
             $sql = "SELECT COUNT(*) AS count FROM $table";
         }
@@ -194,12 +194,12 @@ function getPopulation($barangay = null) {
         return $row['count'];
     }
     $totalPopulation = 0;
-    foreach($tables as $table) $totalPopulation += (int) getRowCount($conn, $table, $barangay);
+    foreach($tables as $table) $totalPopulation += (int) getRowCountt($conn, $table, $barangay, $filter_by);
     return $totalPopulation;
 }
 
 
-function getEthnicGroupPercentages($tableName) {
+function getEthnicGroupPercentages($tableName, $filter_by = null) {
     global $conn;
     $sessionId = $_SESSION['unique_id'] ?? '';
     if (!empty($sessionId)) {
@@ -230,7 +230,7 @@ function getEthnicGroupPercentages($tableName) {
     }
 }
 
-function getEthnicGroupCounts($tableName) {
+function getEthnicGroupCounts($tableName, $filter_by = null) {
     global $conn;
     $sessionId = $_SESSION['unique_id'] ?? '';
     if (!empty($sessionId)) {
@@ -255,7 +255,7 @@ function getEthnicGroupCounts($tableName) {
 }
 
 
-function getCivilStatusPercentages($tableName) {
+function getCivilStatusPercentages($tableName, $filter_by = null) {
     global $conn;
     $sessionId = $_SESSION['unique_id'] ?? '';
     if (!empty($sessionId)) {
@@ -286,7 +286,7 @@ function getCivilStatusPercentages($tableName) {
 }
 
 
-function getCivilStatusCounts($tableName) {
+function getCivilStatusCounts($tableName, $filter_by = null) {
     global $conn;
     $sessionId = $_SESSION['unique_id'] ?? '';
     if (!empty($sessionId)) {
@@ -313,7 +313,7 @@ function getCivilStatusCounts($tableName) {
 
 
 
-function getReligionPercentages($tableName) {
+function getReligionPercentages($tableName, $filter_by = null) {
     global $conn;
     $sessionId = $_SESSION['unique_id'] ?? '';
     if (!empty($sessionId)) {
@@ -343,7 +343,7 @@ function getReligionPercentages($tableName) {
     }
 }
 
-function getReligionCounts($tableName) {
+function getReligionCounts($tableName, $filter_by = null) {
     global $conn;
     $sessionId = $_SESSION['unique_id'] ?? '';
     if (!empty($sessionId)) {
