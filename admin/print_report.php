@@ -1801,11 +1801,11 @@ echo "</tbody></table></div>";
     </main>
     <script>
     window.onload = function() {
-        // printPage()
+        printPage()
     }
 
     let main = document.querySelector('main');
-    // main.class`List.add('hidden');
+    main.classList.add('hidden');
 
     function printPage() {
         main.classList.remove('hidden');

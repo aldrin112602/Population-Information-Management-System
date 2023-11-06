@@ -288,7 +288,24 @@
                                         <h5 class="text-muted">Total Female</h5>
                                         <div class="metric-value d-inline-block">
                                             <h1 class="mb-1">
-                                                <?php echo getCountRowsFemale($_GET['barangay'] ?? $brgy) ?>
+                                                <?php  
+                                                    $brgy = $_GET['barangay'] ?? $brgy; 
+                                                    $query = "SELECT COUNT(*) AS female_count
+                                                        FROM (
+                                                            SELECT sex FROM survey_form_records_children WHERE barangay = '$brgy' AND sex = 'Female'
+                                                            UNION ALL
+                                                            SELECT sex FROM survey_form_records_wife WHERE barangay = '$brgy' AND sex = 'Female'
+                                                            UNION ALL
+                                                            SELECT sex FROM survey_form_records_household_member WHERE barangay = '$brgy' AND sex = 'Female'
+                                                        ) AS count_sex ";
+
+                                                    $result = mysqli_query($conn, $query);
+                                                    $row = mysqli_fetch_assoc($result);
+                                                    echo $row['female_count'];
+                                                    ?>
+
+
+                                               
                                             </h1>
                                         </div>
                                     </div>

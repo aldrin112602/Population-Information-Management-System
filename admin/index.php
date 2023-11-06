@@ -114,13 +114,13 @@
                                     Records
                                 </a>
                             </li>
-                            <li class="nav-item my-1">
+                            <!-- <li class="nav-item my-1">
                                 <a href="./print_report.php"
                                     class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">print</span>
                                     Print report
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="nav-item my-1">
                                 <a href="setting.php"
                                     class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
@@ -257,7 +257,20 @@
                                         <h5 class="text-muted">Total Female</h5>
                                         <div class="metric-value d-inline-block">
                                             <h1 class="mb-1">
-                                                <?php echo getCountRowsFemale() ?>
+                                                <?php   
+                                                $query = "SELECT COUNT(*) AS female_count
+                                                    FROM (
+                                                        SELECT sex FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                                                        UNION ALL
+                                                        SELECT sex FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                                                        UNION ALL
+                                                        SELECT sex FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                                                    ) AS count_sex ";
+
+                                                $result = mysqli_query($conn, $query);
+                                                $row = mysqli_fetch_assoc($result);
+                                                echo $row['female_count'];
+                                                ?>
                                             </h1>
                                         </div>
                                     </div>
