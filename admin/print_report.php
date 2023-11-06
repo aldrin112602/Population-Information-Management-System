@@ -71,6 +71,13 @@
         font-family: 'Spectral', serif;
         font-weight: bold;
     }
+
+    /* @media print {
+         body {
+            display: none;
+         }
+      } */
+
     </style>
 </head>
 
@@ -1558,7 +1565,7 @@
                 ?>
 
                 <tbody>
-                    
+
                     <tr>
                         <td class="fw-bold">Sari-sari store</td>
                         <td>
@@ -1587,15 +1594,207 @@
             </table>
 
 
+            <h3 class="mt-4 fs-5 fw-bold ">Fishpond
+            </h3>
+            <?php
+            function getCountByFishpondOwnership($conn, $unique_id, $fishpondOwnership) {
+                $count = 0;
+                $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND fishpondOwned = ?");
+                $stmt->bind_param("ss", $unique_id, $fishpondOwnership);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($row = $result->fetch_assoc()) {
+                    $count = $row['count'];
+                }
+
+                $stmt->close();
+
+                return $count;
+            }
+
+            $unique_id = $_SESSION['unique_id'];
+            ?>
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                        <th scope="col fw-bold" width="300">&nbsp;</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">Owned</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByFishpondOwnership($conn, $unique_id, 'Owned'); ?>
+                            </b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">None</td>
+                        <td>
+                            <b>- &nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php echo getCountByFishpondOwnership($conn, $unique_id, 'None'); ?>
+                            </b>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+<?php echo "<br><br><h5>Single Age ( " . date('F Y') . ")</h5>"; ?>
+<div class="d-flex align-items-center justify-content-start">
+<?php
+$barangay = $_SESSION['barangay'];
+$query = "SELECT DISTINCT purok
+FROM (
+    SELECT purok FROM survey_form_records_household_member WHERE barangay = '$barangay'
+    UNION
+    SELECT purok FROM survey_form_records_wife WHERE barangay = '$barangay'
+    UNION
+    SELECT purok FROM survey_form_records_children WHERE barangay = '$barangay'
+    UNION
+    SELECT purok FROM survey_form_records_husband WHERE barangay = '$barangay'
+) AS combined_puroks
+ORDER BY CAST(SUBSTRING(purok FROM 7) AS INT) ASC";
+
+$result = $conn->query($query);
+$puroks = [];
+while ($row = $result->fetch_assoc()) {
+    $puroks[] = $row['purok'];
+}
+
+$minAge = 1;
+$maxAge = 100;
+
+echo "<div>
+<h5>Male</h5>
+<table class='table table-striped' style='width: 500px'>
+
+<thead><tr><th>Age</th>";
+foreach ($puroks as $purok) {
+    echo "<th>P$purok</th>";
+}
+
+echo "<th>Total</th></tr></thead>";
+
+
+for ($age = $minAge; $age <= $maxAge; $age++) {
+    echo "<tr><td class='bg-info px-2 text-center'>$age</td>";
+    $rowTotal = 0;
+    
+    foreach ($puroks as $purok) {
+        $query = "SELECT COUNT(*) AS row_count
+            FROM (
+                SELECT age FROM survey_form_records_household_member WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+                UNION ALL
+                SELECT age FROM survey_form_records_wife WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+                UNION ALL
+                SELECT age FROM survey_form_records_children WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+                UNION ALL
+                SELECT age FROM survey_form_records_husband WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+            ) AS combined_rows";
+        $result = $conn->query($query);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $rowCount = $row["row_count"];
+        } else {
+            $rowCount = 0;
+        }
+
+        echo "<td>$rowCount</td>";
+        $rowTotal += $rowCount;
+    }
+
+    echo "<td>$rowTotal</td></tr>";
+}
+echo "</tbody></table></div>";
+
+
+$query = "SELECT DISTINCT purok
+FROM (
+    SELECT purok FROM survey_form_records_household_member WHERE barangay = '$barangay'
+    UNION
+    SELECT purok FROM survey_form_records_wife WHERE barangay = '$barangay'
+    UNION
+    SELECT purok FROM survey_form_records_children WHERE barangay = '$barangay'
+    UNION
+    SELECT purok FROM survey_form_records_husband WHERE barangay = '$barangay'
+) AS combined_puroks
+ORDER BY CAST(SUBSTRING(purok FROM 7) AS INT) ASC";
+
+$result = $conn->query($query);
+$puroks = [];
+while ($row = $result->fetch_assoc()) {
+    $puroks[] = $row['purok'];
+}
+
+$minAge = 1;
+$maxAge = 100;
+
+echo "
+<div>
+<h5>Female</h5>
+<table class='table table-striped' style='width: 500px'>
+<thead><tr><th>Age</th>";
+foreach ($puroks as $purok) {
+    echo "<th>P$purok</th>";
+}
+
+echo "<th>Total</th></tr></thead>";
+
+
+for ($age = $minAge; $age <= $maxAge; $age++) {
+    echo "<tr><td class='bg-info px-2 text-center'>$age</td>";
+    $rowTotal = 0;
+    
+    foreach ($puroks as $purok) {
+        $query = "SELECT COUNT(*) AS row_count
+            FROM (
+                SELECT age FROM survey_form_records_household_member WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                UNION ALL
+                SELECT age FROM survey_form_records_wife WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                UNION ALL
+                SELECT age FROM survey_form_records_children WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                UNION ALL
+                SELECT age FROM survey_form_records_husband WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+            ) AS combined_rows";
+        $result = $conn->query($query);
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $rowCount = $row["row_count"];
+        } else {
+            $rowCount = 0;
+        }
+
+        echo "<td>$rowCount</td>";
+        $rowTotal += $rowCount;
+    }
+
+    echo "<td>$rowTotal</td></tr>";
+}
+echo "</tbody></table></div>";
+?>
+</div>
+
+
+
+
+
+
+
+
+
         </div>
     </main>
     <script>
     window.onload = function() {
-        // printPage()
+        printPage()
     }
 
     let main = document.querySelector('main');
-    // main.classList.add('hidden');
+    main.classList.add('hidden');
 
     function printPage() {
         main.classList.remove('hidden');
@@ -1603,6 +1802,7 @@
 
         window.addEventListener('afterprint', function() {
             main.classList.add('hidden');
+            location.href = '../'
         });
     }
     </script>
