@@ -285,17 +285,25 @@
                         });
                         </script>
 
-                        <div class="col-3 p-0 py-4">
-                            <label for="">Filter by: </label>
-                            <select name="" id="filter_by" class="form-select">
-                                <option value="None">None</option>
-                                <option value="January to June"
-                                    <?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'January to June' ? 'selected' : '' ?>>
-                                    January to June</option>
-                                <option value="July to December"
-                                    <?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'July to December' ? 'selected' : '' ?>>
-                                    July to December</option>
-                            </select>
+                        <div class="p-0 py-4 d-flex align-items-end justify-content-between px-0" style="width: 100%;">
+                            <div>
+                                <label for="">Filter by: </label>
+                                <select name="" id="filter_by" class="form-select">
+                                    <option value="None">None</option>
+                                    <option value="January to June"
+                                        <?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'January to June' ? 'selected' : '' ?>>
+                                        January to June</option>
+                                    <option value="July to December"
+                                        <?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'July to December' ? 'selected' : '' ?>>
+                                        July to December</option>
+                                </select>
+                            </div>
+
+                            <a
+                                class="<?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'None' || !isset($_GET['filter_by']) ? 'd-none' : 'd-flex' ?> btn text-white btn-sm  align-items-center justify-content-between gap-2 mt-5" style="background-color: #1D5B79;"
+                                href="./print_report.php?filter_by=<?php echo $_GET['filter_by'] ?>">
+                                <span class="material-symbols-outlined">print</span> Print report</a>
+
                         </div>
                         <script>
                         $(document).ready(function() {
@@ -332,6 +340,7 @@
                                 <?php
                                 
                                 $selectedFilter = $_GET['filter_by'] ?? '';
+                                
                                 $filterConditions = [
                                     'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
                                     'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",

@@ -295,7 +295,7 @@
                                     <div class="card-body">
                                         <h5 class="text-muted">Ethnic Group (Husband)</h5>
                                         <div>
-                                            <!-- <canvas id="myChart2"></canvas>
+                                            <canvas id="myChart2"></canvas>
                                             <script>
                                             (function() {
                                                 const ctx = document.getElementById('myChart2');
@@ -347,7 +347,7 @@
                                                 };
                                                 new Chart(ctx, config);
                                             })();
-                                            </script> -->
+                                            </script>
                                             <?php
                                         foreach ($ethnicGroupCounts as $ethnicGroup => $count) {
                                             echo "<b>$ethnicGroup:</b> $count<br>";
@@ -365,7 +365,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-muted">Ethnic Group (Wife)</h5>
-                                        <!-- <div>
+                                        <div>
                                             <canvas id="myChart"></canvas>
                                             <script>
                                             (function() {
@@ -400,7 +400,7 @@
                                                 new Chart(ctx, config);
                                             })();
                                             </script>
-                                        </div> -->
+                                        </div>
                                         <?php
                                         foreach ($ethnicGroupCounts as $ethnicGroup => $count) {
                                             echo "<b>$ethnicGroup:</b> $count<br>";
@@ -417,7 +417,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-muted">Ethnic Group (Children)</h5>
-                                        <!-- <div>
+                                        <div>
                                             <canvas id="myChart4"></canvas>
                                             <script>
                                             (function() {
@@ -451,7 +451,7 @@
                                                 new Chart(ctx, config);
                                             })();
                                             </script>
-                                        </div> -->
+                                        </div>
                                         <?php
                                         foreach ($ethnicGroupCounts as $ethnicGroup => $count) {
                                             echo "<b>$ethnicGroup:</b> $count<br>";
@@ -468,7 +468,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="text-muted">Ethnic Group (Other Household)</h5>
-                                        <!-- <div>
+                                        <div>
                                             <canvas id="myChart3"></canvas>
                                             <script>
                                             (function() {
@@ -502,7 +502,7 @@
                                                 new Chart(ctx, config);
                                             })();
                                             </script>
-                                        </div> -->
+                                        </div>
                                         <?php
                                         foreach ($ethnicGroupCounts as $ethnicGroup => $count) {
                                             echo "<b>$ethnicGroup:</b> $count<br>";
@@ -519,6 +519,7 @@
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
                                 <?php 
                                     $percentages = getCivilStatusPercentages("survey_form_records_husband");
+                                   
                                 ?>
                                 <div class="card">
                                     <div class="card-body">
@@ -558,6 +559,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getCivilStatusCounts("survey_form_records_husband") as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -604,6 +610,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getCivilStatusCounts("survey_form_records_wife") as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -649,6 +660,12 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getCivilStatusCounts("survey_form_records_children") as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -694,6 +711,12 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getCivilStatusCounts("survey_form_records_household_member") as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -744,6 +767,12 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getReligionCounts("survey_form_records_husband") as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -790,6 +819,12 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getReligionCounts("survey_form_records_wife") as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -835,6 +870,12 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getReligionCounts("survey_form_records_children") as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -880,6 +921,12 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getReligionCounts("survey_form_records_household_member") as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+
+                                        ?>
                                     </div>
                                 </div>
                             </div>

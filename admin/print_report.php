@@ -81,7 +81,22 @@
 
     </style>
 </head>
+<?php 
+$selectedFilter = $_GET['filter_by'] ?? '';
+$filterConditions = [
+    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
+    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
+];
+$sqlCondition = '';
 
+if (array_key_exists($selectedFilter, $filterConditions)) {
+    $sqlCondition = $filterConditions[$selectedFilter];
+}
+
+
+
+
+?>
 <body>
     <main class="px-5">
 
@@ -104,13 +119,13 @@
             $query = "
                 SELECT COUNT(*) AS purok_count
                 FROM (
-                    SELECT DISTINCT purok FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'
+                    SELECT DISTINCT purok FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
                     UNION
-                    SELECT DISTINCT purok FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'
+                    SELECT DISTINCT purok FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
                     UNION
-                    SELECT DISTINCT purok FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}'
+                    SELECT DISTINCT purok FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
                     UNION
-                    SELECT DISTINCT purok FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}'
+                    SELECT DISTINCT purok FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
                 ) AS distinct_purok
             ";
 
@@ -152,17 +167,14 @@
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
                             <?php   
-                            $query = "
-                                SELECT COUNT(*) AS male_count
-                                FROM (
-                                    SELECT sex FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
-                                    UNION ALL
-                                    SELECT sex FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
-                                    UNION ALL
-                                    SELECT sex FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
-                                ) AS count_sex
-
-                            ";
+                            $query = "SELECT COUNT(*) AS male_count
+                                        FROM (
+                                            SELECT sex FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Male'
+                                            UNION ALL
+                                            SELECT sex FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Male'
+                                            UNION ALL
+                                            SELECT sex FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Male'
+                                        ) AS count_sex";
 
                             $result = mysqli_query($conn, $query);
                             $row = mysqli_fetch_assoc($result);
@@ -182,11 +194,11 @@
                             $query = "
                                 SELECT COUNT(*) AS female_count
                                 FROM (
-                                    SELECT sex FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                                    SELECT sex FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Female'
                                     UNION ALL
-                                    SELECT sex FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                                    SELECT sex FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Female'
                                     UNION ALL
-                                    SELECT sex FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                                    SELECT sex FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Female'
                                 ) AS count_sex
 
                             ";
@@ -220,7 +232,7 @@
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
                             <?php
-                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND status = 'Married'", "survey_form_records_husband");
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND status = 'Married'", "survey_form_records_husband");
                             echo count( $rows );
                             ?>
                         </b>
@@ -234,7 +246,7 @@
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
                             <?php
-                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND status = 'Single'", "survey_form_records_husband");
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND status = 'Single'", "survey_form_records_husband");
                             echo count( $rows );
                             ?>
                         </b>
@@ -248,7 +260,7 @@
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
                             <?php
-                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND status = 'Widow'", "survey_form_records_husband");
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND status = 'Widow'", "survey_form_records_husband");
                             echo count( $rows );
                             ?>
                         </b>
@@ -262,7 +274,7 @@
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
                             <?php
-                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND status = 'Live-in'", "survey_form_records_husband");
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND status = 'Live-in'", "survey_form_records_husband");
                             echo count( $rows );
                             ?>
                         </b>
@@ -276,7 +288,7 @@
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
                             <?php
-                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND status = 'Separated'", "survey_form_records_husband");
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND status = 'Separated'", "survey_form_records_husband");
                             echo count( $rows );
                             ?>
                         </b>
@@ -322,13 +334,13 @@
                                         COUNT(*) AS total_count
                                     FROM
                                     (
-                                        SELECT unique_id FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}' AND purok = $pr AND educationalAttainment = '$att'
+                                        SELECT unique_id FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND purok = $pr AND educationalAttainment = '$att'
                                         UNION ALL
-                                        SELECT unique_id FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}' AND purok = $pr AND educationalAttainment = '$att'
+                                        SELECT unique_id FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND purok = $pr AND educationalAttainment = '$att'
                                         UNION ALL
-                                        SELECT unique_id FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}' AND purok = $pr AND educationalAttainment = '$att'
+                                        SELECT unique_id FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND purok = $pr AND educationalAttainment = '$att'
                                         UNION ALL
-                                        SELECT unique_id FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}' AND purok = $pr AND educationalAttainment = '$att'
+                                        SELECT unique_id FROM survey_form_records_household_member WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND purok = $pr AND educationalAttainment = '$att'
                                     ) AS subquery";
 
                         $result = mysqli_query($conn, $sqlQuery);
@@ -351,9 +363,9 @@
             <h3 class="mt-4 fs-5">&gt; Occupation of Couple and Children</h3>
             <?php 
                 $sql = "SELECT DISTINCT occupation FROM ( 
-                    SELECT DISTINCT occupation FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'
-                    UNION SELECT DISTINCT occupation FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'
-                    UNION SELECT DISTINCT occupation FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}' ) AS distinct_occupation";
+                    SELECT DISTINCT occupation FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
+                    UNION SELECT DISTINCT occupation FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
+                    UNION SELECT DISTINCT occupation FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " ) AS distinct_occupation";
                 
                 $result = mysqli_query($conn, $sql);
             ?>
@@ -374,11 +386,11 @@
                         $unique_id = mysqli_real_escape_string($conn, $_SESSION['unique_id']);
 
                         $queryHusbandWife = "SELECT source, COUNT(occupation) as count FROM (
-                            SELECT 'Husband' as source, occupation FROM survey_form_records_husband WHERE unique_id = '$unique_id' AND occupation = '$occupation'
+                            SELECT 'Husband' as source, occupation FROM survey_form_records_husband WHERE unique_id = '$unique_id' AND occupation = '$occupation'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." 
                             UNION ALL
-                            SELECT 'Wife' as source, occupation FROM survey_form_records_wife WHERE unique_id = '$unique_id' AND occupation = '$occupation'
+                            SELECT 'Wife' as source, occupation FROM survey_form_records_wife WHERE unique_id = '$unique_id' AND occupation = '$occupation'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ."
                             UNION ALL
-                            SELECT 'Children' as source, occupation FROM survey_form_records_children WHERE unique_id = '$unique_id' AND occupation = '$occupation'
+                            SELECT 'Children' as source, occupation FROM survey_form_records_children WHERE unique_id = '$unique_id' AND occupation = '$occupation'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ."
                         ) AS combined_occupation_counts GROUP BY source";
 
                         $resultHusbandWife = mysqli_query($conn, $queryHusbandWife);
@@ -425,7 +437,7 @@
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
                             <?php
-                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND occupation NOT IN ('', 'NA', 'na', 'n/a', 'n/a', 'N/a')", "survey_form_records_husband");
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND occupation NOT IN ('', 'NA', 'na', 'n/a', 'n/a', 'N/a')", "survey_form_records_husband");
                             echo count( $rows );
                             ?>
                         </b>
@@ -439,7 +451,7 @@
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
                             <?php
-                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND occupation NOT IN ('', 'NA', 'na', 'n/a', 'n/a', 'N/a')", "survey_form_records_wife");
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND occupation NOT IN ('', 'NA', 'na', 'n/a', 'n/a', 'N/a')", "survey_form_records_wife");
                             echo count( $rows );
                             ?>
                         </b>
@@ -453,7 +465,7 @@
                         <b>
                             - &nbsp;&nbsp;&nbsp;&nbsp;
                             <?php
-                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}' AND occupation NOT IN ('', 'NA', 'na', 'n/a', 'n/a', 'N/a')", "survey_form_records_children");
+                            $rows = getRows("unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND occupation NOT IN ('', 'NA', 'na', 'n/a', 'n/a', 'N/a')", "survey_form_records_children");
                             echo count( $rows );
                             ?>
                         </b>
@@ -498,9 +510,9 @@
             <h3 class="mt-4 fs-5">&gt;Religion of the Couple and Single</h3>
             <?php 
                 $sql = "SELECT DISTINCT religion FROM ( 
-                    SELECT DISTINCT religion FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'
-                    UNION SELECT DISTINCT religion FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'
-                    UNION SELECT DISTINCT religion FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}' ) AS distinct_religion";
+                    SELECT DISTINCT religion FROM survey_form_records_children WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
+                    UNION SELECT DISTINCT religion FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
+                    UNION SELECT DISTINCT religion FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " ) AS distinct_religion";
                 
                 $result = mysqli_query($conn, $sql);
                 
@@ -521,11 +533,11 @@
                         $unique_id = mysqli_real_escape_string($conn, $_SESSION['unique_id']);
 
                     $queryHusbandWife = "SELECT source, COUNT(religion) as count FROM (
-                        SELECT 'Husband/Wife' as source, religion FROM survey_form_records_husband WHERE unique_id = '$unique_id' AND religion = '$religion'
+                        SELECT 'Husband/Wife' as source, religion FROM survey_form_records_husband WHERE unique_id = '$unique_id' AND religion = '$religion'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
                         UNION ALL
-                        SELECT 'Husband/Wife' as source, religion FROM survey_form_records_wife WHERE unique_id = '$unique_id' AND religion = '$religion'
+                        SELECT 'Husband/Wife' as source, religion FROM survey_form_records_wife WHERE unique_id = '$unique_id' AND religion = '$religion'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
                         UNION ALL
-                        SELECT 'Children' as source, religion FROM survey_form_records_children WHERE unique_id = '$unique_id' AND religion = '$religion'
+                        SELECT 'Children' as source, religion FROM survey_form_records_children WHERE unique_id = '$unique_id' AND religion = '$religion'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
                     ) AS combined_religion_counts GROUP BY source";
 
                         $resultHusbandWife = mysqli_query($conn, $queryHusbandWife);
@@ -561,7 +573,7 @@
             </h3>
             <?php 
                 $sql = "SELECT DISTINCT ethnicGroup FROM ( 
-                    SELECT DISTINCT ethnicGroup FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}') AS distinct_ethnicGroup";
+                    SELECT DISTINCT ethnicGroup FROM survey_form_records_husband WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . ") AS distinct_ethnicGroup";
                 
                 $result = mysqli_query($conn, $sql);
                 
@@ -581,7 +593,7 @@
                         $unique_id = mysqli_real_escape_string($conn, $_SESSION['unique_id']);
 
                         $queryHusbandWife = "SELECT source, COUNT(ethnicGroup) as count FROM (
-                        SELECT 'ethnicGroup' as source, ethnicGroup FROM survey_form_records_husband WHERE unique_id = '$unique_id' AND ethnicGroup = '$ethnicGroup'
+                        SELECT 'ethnicGroup' as source, ethnicGroup FROM survey_form_records_husband WHERE unique_id = '$unique_id' AND ethnicGroup = '$ethnicGroup'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
                     ) AS combined_ethnicGroup_counts GROUP BY source";
 
                         $resultHusbandWife = mysqli_query($conn, $queryHusbandWife);
@@ -617,7 +629,7 @@
             </h3>
             <?php 
                 $sql = "SELECT DISTINCT ethnicGroup FROM ( 
-                    SELECT DISTINCT ethnicGroup FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}') AS distinct_ethnicGroup";
+                    SELECT DISTINCT ethnicGroup FROM survey_form_records_wife WHERE unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . ") AS distinct_ethnicGroup";
                 
                 $result = mysqli_query($conn, $sql);
                 
@@ -637,7 +649,7 @@
                         $unique_id = mysqli_real_escape_string($conn, $_SESSION['unique_id']);
 
                         $queryWifeWife = "SELECT source, COUNT(ethnicGroup) as count FROM (
-                        SELECT 'ethnicGroup' as source, ethnicGroup FROM survey_form_records_wife WHERE unique_id = '$unique_id' AND ethnicGroup = '$ethnicGroup'
+                        SELECT 'ethnicGroup' as source, ethnicGroup FROM survey_form_records_wife WHERE unique_id = '$unique_id' AND ethnicGroup = '$ethnicGroup'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
                     ) AS combined_ethnicGroup_counts GROUP BY source";
 
                         $resultWifeWife = mysqli_query($conn, $queryWifeWife);
@@ -677,7 +689,7 @@
                 </thead>
                 <?php
                 function getCountWithCondition($conn, $unique_id, $field, $condition) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND $field $condition");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND $field $condition");
                     $stmt->bind_param("s", $unique_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -740,7 +752,7 @@
                 </thead>
                 <?php
                 function getCountByHousingType($conn, $unique_id, $housingType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND typeOfHousingUnitOccupied = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND typeOfHousingUnitOccupied = ?");
                     $stmt->bind_param("ss", $unique_id, $housingType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -795,7 +807,7 @@
                 </thead>
                 <?php
                 function getCountBySubHousingType($conn, $unique_id, $subHousingType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND subTypeOfHousingUnitOccupied = ?");
                     $stmt->bind_param("ss", $unique_id, $subHousingType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -848,7 +860,7 @@
                 </thead>
                 <?php
                 function getCountSubHousingType($conn, $unique_id, $subHousingType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND subTypeOfHousingUnitOccupied = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND subTypeOfHousingUnitOccupied = ?");
                     $stmt->bind_param("ss", $unique_id, $subHousingType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -908,7 +920,7 @@
                 </thead>
                 <?php
                 function getCountByHouseLightType($conn, $unique_id, $houseLightType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND typeOfHouseLightUsed = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND typeOfHouseLightUsed = ?");
                     $stmt->bind_param("ss", $unique_id, $houseLightType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -954,7 +966,7 @@
                 </thead>
                 <?php
                 function getCountByWaterSupplyType($conn, $unique_id, $waterSupplyType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND typeOfWaterSupply = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND typeOfWaterSupply = ?");
                     $stmt->bind_param("ss", $unique_id, $waterSupplyType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1036,7 +1048,7 @@
                 </thead>
                 <?php
                 function getCountByToiletType($conn, $unique_id, $toiletType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND typeOfToilet = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND typeOfToilet = ?");
                     $stmt->bind_param("ss", $unique_id, $toiletType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1097,7 +1109,7 @@
                 </thead>
                 <?php
                 function getCountByGarbageDisposalType($conn, $unique_id, $garbageDisposalType) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND typeOfGarbageDisposal = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND typeOfGarbageDisposal = ?");
                     $stmt->bind_param("ss", $unique_id, $garbageDisposalType);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1166,7 +1178,7 @@
                 </thead>
                 <?php
                 function getCountByCommunicationFacility($conn, $unique_id, $communicationFacility) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND communicationFacility = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND communicationFacility = ?");
                     $stmt->bind_param("ss", $unique_id, $communicationFacility);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1249,7 +1261,7 @@
                 </thead>
                 <?php
                 function getCountByTransportFacility($conn, $unique_id, $transportFacility) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND transportFacility = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND transportFacility = ?");
                     $stmt->bind_param("ss", $unique_id, $transportFacility);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1323,7 +1335,7 @@
                 </thead>
                 <?php
                 function getAgriculturalProductCount($conn, $unique_id, $product) {
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND agriculturalProduct = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND agriculturalProduct = ?");
                     $stmt->bind_param("ss", $unique_id, $product);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1399,7 +1411,7 @@
                 <?php
                 function getTotalPoultryHeads($conn, $unique_id, $poultryType) {
                     $totalHeads = 0;
-                    $stmt = $conn->prepare("SELECT SUM(poultryNumberOfHeads$poultryType) AS total FROM survey_form_records WHERE unique_id = ? AND poultryNumberOfHeads$poultryType IS NOT NULL");
+                    $stmt = $conn->prepare("SELECT SUM(poultryNumberOfHeads$poultryType) AS total FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND poultryNumberOfHeads$poultryType IS NOT NULL");
                     $stmt->bind_param("s", $unique_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1471,7 +1483,7 @@
                 <?php
                 function getTotalLivestockHeads($conn, $unique_id, $livestockType) {
                     $totalHeads = 0;
-                    $stmt = $conn->prepare("SELECT SUM(livestockNumber$livestockType) AS total FROM survey_form_records WHERE unique_id = ? AND livestockNumber$livestockType IS NOT NULL");
+                    $stmt = $conn->prepare("SELECT SUM(livestockNumber$livestockType) AS total FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND livestockNumber$livestockType IS NOT NULL");
                     $stmt->bind_param("s", $unique_id);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1549,7 +1561,7 @@
                 <?php
                 function getCountByIncomeSource($conn, $unique_id, $source) {
                     $count = 0;
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND otherSourceOfIncome = ?");
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND otherSourceOfIncome = ?");
                     $stmt->bind_param("ss", $unique_id, $source);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -1601,7 +1613,7 @@
             <?php
             function getCountByFishpondOwnership($conn, $unique_id, $fishpondOwnership) {
                 $count = 0;
-                $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ? AND fishpondOwned = ?");
+                $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM survey_form_records WHERE unique_id = ?". (!empty($sqlCondition) ? " AND $sqlCondition" : "") ." AND fishpondOwned = ?");
                 $stmt->bind_param("ss", $unique_id, $fishpondOwnership);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -1651,13 +1663,13 @@
 $barangay = $_SESSION['barangay'];
 $query = "SELECT DISTINCT purok
 FROM (
-    SELECT purok FROM survey_form_records_household_member WHERE barangay = '$barangay'
+    SELECT purok FROM survey_form_records_household_member WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
     UNION
-    SELECT purok FROM survey_form_records_wife WHERE barangay = '$barangay'
+    SELECT purok FROM survey_form_records_wife WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
     UNION
-    SELECT purok FROM survey_form_records_children WHERE barangay = '$barangay'
+    SELECT purok FROM survey_form_records_children WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
     UNION
-    SELECT purok FROM survey_form_records_husband WHERE barangay = '$barangay'
+    SELECT purok FROM survey_form_records_husband WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
 ) AS combined_puroks
 ORDER BY CAST(SUBSTRING(purok FROM 7) AS INT) ASC";
 
@@ -1689,13 +1701,13 @@ for ($age = $minAge; $age <= $maxAge; $age++) {
     foreach ($puroks as $purok) {
         $query = "SELECT COUNT(*) AS row_count
             FROM (
-                SELECT age FROM survey_form_records_household_member WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+                SELECT age FROM survey_form_records_household_member WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Male'
                 UNION ALL
-                SELECT age FROM survey_form_records_wife WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+                SELECT age FROM survey_form_records_wife WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Male'
                 UNION ALL
-                SELECT age FROM survey_form_records_children WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+                SELECT age FROM survey_form_records_children WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Male'
                 UNION ALL
-                SELECT age FROM survey_form_records_husband WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Male'
+                SELECT age FROM survey_form_records_husband WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Male'
             ) AS combined_rows";
         $result = $conn->query($query);
         if ($result->num_rows > 0) {
@@ -1716,13 +1728,13 @@ echo "</tbody></table></div>";
 
 $query = "SELECT DISTINCT purok
 FROM (
-    SELECT purok FROM survey_form_records_household_member WHERE barangay = '$barangay'
+    SELECT purok FROM survey_form_records_household_member WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
     UNION
-    SELECT purok FROM survey_form_records_wife WHERE barangay = '$barangay'
+    SELECT purok FROM survey_form_records_wife WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
     UNION
-    SELECT purok FROM survey_form_records_children WHERE barangay = '$barangay'
+    SELECT purok FROM survey_form_records_children WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
     UNION
-    SELECT purok FROM survey_form_records_husband WHERE barangay = '$barangay'
+    SELECT purok FROM survey_form_records_husband WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . "
 ) AS combined_puroks
 ORDER BY CAST(SUBSTRING(purok FROM 7) AS INT) ASC";
 
@@ -1754,13 +1766,13 @@ for ($age = $minAge; $age <= $maxAge; $age++) {
     foreach ($puroks as $purok) {
         $query = "SELECT COUNT(*) AS row_count
             FROM (
-                SELECT age FROM survey_form_records_household_member WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                SELECT age FROM survey_form_records_household_member WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Female'
                 UNION ALL
-                SELECT age FROM survey_form_records_wife WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                SELECT age FROM survey_form_records_wife WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Female'
                 UNION ALL
-                SELECT age FROM survey_form_records_children WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                SELECT age FROM survey_form_records_children WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Female'
                 UNION ALL
-                SELECT age FROM survey_form_records_husband WHERE barangay = '$barangay' AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}' AND sex = 'Female'
+                SELECT age FROM survey_form_records_husband WHERE barangay = '$barangay'" . (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND age = $age AND purok = '$purok' AND status = 'Single' AND unique_id = '{$_SESSION['unique_id']}'". (!empty($sqlCondition) ? " AND $sqlCondition" : "") . " AND sex = 'Female'
             ) AS combined_rows";
         $result = $conn->query($query);
         if ($result->num_rows > 0) {
@@ -1792,11 +1804,11 @@ echo "</tbody></table></div>";
     </main>
     <script>
     window.onload = function() {
-        printPage()
+        // printPage()
     }
 
     let main = document.querySelector('main');
-    main.classList.add('hidden');
+    // main.class`List.add('hidden');
 
     function printPage() {
         main.classList.remove('hidden');

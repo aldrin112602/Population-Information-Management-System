@@ -359,6 +359,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getEthnicGroupCountsS("survey_form_records_husband", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -405,6 +410,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getEthnicGroupCountsS("survey_form_records_wife", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -450,6 +460,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getEthnicGroupCountsS("survey_form_records_children", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -495,6 +510,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getEthnicGroupCountsS("survey_form_records_household_member", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -545,6 +565,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getCivilStatusCountsS("survey_form_records_husband", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -591,6 +616,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getCivilStatusCountsS("survey_form_records_wife", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -636,6 +666,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getCivilStatusCountsS("survey_form_records_children", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -681,6 +716,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getCivilStatusCountsS("survey_form_records_household_member", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -731,6 +771,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getReligionCountsS("survey_form_records_husband", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -777,6 +822,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getReligionCountsS("survey_form_records_wife", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -822,6 +872,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getReligionCountsS("survey_form_records_children", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -867,6 +922,11 @@
                                             })();
                                             </script>
                                         </div>
+                                        <?php
+                                        foreach (getReligionCountsS("survey_form_records_household_member", $_GET['barangay'] ?? $brgy) as $key => $count) {
+                                            echo "<b>$key:</b> $count<br>";
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>

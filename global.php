@@ -286,6 +286,32 @@ function getCivilStatusPercentages($tableName) {
 }
 
 
+function getCivilStatusCounts($tableName) {
+    global $conn;
+    $sessionId = $_SESSION['unique_id'] ?? '';
+    if (!empty($sessionId)) {
+        $statusQuery = "
+            SELECT status, COUNT(*) AS count
+            FROM $tableName
+            WHERE unique_id = '$sessionId'
+            GROUP BY status";
+        $result = $conn->query($statusQuery);
+        $data = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $status = $row['status'];
+                $count = $row['count'];
+                $data[$status] = $count;
+            }
+        }
+        return $data; // This returns the counts of civil statuses.
+    } else {
+        return array();
+    }
+}
+
+
+
 
 function getReligionPercentages($tableName) {
     global $conn;
@@ -316,6 +342,31 @@ function getReligionPercentages($tableName) {
         return array();
     }
 }
+
+function getReligionCounts($tableName) {
+    global $conn;
+    $sessionId = $_SESSION['unique_id'] ?? '';
+    if (!empty($sessionId)) {
+        $religionQuery = "
+            SELECT religion, COUNT(*) AS count
+            FROM $tableName
+            WHERE unique_id = '$sessionId'
+            GROUP BY religion";
+        $result = $conn->query($religionQuery);
+        $data = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $religion = $row['religion'];
+                $count = $row['count'];
+                $data[$religion] = $count;
+            }
+        }
+        return $data; // This returns the counts of religions.
+    } else {
+        return array();
+    }
+}
+
 
 
 
@@ -420,6 +471,30 @@ function getEthnicGroupPercentagesS($tableName, $barangay) {
     }
 }
 
+function getEthnicGroupCountsS($tableName, $barangay) {
+    global $conn;
+    if (!empty($barangay)) {
+        $ethnicGroupsQuery = "
+            SELECT ethnicGroup, COUNT(*) AS count
+            FROM $tableName
+            WHERE barangay = '$barangay'
+            GROUP BY ethnicGroup";
+        $result = $conn->query($ethnicGroupsQuery);
+        $data = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $ethnicGroup = $row['ethnicGroup'];
+                $count = $row['count'];
+                $data[$ethnicGroup] = $count;
+            }
+        }
+        return $data; // This returns the counts of ethnic groups for a specific barangay.
+    } else {
+        return array();
+    }
+}
+
+
 
 function getCivilStatusPercentagesS($tableName, $barangay) {
     global $conn;
@@ -449,6 +524,30 @@ function getCivilStatusPercentagesS($tableName, $barangay) {
         return array();
     }
 }
+
+function getCivilStatusCountsS($tableName, $barangay) {
+    global $conn;
+    if (!empty($barangay)) {
+        $statusGroupsQuery = "
+            SELECT status, COUNT(*) AS count
+            FROM $tableName
+            WHERE barangay = '$barangay'
+            GROUP BY status";
+        $result = $conn->query($statusGroupsQuery);
+        $data = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $status = $row['status'];
+                $count = $row['count'];
+                $data[$status] = $count;
+            }
+        }
+        return $data; // This returns the counts of civil statuses for a specific barangay.
+    } else {
+        return array();
+    }
+}
+
 
 
 
@@ -480,5 +579,29 @@ function getReligionPercentagesS($tableName, $barangay) {
         return array();
     }
 }
+
+function getReligionCountsS($tableName, $barangay) {
+    global $conn;
+    if (!empty($barangay)) {
+        $religionGroupsQuery = "
+            SELECT religion, COUNT(*) AS count
+            FROM $tableName
+            WHERE barangay = '$barangay'
+            GROUP BY religion";
+        $result = $conn->query($religionGroupsQuery);
+        $data = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $religion = $row['religion'];
+                $count = $row['count'];
+                $data[$religion] = $count;
+            }
+        }
+        return $data; // This returns the counts of religions for a specific barangay.
+    } else {
+        return array();
+    }
+}
+
 
 
