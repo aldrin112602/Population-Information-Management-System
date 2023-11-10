@@ -296,7 +296,40 @@
                             </div>
 
                         </div>
-                        <h3 class="fw-bold text-muted">Ethnic Group</h3>
+                        <h3 class="fw-bold text-muted d-flex align-items-center justify-content-start gap-3">Ethnic
+                            Group
+                            <div>
+                                <select class="form-select" id="ethnicGroupSelect">
+                                    <option value="doughnut"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'doughnut' ? 'selected' : '' ?>>
+                                        doughnut</option>
+                                    <option value="bubble"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'bubble' ? 'selected' : '' ?>>
+                                        bubble</option>
+                                    <option value="bar"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'bar' ? 'selected' : '' ?>>
+                                        bar</option>
+                                    <option value="line"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'line' ? 'selected' : '' ?>>
+                                        line</option>
+                                    <option value="polarArea"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'polarArea' ? 'selected' : '' ?>>
+                                        polarArea</option>
+                                    <option value="radar"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'radar' ? 'selected' : '' ?>>
+                                        radar</option>
+                                    <option value="scatter"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'scatter' ? 'selected' : '' ?>>
+                                        scatter</option>
+                                </select>
+                                <script>
+                                $('#ethnicGroupSelect').on('change', function() {
+                                    location.href = '?ethnicGroupSelect=' + $(this).val()
+                                })
+                                </script>
+                            </div>
+                        </h3>
+
                         <div class="row">
 
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
@@ -317,7 +350,7 @@
                                                 let labels = Object.keys(temp);
                                                 let values = Object.values(temp);
                                                 let percentages = Object.values(temp);
-                                                                                               
+
                                                 let backgroundColor = [];
                                                 for (let i = 0; i < labels.length; i++) {
                                                     let color = 'rgba(' + Math.floor(Math.random() * 256) + ', ' +
@@ -338,7 +371,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'doughnut',
+                                                    type: '<?php echo $_GET['ethnicGroupSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                     options: {
                                                         plugins: {
@@ -348,7 +381,8 @@
                                                                         let label = labels[context
                                                                             .dataIndex];
                                                                         let count = temp[
-                                                                        label]; // Use the exact numerical count
+                                                                            label
+                                                                            ]; // Use the exact numerical count
                                                                         let percentage = percentages[context
                                                                             .dataIndex];
                                                                         return `${label}: ${count} (${percentage}%)`;
@@ -407,7 +441,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'doughnut',
+                                                    type: '<?php echo $_GET['ethnicGroupSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -458,7 +492,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'doughnut',
+                                                    type: '<?php echo $_GET['ethnicGroupSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -509,7 +543,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'doughnut',
+                                                    type: '<?php echo $_GET['ethnicGroupSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -526,7 +560,39 @@
                             </div>
                         </div>
 
-                        <h3 class="fw-bold text-muted">Civil Status </h3>
+                        
+                        <h3 class="fw-bold text-muted d-flex align-items-center justify-content-start gap-3">Civil Status
+                            <div>
+                                <select class="form-select" id="civilStatusSelect">
+                                    <option value="doughnut"
+                                        <?php echo isset($_GET['civilStatusSelect']) && $_GET['civilStatusSelect'] == 'doughnut' ? 'selected' : '' ?>>
+                                        doughnut</option>
+                                    <option value="bubble"
+                                        <?php echo isset($_GET['civilStatusSelect']) && $_GET['civilStatusSelect'] == 'bubble' ? 'selected' : '' ?>>
+                                        bubble</option>
+                                    <option value="bar"
+                                        <?php echo isset($_GET['civilStatusSelect']) && $_GET['civilStatusSelect'] == 'bar' ? 'selected' : '' ?>>
+                                        bar</option>
+                                    <option value="line"
+                                        <?php echo isset($_GET['civilStatusSelect']) && $_GET['civilStatusSelect'] == 'line' ? 'selected' : '' ?>>
+                                        line</option>
+                                    <option value="polarArea"
+                                        <?php echo isset($_GET['civilStatusSelect']) && $_GET['civilStatusSelect'] == 'polarArea' ? 'selected' : '' ?>>
+                                        polarArea</option>
+                                    <option value="radar"
+                                        <?php echo isset($_GET['civilStatusSelect']) && $_GET['civilStatusSelect'] == 'radar' ? 'selected' : '' ?>>
+                                        radar</option>
+                                    <option value="scatter"
+                                        <?php echo isset($_GET['civilStatusSelect']) && $_GET['civilStatusSelect'] == 'scatter' ? 'selected' : '' ?>>
+                                        scatter</option>
+                                </select>
+                                <script>
+                                $('#civilStatusSelect').on('change', function() {
+                                    location.href = '?civilStatusSelect=' + $(this).val()
+                                })
+                                </script>
+                            </div>
+                        </h3>
                         <div class="row">
 
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
@@ -565,7 +631,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'pie',
+                                                    type: '<?php echo $_GET['civilStatusSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -616,7 +682,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'pie',
+                                                    type: '<?php echo $_GET['civilStatusSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -666,7 +732,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'pie',
+                                                    type: '<?php echo $_GET['civilStatusSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -717,7 +783,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'pie',
+                                                    type: '<?php echo $_GET['civilStatusSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -735,7 +801,39 @@
                             </div>
                         </div>
 
-                        <h3 class="fw-bold text-muted">Religion </h3>
+                        <h3 class="fw-bold text-muted d-flex align-items-center justify-content-start gap-3">Religion
+                            <div>
+                                <select class="form-select" id="religionSelect">
+                                    <option value="doughnut"
+                                        <?php echo isset($_GET['religionSelect']) && $_GET['religionSelect'] == 'doughnut' ? 'selected' : '' ?>>
+                                        doughnut</option>
+                                    <option value="bubble"
+                                        <?php echo isset($_GET['religionSelect']) && $_GET['religionSelect'] == 'bubble' ? 'selected' : '' ?>>
+                                        bubble</option>
+                                    <option value="bar"
+                                        <?php echo isset($_GET['religionSelect']) && $_GET['religionSelect'] == 'bar' ? 'selected' : '' ?>>
+                                        bar</option>
+                                    <option value="line"
+                                        <?php echo isset($_GET['religionSelect']) && $_GET['religionSelect'] == 'line' ? 'selected' : '' ?>>
+                                        line</option>
+                                    <option value="polarArea"
+                                        <?php echo isset($_GET['religionSelect']) && $_GET['religionSelect'] == 'polarArea' ? 'selected' : '' ?>>
+                                        polarArea</option>
+                                    <option value="radar"
+                                        <?php echo isset($_GET['religionSelect']) && $_GET['religionSelect'] == 'radar' ? 'selected' : '' ?>>
+                                        radar</option>
+                                    <option value="scatter"
+                                        <?php echo isset($_GET['religionSelect']) && $_GET['religionSelect'] == 'scatter' ? 'selected' : '' ?>>
+                                        scatter</option>
+                                </select>
+                                <script>
+                                $('#religionSelect').on('change', function() {
+                                    location.href = '?religionSelect=' + $(this).val()
+                                })
+                                </script>
+                            </div>
+                        </h3>
+
                         <div class="row">
 
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
@@ -773,7 +871,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'polarArea',
+                                                    type: '<?php echo $_GET['religionSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -825,7 +923,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'polarArea',
+                                                    type: '<?php echo $_GET['religionSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -876,7 +974,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'polarArea',
+                                                    type: '<?php echo $_GET['religionSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -927,7 +1025,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'polarArea',
+                                                    type: '<?php echo $_GET['religionSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);

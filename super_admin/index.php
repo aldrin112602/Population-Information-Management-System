@@ -331,7 +331,39 @@
                             </div>
 
                         </div>
-                        <h3 class="fw-bold text-muted">Ethnic Group</h3>
+                        <h3 class="fw-bold text-muted d-flex align-items-center justify-content-start gap-3">Ethnic
+                            Group
+                            <div>
+                                <select class="form-select" id="ethnicGroupSelect">
+                                    <option value="doughnut"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'doughnut' ? 'selected' : '' ?>>
+                                        doughnut</option>
+                                    <option value="bubble"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'bubble' ? 'selected' : '' ?>>
+                                        bubble</option>
+                                    <option value="bar"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'bar' ? 'selected' : '' ?>>
+                                        bar</option>
+                                    <option value="line"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'line' ? 'selected' : '' ?>>
+                                        line</option>
+                                    <option value="polarArea"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'polarArea' ? 'selected' : '' ?>>
+                                        polarArea</option>
+                                    <option value="radar"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'radar' ? 'selected' : '' ?>>
+                                        radar</option>
+                                    <option value="scatter"
+                                        <?php echo isset($_GET['ethnicGroupSelect']) && $_GET['ethnicGroupSelect'] == 'scatter' ? 'selected' : '' ?>>
+                                        scatter</option>
+                                </select>
+                                <script>
+                                $('#ethnicGroupSelect').on('change', function() {
+                                    location.href = '?ethnicGroupSelect=' + $(this).val()
+                                })
+                                </script>
+                            </div>
+                        </h3>
                         <div class="row">
 
                             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12 overflow-hidden">
@@ -369,7 +401,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'doughnut',
+                                                    type: '<?php echo $_GET['ethnicGroupSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -420,7 +452,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'doughnut',
+                                                    type: '<?php echo $_GET['ethnicGroupSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -470,7 +502,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'doughnut',
+                                                    type: '<?php echo $_GET['ethnicGroupSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
@@ -520,7 +552,7 @@
                                                 };
 
                                                 const config = {
-                                                    type: 'doughnut',
+                                                    type: '<?php echo $_GET['ethnicGroupSelect'] ?? 'doughnut' ?>',
                                                     data,
                                                 };
                                                 new Chart(ctx, config);
