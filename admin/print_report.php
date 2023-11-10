@@ -45,7 +45,7 @@
 
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- custom styles -->
     <style>
@@ -1801,23 +1801,14 @@ echo "</tbody></table></div>";
 
         </div>
     </main>
-    <!-- <script src="../assets/libs/js/jspdf.umd.min.js"></script> -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        printPage()
+        html2pdf(document.body);
+        setInterval(() => {
+            location.href = 'records.php'
+        }, 1000);
     })
-    let main = document.querySelector('main');
-    main.classList.add('hidden');
-
-    function printPage() {
-        main.classList.remove('hidden');
-        window.print();
-
-        window.addEventListener('afterprint', function() {
-            main.classList.add('hidden');
-            location.href = '../'
-        });
-    }
+    
     </script>
 </body>
 
