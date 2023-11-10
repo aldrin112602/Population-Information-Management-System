@@ -45,6 +45,8 @@
 
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
 
+
+
     <!-- custom styles -->
     <style>
     * {
@@ -73,12 +75,10 @@
     }
 
 
- #img {
-    position: absolute;
-     left: 100px;
- }
-
-
+    #img {
+        position: absolute;
+        left: 100px;
+    }
     </style>
 </head>
 <?php 
@@ -97,6 +97,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
 
 
 ?>
+
 <body>
     <main class="px-5">
 
@@ -213,7 +214,8 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                     </td>
                     <td width="200">
                         <b>
-                            - &nbsp;&nbsp;&nbsp;&nbsp; <?php echo getPopulation( $barangay, (!empty($sqlCondition) ? " AND $sqlCondition" : "")) ?>
+                            - &nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php echo getPopulation( $barangay, (!empty($sqlCondition) ? " AND $sqlCondition" : "")) ?>
                         </b>
                     </td>
                 </tr>
@@ -1654,9 +1656,9 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
                 </tbody>
             </table>
 
-<?php echo "<br><br><h5>Single Age ( " . date('F Y') . ")</h5>"; ?>
-<div class="d-flex align-items-center justify-content-start">
-<?php
+            <?php echo "<br><br><h5>Single Age ( " . date('F Y') . ")</h5>"; ?>
+            <div class="d-flex align-items-center justify-content-start">
+                <?php
 $barangay = $_SESSION['barangay'];
 $query = "SELECT DISTINCT purok
 FROM (
@@ -1787,7 +1789,7 @@ for ($age = $minAge; $age <= $maxAge; $age++) {
 }
 echo "</tbody></table></div>";
 ?>
-</div>
+            </div>
 
 
 
@@ -1799,11 +1801,11 @@ echo "</tbody></table></div>";
 
         </div>
     </main>
+    <!-- <script src="../assets/libs/js/jspdf.umd.min.js"></script> -->
     <script>
-    window.onload = function() {
+    document.addEventListener('DOMContentLoaded', function() {
         printPage()
-    }
-
+    })
     let main = document.querySelector('main');
     main.classList.add('hidden');
 
