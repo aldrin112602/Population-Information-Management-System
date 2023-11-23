@@ -1,4 +1,5 @@
 <?php
+require './send_OTP.php';
 require_once './config.php';
 require_once './global.php';
 
