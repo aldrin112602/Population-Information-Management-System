@@ -100,7 +100,7 @@
                 <h1 class="text-center fw-bolder fs-4">OTP verification</h1>
                 <div class="container my-3">
                     <label for="otp" class="mx-2">Enter 6 digits code:</label>
-                    <input placeholder="xxxxxx" value="<?php echo $otp ?? null ?>" required type="number" class="form-control form-control-lg input" id="otp" name="otp">
+                    <input placeholder="xxxxxx" value="<?php echo $_POST[ 'otp' ] ?? null ?>" required type="number" class="form-control form-control-lg input" id="otp" name="otp">
                 </div>
                 <div class="container my-3 text-center">
                     <button type="submit" class="btn">Verify</button><br>

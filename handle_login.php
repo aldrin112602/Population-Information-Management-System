@@ -31,6 +31,8 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
             if($row['enable2FA'] == 'true') {
                 if(send_mail($row['email'], $body)) {
                     $_SESSION['validate_otp'] = $token;
+                    $_SESSION[ 'username' ] = $row[ 'username' ];
+                    $_SESSION[ 'password' ] = $row[ 'password' ];
                 }
             } else {
                 $_SESSION[ 'login' ] = true;
@@ -49,7 +51,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
                                 text: "Logged in successfully",
                                 icon: "success",
                                 onClose: function() {
-                                    window.open("./login.php", "_self");
+                                    location.href = "./login.php"
                                 }
                             });
                         })
@@ -66,21 +68,64 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
                         title: "Error!",
                         text: "Invalid username or password!",
                         icon: "error",
-                        onClose: function() {
-                            window.open("./login.php", "_self");
-                        }
+                        
                     });
                 })
             </script>
         ';
     }
 
-} else {
-    if ( isset( $_SESSION[ 'role' ] ) ) {
-        if ( $_SESSION[ 'role' ] == 'super_admin' ) {
-            header( 'location: ./super_admin/' );
-        } else {
-            header( 'location: ./admin/' );
+} // else {
+//     if ( isset( $_SESSION[ 'role' ] ) ) {
+//         if ( $_SESSION[ 'role' ] == 'super_admin' ) {
+//             header( 'location: ./super_admin/' );
+//         } else {
+//             header( 'location: ./admin/' );
+//         }
+//     }
+// }
+
+if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'otp' ])) {
+    if($_POST[ 'otp' ] == $_SESSION['validate_otp']) {
+        $condition = "username = '{$_SESSION[ 'username' ]}' AND password = '{$_SESSION[ 'password' ]}'";
+        if ( isDataExists( 'accounts', '*', $condition ) ) {
+            foreach ( getRows( $condition, 'accounts' ) as $row ) {
+                $_SESSION['validate_otp'] = null;
+                $_SESSION[ 'login' ] = true;
+                $_SESSION[ 'role' ] = $row[ 'role' ];
+                $_SESSION[ 'username' ] = $row[ 'username' ];
+                $_SESSION[ 'barangay' ] = $row[ 'barangay' ];
+                $_SESSION[ 'municipality' ] = $row[ 'municipality' ];
+                $_SESSION[ 'province' ] = $row[ 'province' ];
+                $_SESSION[ 'unique_id' ] = $row[ 'unique_id' ];
+            }
         }
+
+        echo '
+            <script>
+                $(document).ready(function() {
+                    Swal.fire({
+                        title: "Congratulations!",
+                        text: "Logged in successfully",
+                        icon: "success",
+                        onClose: function() {
+                            location.href = "./login.php"
+                        }
+                    });
+                })
+            </script>
+            ';
+    } else {
+        echo '
+            <script>
+                $(document).ready(function() {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Invalid OTP code!",
+                        icon: "error",
+                    });
+                })
+            </script>
+        ';
     }
 }
