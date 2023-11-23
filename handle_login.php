@@ -75,15 +75,15 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
         ';
     }
 
-} // else {
-//     if ( isset( $_SESSION[ 'role' ] ) ) {
-//         if ( $_SESSION[ 'role' ] == 'super_admin' ) {
-//             header( 'location: ./super_admin/' );
-//         } else {
-//             header( 'location: ./admin/' );
-//         }
-//     }
-// }
+} else {
+    if ( isset( $_SESSION[ 'role' ] ) ) {
+        if ( $_SESSION[ 'role' ] == 'super_admin' ) {
+            header( 'location: ./super_admin/' );
+        } else {
+            header( 'location: ./admin/' );
+        }
+    }
+}
 
 if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'otp' ])) {
     if($_POST[ 'otp' ] == $_SESSION['validate_otp']) {
