@@ -184,8 +184,8 @@
                                 <img src="../img/pims logo.png" alt="pims logo" class="img-fluid" width="200px">
                             </li>
                             <li class="nav-item text-center my-4">
-                                <img src="<?php echo $profile; ?>"
-                                    alt="Profile avatar" class="img-fluid rounded-circle" width="100px"><br>
+                                <img src="<?php echo $profile; ?>" alt="Profile avatar" class="img-fluid rounded-circle"
+                                    width="100px"><br>
                                 <h3 class="text-white py-2"><?php echo $_SESSION['username']; ?></h3>
                             </li>
                             <li class="nav-item my-1">
@@ -209,13 +209,6 @@
                                     Manage Admins
                                 </a>
                             </li>
-                            <!-- <li class="nav-item my-1">
-                                <a href="#"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">donut_large</span>
-                                    Reports
-                                </a>
-                            </li> -->
                             <li class="nav-item my-1  current-page">
                                 <a href=""
                                     class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
@@ -252,14 +245,15 @@
                             <div class="page-header row justify-content-between">
                                 <h2 class="pageheader-title font-weight-bold pb-4 col">Settings</h2>
                                 <div class="text-end col ">
-                                    <small class="fw-bold">Date: <?php echo date("F d, Y", strtotime(date('Y-m-d'))); ?></small> |
+                                    <small class="fw-bold">Date:
+                                        <?php echo date("F d, Y", strtotime(date('Y-m-d'))); ?></small> |
                                     <small id="time" class="fw-bold"><?php echo 'Time: ' .  date("g:i:s A"); ?></small>
                                 </div>
                                 <div class="page-breadcrumb">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href=""
-                                                    class="breadcrumb-link">Settings</a></li>
+                                            <li class="breadcrumb-item"><a href="" class="breadcrumb-link">Settings</a>
+                                            </li>
                                             <li class="breadcrumb-item active" aria-current="page">Profile</li>
                                         </ol>
                                     </nav>
@@ -282,11 +276,9 @@
                                     <div class="mt-4 bg-white p-4">
                                         <h5 class="fw-semibold p-3 text-left bg-white px-md-5">UPDATE
                                             PROFILE</h5>
-                                        
-                                        <form action="" method="post"
-                                            enctype="multipart/form-data">
-                                            <div
-                                                class="d-md-flex align-items-start justify-content-center gap-5">
+
+                                        <form action="" method="post" enctype="multipart/form-data">
+                                            <div class="d-md-flex align-items-start justify-content-center gap-5">
                                                 <!-- row 1 -->
                                                 <div class="col-md-3 col-12">
                                                     <div class="border border-1 border-primary px-4 py-3">
@@ -380,8 +372,7 @@
                                                     value="<?php echo $password; ?>"
                                                     class="form-control form-control-lg border-1 border-primary">
                                                 <!-- eye icon -->
-                                                <span class="material-symbols-outlined position-absolute"
-                                                    id="eye"
+                                                <span class="material-symbols-outlined position-absolute" id="eye"
                                                     style="top: 56%; right: 2.7rem; cursor: pointer;">visibility_off</span>
                                             </div>
                                             <div class="position-relative px-md-4  my-3">
@@ -406,6 +397,66 @@
                                     </div>
 
 
+                                    <!-- 2FA -->
+                                    <form id="2fa" method="post" action="" class="mt-4 bg-white p-4">
+                                        <h5 class="fw-semibold p-3 text-left bg-white text-dark px-md-5">
+                                            Enable Two-Factor Authentication (2FA)
+                                            <p>
+                                                Two-Factor Authentication (2FA) requires users to provide two types of
+                                                identification to access an account. For instance, you might enter a
+                                                password (something you know) and receive a one-time code on your phone
+                                                (via email), enhancing security by requiring multiple verification
+                                                steps.
+                                            </p>
+
+                                            <?php
+                                                $sql = "SELECT enable2FA FROM accounts WHERE username='{$_SESSION[ 'username' ]}'";
+                                                $result = mysqli_query($conn, $sql);
+                                                $row = mysqli_fetch_assoc($result);
+                                            ?>
+
+                                            <div class="form-check">
+                                                <input <?php echo ($row['enable2FA'] == 'true') ? 'checked' : '' ?> id="enable2FA" name="enable2FA" class="form-check-input p-2" type="checkbox">
+                                                <label class="px-2 form-check-label" for="enable2FA">
+                                                    Enable 2FA
+                                                </label>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary mt-3 btn-sm">Save</button>
+                                        </h5>
+                                        <script>
+                                        $(document).ready(function() {
+                                            $('#2fa').on('submit', function(e) {
+                                                e.preventDefault();
+
+                                                let data = ($('#enable2FA').prop('checked')).toString()
+                                                $.ajax({
+                                                    method: 'POST',
+                                                    url: '../update_2fa.php',
+                                                    data: `enable2FA=${data}`,
+                                                    success: function(response) {
+                                                        Swal.fire({
+                                                            title: "Success!",
+                                                            text: "2FA status updated successfully",
+                                                            icon: "success"
+                                                        });
+                                                    },
+                                                    error: function(error) {
+                                                        Swal.fire({
+                                                            title: "Error!",
+                                                            text: "Error updating 2FA status",
+                                                            icon: "error"
+                                                        });
+                                                    }
+                                                });
+
+
+                                            })
+                                        })
+                                        </script>
+                                    </form>
+
+
                                 </div> <!-- End of main content  -->
 
                             </div>
@@ -417,7 +468,7 @@
 
                 </div>
             </div>
-            
+
         </div>
         <!-- ============================================================== -->
         <!-- end wrapper  -->

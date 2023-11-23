@@ -133,13 +133,7 @@
                                     Manage Admins
                                 </a>
                             </li>
-                            <!-- <li class="nav-item my-1">
-                                <a href="#"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">donut_large</span>
-                                    Reports
-                                </a>
-                            </li> -->
+
                             <li class="nav-item my-1">
                                 <a href="setting.php"
                                     class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
@@ -222,7 +216,7 @@
                                         }();
                                         </script>
 
-                                        <button data-bs-toggle="modal" data-bs-target="#addBrgy" role="button"
+                                        <button data-bs-toggle="modal" data-bs-target="#addAdmin" role="button"
                                             class="btn text-white btn-lg" style="
                                             background-color: #1D5B79;
                                             border-radius: 50px;
@@ -348,12 +342,12 @@
                     <!-- end pageheader  -->
                     <!-- ============================================================== -->
                     <!-- Modal -->
-                    <div class="modal fade" id="addBrgy" data-bs-backdrop="static" data-bs-keyboard="false"
+                    <div class="modal fade" id="addAdmin" data-bs-backdrop="static" data-bs-keyboard="false"
                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <form action="" method="post" class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="addBrgyLabel">Add Admin</h1>
+                                    <h1 class="modal-title fs-5" id="addAdminLabel">Add Admin</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -363,6 +357,9 @@
 
                                     <label class="form-label mt-3">Password:</label>
                                     <input name="password" required type="text" class="form-control">
+
+                                    <label class="form-label mt-3">Email address:</label>
+                                    <input name="email" required type="email" class="form-control">
 
                                     <label class="form-label mt-3">Municipalaty:</label>
                                     <input name="municipality" required type="text" class="form-control">
@@ -426,20 +423,24 @@
                                     ?>
 
                                     <label class="form-label">Username:</label>
-                                    <input name="username" value="<?php echo $row['username'] ?? null ?>" required type="text"
-                                        class="form-control">
+                                    <input name="username" value="<?php echo $row['username'] ?? null ?>" required
+                                        type="text" class="form-control">
 
                                     <label class="form-label mt-3">Password:</label>
                                     <input name="password" value="<?php echo $row['password'] ?? null ?>" required
                                         type="password" class="form-control">
 
+                                    <label class="form-label mt-3">Email address:</label>
+                                    <input value="<?php echo $row['email'] ?? null ?>" name="email" required
+                                        type="email" class="form-control">
+
                                     <label class="form-label mt-3">Municipalaty:</label>
-                                    <input name="municipality" value="<?php echo $row['municipality'] ?? null ?>" required
-                                        type="text" class="form-control">
+                                    <input name="municipality" value="<?php echo $row['municipality'] ?? null ?>"
+                                        required type="text" class="form-control">
 
                                     <label class="form-label mt-3">Province:</label>
-                                    <input name="province" value="<?php echo $row['province'] ?? null ?>" required type="text"
-                                        class="form-control">
+                                    <input name="province" value="<?php echo $row['province'] ?? null ?>" required
+                                        type="text" class="form-control">
 
                                     <input id="unique_id_hidden_2" name="unique_id" required type="hidden">
 
@@ -451,8 +452,10 @@
                                             $brgy_rows = getRows(null, "barangay");
                                             foreach($brgy_rows as $row) {
                                         ?>
-                                        <option <?php echo $brgy == ($row['barangay'] ?? null) ? 'selected' : '' ?> data-unique-id="<?php echo $row['unique_id'] ?? null ?>"
-                                            value="<?php echo $row['barangay'] ?? null ?>"><?php echo $row['barangay'] ?? null ?>
+                                        <option <?php echo $brgy == ($row['barangay'] ?? null) ? 'selected' : '' ?>
+                                            data-unique-id="<?php echo $row['unique_id'] ?? null ?>"
+                                            value="<?php echo $row['barangay'] ?? null ?>">
+                                            <?php echo $row['barangay'] ?? null ?>
                                         </option>
                                         <?php
                                             }
@@ -489,7 +492,7 @@
 
                 </div>
             </div>
-            
+
         </div>
         <!-- ============================================================== -->
         <!-- end wrapper  -->

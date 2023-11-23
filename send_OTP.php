@@ -42,7 +42,4 @@ function send_mail($email, $bodytemplate, $isattached = null) {
         return $success;
     }
 
-
-
-
 ?>

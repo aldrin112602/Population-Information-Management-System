@@ -68,12 +68,14 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_GET[ 'update_username' 
         $province = ucwords( filter_and_implode( $_POST[ 'province' ] ?? '' ) );
         $barangay = ucwords( filter_and_implode( $_POST[ 'barangay' ] ?? '' ) );
         $unique_id = trim($_POST['unique_id']);
+        $email =  trim( filter_and_implode( $_POST[ 'email' ] ?? '' ) );
         // Check if the new username already exists in the database
         $check_sql = 'SELECT * FROM accounts WHERE username = ?';
         $check_stmt = $conn->prepare( $check_sql );
         $check_stmt->bind_param( 's', $newUsername );
         $check_stmt->execute();
         $check_result = $check_stmt->get_result();
+
         if ( $check_result->num_rows > 0 && $username != $newUsername) {
             echo '
             <script>
@@ -91,7 +93,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_GET[ 'update_username' 
         ';
         } else {
             // The new username is available, proceed with the update operation
-            $sql = "UPDATE accounts SET unique_id = '$unique_id', username = '$newUsername', password = '$password', municipality = '$municipality', province = '$province', barangay = '$barangay' WHERE username = '$username'";
+            $sql = "UPDATE accounts SET email = '$email', unique_id = '$unique_id', username = '$newUsername', password = '$password', municipality = '$municipality', province = '$province', barangay = '$barangay' WHERE username = '$username'";
 
             if ( mysqli_query( $conn, $sql ) ) {
                 echo '

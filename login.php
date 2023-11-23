@@ -1,8 +1,3 @@
-<?php 
-
-    
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,22 +78,37 @@
         background-repeat: no-repeat;
         background-size: 100% 100%;
       " class="w-full d-flex align-items-center justify-content-center flex-column px-3">
-        <img src="img/pims logo.png" alt="pims logo" class="img-fluid mb-4" width="330px">
-        <form action="" method="post" class="form p-5 text-white col-12 col-md-4 col-lg-3">
-            <h1 class="text-center fw-bolder">Login</h1>
-            <div class="container my-3">
-                <label for="username" class="mx-2">USERNAME</label>
-                <input value="<?php echo $username ?>" required type="text" class="form-control form-control-lg input" id="username" name="username">
-            </div>
-            <div class="container my-3">
-                <label for="username" class="mx-2">PASSWORD</label>
-                <input value="<?php echo $password ?>" required type="password" class="form-control form-control-lg input" id="password"
-                    name="password">
-            </div>
-            <div class="container my-3 text-center">
-                <button type="submit" class="btn">Login</button>
-            </div>
-        </form>
+      <img src="img/pims logo.png" alt="pims logo" class="img-fluid mb-4" width="330px">
+        <?php if(!isset($_SESSION['validate_otp'])) { ?>
+            <form action="" method="post" class="form p-5 text-white col-12 col-md-4 col-lg-3">
+                <h1 class="text-center fw-bolder">Login</h1>
+                <div class="container my-3">
+                    <label for="username" class="mx-2">USERNAME</label>
+                    <input value="<?php echo $username ?>" required type="text" class="form-control form-control-lg input" id="username" name="username">
+                </div>
+                <div class="container my-3">
+                    <label for="username" class="mx-2">PASSWORD</label>
+                    <input value="<?php echo $password ?>" required type="password" class="form-control form-control-lg input" id="password"
+                        name="password">
+                </div>
+                <div class="container my-3 text-center">
+                    <button type="submit" class="btn">Login</button>
+                </div>
+            </form>
+        <?php } else { ?>
+            <form action="" method="post" class="form p-5 text-white col-12 col-md-4 col-lg-3">
+                <h1 class="text-center fw-bolder fs-4">OTP verification</h1>
+                <div class="container my-3">
+                    <label for="otp" class="mx-2">Enter 6 digits code:</label>
+                    <input placeholder="xxxxxx" value="<?php echo $otp ?? null ?>" required type="number" class="form-control form-control-lg input" id="otp" name="otp">
+                </div>
+                <div class="container my-3 text-center">
+                    <button type="submit" class="btn">Verify</button><br>
+                    <p class="mt-3 fs-6">Didn't receive OTP? <a href="" class="text-white">Resend</a></p>
+                </div>
+            </form>
+
+        <?php } ?>
     </div>
 </body>
 

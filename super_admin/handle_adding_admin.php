@@ -5,6 +5,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_POST[ 'add_admin' ] ) )
     $barangay = ucwords( filter_and_implode( $_POST[ 'barangay' ] ?? '' ) );
     $unique_id =  $_POST[ 'unique_id' ] ?? null;
     $username =  trim( filter_and_implode( $_POST[ 'username' ] ?? '' ) );
+    $email =  trim( filter_and_implode( $_POST[ 'email' ] ?? '' ) );
     $password =  trim( $_POST[ 'password' ] ?? null );
     $barangay =  ucwords( filter_and_implode( $_POST[ 'barangay' ] ?? '' ) );
     $municipality =  ucwords( filter_and_implode( $_POST[ 'municipality' ] ?? '' ) );
@@ -16,8 +17,8 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_POST[ 'add_admin' ] ) )
     $select_stmt->execute();
     $result = $select_stmt->get_result();
     if ( $result->num_rows === 0 ) {
-        $sql = "INSERT INTO accounts (unique_id, barangay, username, password, municipality, province, role)
-            VALUES ('$unique_id', '$barangay', '$username', '$password', '$municipality', '$province', 'admin')";
+        $sql = "INSERT INTO accounts (unique_id, email, barangay, username, password, municipality, province, role)
+            VALUES ('$unique_id', '$email', '$barangay', '$username', '$password', '$municipality', '$province', 'admin')";
 
         if ( mysqli_query( $conn, $sql ) ) {
             echo '

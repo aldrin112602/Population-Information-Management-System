@@ -202,13 +202,6 @@
                                     Records
                                 </a>
                             </li>
-                            <!-- <li class="nav-item my-1">
-                                <a href="./print_report.php"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">print</span>
-                                    Print report
-                                </a>
-                            </li> -->
                             <li class="nav-item my-1  current-page">
                                 <a href=""
                                     class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
@@ -397,6 +390,65 @@
                                             </div>
                                         </form>
                                     </div>
+
+                                    <!-- 2FA -->
+                                    <form id="2fa" method="post" action="" class="mt-4 bg-white p-4">
+                                        <h5 class="fw-semibold p-3 text-left bg-white text-dark px-md-5">
+                                            Enable Two-Factor Authentication (2FA)
+                                            <p>
+                                                Two-Factor Authentication (2FA) requires users to provide two types of
+                                                identification to access an account. For instance, you might enter a
+                                                password (something you know) and receive a one-time code on your phone
+                                                (via email), enhancing security by requiring multiple verification
+                                                steps.
+                                            </p>
+
+                                            <?php
+                                                $sql = "SELECT enable2FA FROM accounts WHERE username='{$_SESSION[ 'username' ]}'";
+                                                $result = mysqli_query($conn, $sql);
+                                                $row = mysqli_fetch_assoc($result);
+                                            ?>
+
+                                            <div class="form-check">
+                                                <input <?php echo ($row['enable2FA'] == 'true') ? 'checked' : '' ?> id="enable2FA" name="enable2FA" class="form-check-input p-2" type="checkbox">
+                                                <label class="px-2 form-check-label" for="enable2FA">
+                                                    Enable 2FA
+                                                </label>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary mt-3 btn-sm">Save</button>
+                                        </h5>
+                                        <script>
+                                        $(document).ready(function() {
+                                            $('#2fa').on('submit', function(e) {
+                                                e.preventDefault();
+
+                                                let data = ($('#enable2FA').prop('checked')).toString()
+                                                $.ajax({
+                                                    method: 'POST',
+                                                    url: '../update_2fa.php',
+                                                    data: `enable2FA=${data}`,
+                                                    success: function(response) {
+                                                        Swal.fire({
+                                                            title: "Success!",
+                                                            text: "2FA status updated successfully",
+                                                            icon: "success"
+                                                        });
+                                                    },
+                                                    error: function(error) {
+                                                        Swal.fire({
+                                                            title: "Error!",
+                                                            text: "Error updating 2FA status",
+                                                            icon: "error"
+                                                        });
+                                                    }
+                                                });
+
+
+                                            })
+                                        })
+                                        </script>
+                                    </form>
 
 
                                 </div> <!-- End of main content  -->
