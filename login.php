@@ -74,7 +74,7 @@
     ?>
     <div style="
         min-height: 100vh;
-        background: url(img/bg.jpg);
+        background: url(img/bg.jpeg);
         background-repeat: no-repeat;
         background-size: 100% 100%;
       " class="w-full d-flex align-items-center justify-content-center flex-column px-3">

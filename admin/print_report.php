@@ -102,7 +102,7 @@ if (array_key_exists($selectedFilter, $filterConditions)) {
     <main class="px-5">
 
         <div class="table-responsive mt-3 px-md-5">
-            <img id="img" src="./logo.png" alt="" width="150px">
+            <img id="img" src="../img/logo.jfif" class="rounded-circle" alt="" width="150px">
             <p class="text-center fs-5">
                 Republic of the Philippines <br>
                 Province of <?php echo $_SESSION['province'] ?> <br>

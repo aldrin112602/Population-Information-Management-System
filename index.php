@@ -59,7 +59,7 @@
 
 <body>
     <div style="min-height: 100vh;" class="position-relative">
-        <img src="./img/bg.jpg" alt="" class="img-fluid position-absolute"
+        <img src="./img/bg.jpeg" alt="" class="img-fluid position-absolute"
             style="top: 0; left: 0; filter: brightness(30%); height: 100%; width: 100%;">
 
 
@@ -102,7 +102,7 @@
                                 <div id="google-maps-canvas" style="height:100%; width:100%;max-width:100%;"
                                     class="rounded overflow-hidden">
                                     <iframe style="height:100%;width:100%;border:0;" frameborder="0"
-                                        src="https://www.google.com/maps/embed/v1/place?q=Zamora,+Quirino,+Philippines&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe>
+                                        src="https://www.google.com/maps/embed/v1/place?q=Rizal,+Tanay,+Philippines&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe>
                                 </div>
                                 <style>
                                 #google-maps-canvas img {
@@ -115,10 +115,10 @@
                         </div>
                         <div class="col-12 col-md-5 px-md-5 bg-white rounded p-4 text-center">
                             <h1 class="fw-bold">
-                                Quirino
+                                Tanay, Rizal
                             </h1>
                             <br><br>
-                            <h2>
+                            <h2 class="fs-1">
                                 <?php echo number_format(getPopulation()) ?> <br>
                                 <span class="fw-bold">Population</span> <br>
                                 <br><br>
@@ -173,7 +173,7 @@
                         <h1 class="fw-bold">About</h1>
                         <h3>
                             The Population Information Monitoring System is a game-changer <br>
-                            for Cabarroguis Municipality's Population Office, enhancing their <br>
+                            for Tanay, Rizal Municipality's Population Office, by enhancing their <br>
                             capacity to make data-driven decisions and ultimately create a <br>
                             towards a smarter, more informed future. Explore the <br>
                             possibilities with our system today!
@@ -193,11 +193,11 @@
                         <h4 class="text-primary fw-bold my-4">
                             PHONE
                         </h4>
-                        <h4>(+63) 975-494-2690</h4><br>
+                        <h4>(+63) 951-279-3354</h4><br>
                         <h4 class="text-primary fw-bold my-4">
                             EMAIL
                         </h4>
-                        <h4>pims@gmail.com</h4><br>
+                        <h4>caballeroaldrin02@gmail.com</h4><br>
                         <h4 class="text-primary fw-bold my-4">
                             SOCIAL
                         </h4>

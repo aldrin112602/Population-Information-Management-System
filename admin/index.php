@@ -114,13 +114,6 @@
                                     Records
                                 </a>
                             </li>
-                            <!-- <li class="nav-item my-1">
-                                <a href="./print_report.php"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">print</span>
-                                    Print report
-                                </a>
-                            </li> -->
                             <li class="nav-item my-1">
                                 <a href="setting.php"
                                     class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
