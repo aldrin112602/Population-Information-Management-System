@@ -6,7 +6,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_POST[ 'add_admin' ] ) )
     $unique_id =  $_POST[ 'unique_id' ] ?? null;
     $username =  trim( filter_and_implode( $_POST[ 'username' ] ?? '' ) );
     $email =  trim( filter_and_implode( $_POST[ 'email' ] ?? '' ) );
-    $password =  trim( $_POST[ 'password' ] ?? null );
+    $password =  md5(trim( $_POST[ 'password' ] ?? '' ));
     $barangay =  ucwords( filter_and_implode( $_POST[ 'barangay' ] ?? '' ) );
     $municipality =  ucwords( filter_and_implode( $_POST[ 'municipality' ] ?? '' ) );
     $province =  ucwords( filter_and_implode( $_POST[ 'province' ] ?? '' ) );

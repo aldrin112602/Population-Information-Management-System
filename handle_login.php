@@ -8,8 +8,8 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
     $post = validate_post_data( $_POST );
     $username = $post[ 'username' ];
     $password = $post[ 'password' ];
-
-    $condition = "username = '$username' AND password = '$password'";
+    $hashPass = md5($password);
+    $condition = "username = '$username' AND password = '$hashPass'";
     if ( isDataExists( 'accounts', '*', $condition ) ) {
         foreach ( getRows( $condition, 'accounts' ) as $row ) {
             $token = random_int(100000, 999999);

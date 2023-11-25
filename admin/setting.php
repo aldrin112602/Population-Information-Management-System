@@ -120,6 +120,7 @@
         // handle change password
         if(isset($_POST['change-password'])) {
             $inpt_password = trim($_POST['pswd']);
+            $hashPass = md5($inpt_password);
             $confirm_password = trim($_POST['con-pswd']);
             // Validate password
             $uppercase    = preg_match( '@[A-Z]@', $inpt_password );
@@ -137,7 +138,7 @@
                 $err_msg = 'Confirm password did not match, please try again!';
             } else {
                 // update password
-                $sql = "UPDATE accounts SET password = '$inpt_password' WHERE username = '{$_SESSION['username']}'";
+                $sql = "UPDATE accounts SET password = '$hashPass' WHERE username = '{$_SESSION['username']}'";
                     if( mysqli_query($conn, $sql) ) {
                         $success_msg = 'Password changed successfully!';
                         $password = $inpt_password;

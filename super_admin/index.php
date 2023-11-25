@@ -86,11 +86,12 @@
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav flex-column">
                             <li class="nav-item text-center">
                                 <img src="../img/pims logo.png" alt="pims logo" class="img-fluid" width="200px">
@@ -133,6 +134,13 @@
                                     class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">settings</span>
                                     Settings
+                                </a>
+                            </li>
+                            <li class="nav-item my-1">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#bugReport"
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                    <span class="material-symbols-outlined">bug_report</span>
+                                    Bug report
                                 </a>
                             </li>
                             <li class="nav-item mt-3">
@@ -188,28 +196,28 @@
                             </html>';
                             if(send_mail($email, $body)) {
                                 ?>
-                                <script>
-                                    $(document).ready(function() {
-                                        Swal.fire({
-                                            title: "Success!",
-                                            text: "Bug reported successfully",
-                                            icon: "success"
-                                        });
-                                    })
-                                </script>
-                                <?php
+                    <script>
+                    $(document).ready(function() {
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Bug reported successfully",
+                            icon: "success"
+                        });
+                    })
+                    </script>
+                    <?php
                             } else {
                                 ?>
-                                <script>
-                                    $(document).ready(function() {
-                                        Swal.fire({
-                                            title: "Error!",
-                                            text: "Something went wrong, please try again",
-                                            icon: "error"
-                                        });
-                                    })
-                                </script>
-                                <?php
+                    <script>
+                    $(document).ready(function() {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Something went wrong, please try again",
+                            icon: "error"
+                        });
+                    })
+                    </script>
+                    <?php
                             }
 
                         }
@@ -226,9 +234,11 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Please let us know if you encountered a problem while using the app. Your feedback helps improve the System.</p>
+                                    <p>Please let us know if you encountered a problem while using the app. Your
+                                        feedback helps improve the System.</p>
                                     <label for="bugTitle" class="form-label">Bug Title:</label>
-                                    <input type="text" id="bugTitle" name="bugTitle" class="form-control rounded" required>
+                                    <input type="text" id="bugTitle" name="bugTitle" class="form-control rounded"
+                                        required>
                                     <br>
                                     <label for="bugDescription" class="form-label">Bug Description:</label>
                                     <textarea id="bugDescription" name="bugDescription" class="form-control rounded"
@@ -308,7 +318,8 @@
 
                     <h5>Populations as of <?php echo date("F d, Y") ?>:
                         <strong><?php echo getPopulation($_GET['barangay'] ?? $brgy) ?></strong>
-                        people </h5>
+                        people
+                    </h5>
                     <?php
                         if(isset($_GET['download']) && isset($_GET['barangay']) && file_exists(trim(base64_decode($_GET['download'])))) {
                     ?>
@@ -327,10 +338,11 @@
                                 cancelButtonText: 'Cancel',
                                 reverseButtons: true,
                                 onClose: function() {
-                                    window.open('./?barangay=<?php echo $_GET['barangay'] ?>', '_self');
+                                    window.open('./?barangay=<?php echo $_GET['barangay'] ?>',
+                                        '_self');
                                 },
                             }).then((result) => {
-                                if(result.isConfirmed) {
+                                if (result.isConfirmed) {
                                     a.click();
                                 }
                             });
@@ -396,7 +408,7 @@
                                                     ?>
 
 
-                                               
+
                                             </h1>
                                         </div>
                                     </div>
@@ -660,7 +672,8 @@
                             </div>
                         </div>
 
-                        <h3 class="fw-bold text-muted d-flex align-items-center justify-content-start gap-3">Civil Status
+                        <h3 class="fw-bold text-muted d-flex align-items-center justify-content-start gap-3">Civil
+                            Status
                             <div>
                                 <select class="form-select" id="civilStatusSelect">
                                     <option value="doughnut"
@@ -1151,7 +1164,10 @@
     <!-- ============================================================== -->
     <script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
     <!-- bootstap bundle js -->
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <!-- <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
     <!-- slimscroll js -->
     <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <!-- main js -->

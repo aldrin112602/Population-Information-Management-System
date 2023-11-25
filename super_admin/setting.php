@@ -49,6 +49,8 @@
     <link rel="stylesheet" href="../assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../assets/vendor/charts/c3charts/c3.css">
     <link rel="stylesheet" href="../assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
     <!-- jquery plugin -->
     <script src="../src/jquery.min.js"></script>
@@ -120,6 +122,7 @@
         // handle change password
         if(isset($_POST['change-password'])) {
             $inpt_password = trim($_POST['pswd']);
+            $hashPass = md5($inpt_password);
             $confirm_password = trim($_POST['con-pswd']);
             // Validate password
             $uppercase    = preg_match( '@[A-Z]@', $inpt_password );
@@ -137,7 +140,7 @@
                 $err_msg = 'Confirm password did not match, please try again!';
             } else {
                 // update password
-                $sql = "UPDATE accounts SET password = '$inpt_password' WHERE username = '{$_SESSION['username']}'";
+                $sql = "UPDATE accounts SET password = '$hashPass' WHERE username = '{$_SESSION['username']}'";
                     if( mysqli_query($conn, $sql) ) {
                         $success_msg = 'Password changed successfully!';
                         $password = $inpt_password;
@@ -216,6 +219,13 @@
                                     Settings
                                 </a>
                             </li>
+                            <li class="nav-item my-1">
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#bugReport"
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                    <span class="material-symbols-outlined">bug_report</span>
+                                    Bug report
+                                </a>
+                            </li>
                             <li class="nav-item mt-3">
                                 <a href="../logout.php"
                                     class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
@@ -240,6 +250,97 @@
                     <!-- ============================================================== -->
                     <!-- pageheader  -->
                     <!-- ============================================================== -->
+                    <?php 
+                        require_once('../bug_report.php');
+                        if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bugTitle'])) {
+                            $bugTitle = trim($_POST['bugTitle']);
+                            $bugDescription = trim($_POST['bugDescription']);
+                            $expectedOutcome = trim($_POST['expectedOutcome']);
+                            $actualOutcome = trim($_POST['actualOutcome']);
+                            $email = 'caballeroaldrin02@gmail.com';
+
+                            $body = '
+                            <!DOCTYPE html>
+                            <html>
+                                <head>
+                                    <title>Bug reported</title>
+                                </head>
+                                <body>
+                                    <p>Dear ' . $email . ',</p>
+                                    <p>A bug has been reported with the following details:</p>
+                                    <p><b>Title:</b> ' . $bugTitle . '</p>
+                                    <p><b>Description:</b> ' . $bugDescription . '</p>
+                                    <p><b>Expected Outcome:</b> ' . $expectedOutcome . '</p>
+                                    <p><b>Actual Outcome:</b> ' . $actualOutcome . '</p>
+                                    <p>If you have any additional information or if further clarification is needed, please respond to this email.</p>
+                                    <p>Thank you for your attention to this matter.</p>
+                                    <p>Sincerely,<br>Your Bug Reporting System</p>
+                                </body>
+                            </html>';
+                            if(send_mail($email, $body)) {
+                                ?>
+                                <script>
+                                    $(document).ready(function() {
+                                        Swal.fire({
+                                            title: "Success!",
+                                            text: "Bug reported successfully",
+                                            icon: "success"
+                                        });
+                                    })
+                                </script>
+                                <?php
+                            } else {
+                                ?>
+                                <script>
+                                    $(document).ready(function() {
+                                        Swal.fire({
+                                            title: "Error!",
+                                            text: "Something went wrong, please try again",
+                                            icon: "error"
+                                        });
+                                    })
+                                </script>
+                                <?php
+                            }
+
+                        }
+                    ?>
+                    <form action="#" method="post" class="modal fade" id="bugReport" data-bs-backdrop="static"
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5 d-flex align-items-center justify-content-between gap-3"
+                                        id="staticBackdropLabel">Bug report <span
+                                            class="material-symbols-outlined fs-3">bug_report</span></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Please let us know if you encountered a problem while using the app. Your feedback helps improve the System.</p>
+                                    <label for="bugTitle" class="form-label">Bug Title:</label>
+                                    <input type="text" id="bugTitle" name="bugTitle" class="form-control rounded" required>
+                                    <br>
+                                    <label for="bugDescription" class="form-label">Bug Description:</label>
+                                    <textarea id="bugDescription" name="bugDescription" class="form-control rounded"
+                                        required></textarea>
+                                    <br>
+                                    <label for="expectedOutcome" class="form-label">Expected Outcome:</label>
+                                    <textarea id="expectedOutcome" name="expectedOutcome" class="form-control rounded"
+                                        required></textarea>
+                                    <br>
+                                    <label for="actualOutcome" class="form-label">Actual Outcome:</label>
+                                    <textarea id="actualOutcome" name="actualOutcome" class="form-control rounded"
+                                        required></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header row justify-content-between">

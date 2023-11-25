@@ -63,7 +63,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_GET[ 'update_username' 
     } else {
         $username = htmlspecialchars( $_GET[ 'update_username' ] );
         $newUsername = filter_and_implode( $_POST[ 'username' ] ?? '' );
-        $password = ucwords( filter_and_implode( $_POST[ 'password' ] ?? '' ) );
+        $password =  md5(trim( $_POST[ 'password' ] ?? '' ));
         $municipality = ucwords( filter_and_implode( $_POST[ 'municipality' ] ?? '' ) );
         $province = ucwords( filter_and_implode( $_POST[ 'province' ] ?? '' ) );
         $barangay = ucwords( filter_and_implode( $_POST[ 'barangay' ] ?? '' ) );
