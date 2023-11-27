@@ -21,6 +21,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_POST[ 'add_admin' ] ) )
             VALUES ('$unique_id', '$email', '$barangay', '$username', '$password', '$municipality', '$province', 'admin')";
 
         if ( mysqli_query( $conn, $sql ) ) {
+            logUser($_SESSION[ 'username' ], 'Admin added successfully!');
             echo '
             <script>
                 $(document).ready(function() {  
@@ -37,6 +38,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_POST[ 'add_admin' ] ) )
         ';
 
         } else {
+            logUser($_SESSION[ 'username' ], 'Error: Failed to save Admin account!');
             echo '
             <script>
                 $(document).ready(function() {
@@ -51,6 +53,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_POST[ 'add_admin' ] ) )
         }
 
     } else {
+        logUser($_SESSION[ 'username' ], 'Error: Trying to save admin account, username already exists!');
         echo '
             <script>
                 $(document).ready(function() {

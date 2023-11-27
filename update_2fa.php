@@ -1,6 +1,7 @@
 <?php
 require_once './config.php';
 require_once './global.php';
+require_once './audit_trails.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -14,7 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (mysqli_stmt_execute($stmt)) {
         echo 'success';
+        logUser($_SESSION[ 'username' ], '2FA ('. ($enable2FA == 'false' ? 'OFF' : 'ON') .') successfully!');
     } else {
+        logUser($_SESSION[ 'username' ], 'Error updating 2FA: ' . mysqli_error($conn));
         echo 'failed: ' . mysqli_error($conn);
     }
 

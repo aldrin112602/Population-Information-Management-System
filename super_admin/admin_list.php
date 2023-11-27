@@ -1,6 +1,7 @@
 <?php 
     require_once '../config.php';
     require_once '../global.php';
+    require_once './audit_trails.php';
 
     if(isset($_SESSION['role'])) {
         if($_SESSION['role'] == 'super_admin') {
@@ -526,7 +527,7 @@
                                         type="text" class="form-control">
 
                                     <label class="form-label mt-3">New Password:</label>
-                                    <input name="password" required
+                                    <input name="password"
                                         type="text" class="form-control">
 
                                     <label class="form-label mt-3">Email address:</label>

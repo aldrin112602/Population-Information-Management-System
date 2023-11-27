@@ -1,4 +1,5 @@
 <?php
+require_once './audit_trails.php';
 if ( $_SERVER[ 'REQUEST_METHOD' ] === 'GET' && isset( $_GET[ 'username' ] ) ) {
     $username = htmlspecialchars( $_GET[ 'username' ] );
     $select_sql = 'SELECT * FROM accounts WHERE username = ?';
@@ -7,6 +8,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'GET' && isset( $_GET[ 'username' ] ) ) {
     $select_stmt->execute();
     $result = $select_stmt->get_result();
     if ( $result->num_rows === 0 ) {
+        logUser($_SESSION[ 'username' ], 'Trying to remove, admin not found!');
         echo '
             <script>
                 $(document).ready(function() {
@@ -27,6 +29,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'GET' && isset( $_GET[ 'username' ] ) ) {
         $stmt->bind_param( 's', $username );
 
         if ( $stmt->execute() ) {
+            logUser($_SESSION[ 'username' ], 'Accounts removed successfully!');
             echo '
                 <script>
                     $(document).ready(function() {
@@ -42,6 +45,8 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'GET' && isset( $_GET[ 'username' ] ) ) {
                 </script>
             ';
         } else {
+
+            logUser($_SESSION[ 'username' ], 'Error: failed to remove admin!');
             echo '
             <script>
                 $(document).ready(function() {

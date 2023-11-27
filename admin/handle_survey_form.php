@@ -1,6 +1,7 @@
 <?php
 
 require_once( '../global.php' );
+require_once './audit_trails.php';
 
 if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
 
@@ -162,6 +163,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
     if ( !mysqli_query( $conn, $sql ) ) $success = false;
 
     if ( $success ) {
+        logUser($_SESSION[ 'username' ], 'Form record saved successfully!');
         echo '
             <script>
                 $(document).ready(function() {
@@ -178,6 +180,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
         ';
 
     } else {
+        logUser($_SESSION[ 'username' ], 'Error saving form record!');
         echo '
             <script>
                 $(document).ready(function() {

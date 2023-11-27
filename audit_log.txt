@@ -1,0 +1,39 @@
+[ 2023-11-26 9:06:42 AM ][ admin ] -> Logged in successfully.
+[ 2023-11-26 9:17:22 AM ][ admin ] -> Profile updated successfully!
+[ 2023-11-26 10:10:28 AM ][ admin ] -> Password changed successfully!
+[ 2023-11-26 10:35:50 AM ][ admin ] -> 2FA (ON) successfully!
+[ 2023-11-26 10:37:57 AM ][ admin ] -> 2FA (OFF) successfully!
+[ 2023-11-26 10:52:42 AM ][ admin ] -> User selected filter: July to December
+[ 2023-11-26 10:53:05 AM ][ admin ] -> User selected filter: January to June
+[ 2023-11-26 10:53:09 AM ][ admin ] -> User selected filter: July to December
+[ 2023-11-26 11:05:23 AM ][ admin ] -> User logged out successfully.
+[ 2023-11-26 11:08:28 AM ][ super_admin ] -> Logged in successfully.
+[ 2023-11-26 11:24:32 AM ][ super_admin ] -> Error: Trying to save admin account, username already exists!
+[ 2023-11-26 11:40:16 AM ][ super_admin ] -> Admin account updated successfully!
+[ 2023-11-27 12:05:50 PM ][ super_admin ] -> Admin account updated successfully!
+[ 2023-11-27 12:12:04 PM ][ super_admin ] -> Barangay updated successfully!
+[ 2023-11-27 12:17:50 PM ][ super_admin ] -> Barangay added successfully!
+[ 2023-11-27 12:23:27 PM ][ super_admin ] -> Barangay removed successfully!
+[ 2023-11-27 12:23:40 PM ][ super_admin ] -> Barangay removed successfully!
+[ 2023-11-27 12:23:49 PM ][ super_admin ] -> Barangay added successfully!
+[ 2023-11-27 12:23:55 PM ][ super_admin ] -> Barangay removed successfully!
+[ 2023-11-27 12:33:07 PM ][ super_admin ] -> Admin account updated successfully!
+[ 2023-11-27 12:33:38 PM ][ super_admin ] -> Admin added successfully!
+[ 2023-11-27 12:33:49 PM ][ super_admin ] -> Accounts removed successfully!
+[ 2023-11-27 12:42:02 PM ][ super_admin ] -> Profile updated successfully!
+[ 2023-11-27 12:42:19 PM ][ super_admin ] -> 2FA (ON) successfully!
+[ 2023-11-27 12:42:29 PM ][ super_admin ] -> 2FA (OFF) successfully!
+[ 2023-11-27 1:16:00 PM ][ super_admin ] -> User logged out successfully.
+[ 2023-11-27 1:16:25 PM ][ admin ] -> Logged in successfully.
+[ 2023-11-27 1:17:10 PM ][ admin ] -> 2FA (ON) successfully!
+[ 2023-11-27 1:17:16 PM ][ admin ] -> 2FA (OFF) successfully!
+[ 2023-11-27 1:17:31 PM ][ admin ] -> Bug reported successfully.
+[ 2023-11-27 1:17:44 PM ][ admin ] -> User selected filter by: January to June
+[ 2023-11-27 1:17:51 PM ][ admin ] -> User selected filter by: July to December
+[ 2023-11-27 1:20:13 PM ][ admin ] -> User selected filter by: January to June
+[ 2023-11-27 1:20:43 PM ][ admin ] -> Print report generated successfully!
+[ 2023-11-27 1:21:02 PM ][ admin ] -> User logged out successfully.
+[ 2023-11-27 1:24:45 PM ][ admin ] -> Logged in successfully.
+[ 2023-11-27 1:25:05 PM ][ admin ] -> User selected filter by: January to June
+[ 2023-11-27 1:25:08 PM ][ admin ] -> User selected filter by: July to December
+[ 2023-11-27 1:32:04 PM ][ admin ] -> User logged out successfully.

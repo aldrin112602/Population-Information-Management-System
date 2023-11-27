@@ -63,7 +63,8 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_GET[ 'update_username' 
     } else {
         $username = htmlspecialchars( $_GET[ 'update_username' ] );
         $newUsername = filter_and_implode( $_POST[ 'username' ] ?? '' );
-        $password =  md5(trim( $_POST[ 'password' ] ?? '' ));
+        $password =  trim( $_POST[ 'password' ] ?? '' );
+        $newPass = md5($password);
         $municipality = ucwords( filter_and_implode( $_POST[ 'municipality' ] ?? '' ) );
         $province = ucwords( filter_and_implode( $_POST[ 'province' ] ?? '' ) );
         $barangay = ucwords( filter_and_implode( $_POST[ 'barangay' ] ?? '' ) );
@@ -77,6 +78,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_GET[ 'update_username' 
         $check_result = $check_stmt->get_result();
 
         if ( $check_result->num_rows > 0 && $username != $newUsername) {
+            logUser($_SESSION[ 'username' ], 'Error: Trying to update admin account, username already exists!');
             echo '
             <script>
                 $(document).ready(function() {
@@ -93,9 +95,16 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_GET[ 'update_username' 
         ';
         } else {
             // The new username is available, proceed with the update operation
-            $sql = "UPDATE accounts SET email = '$email', unique_id = '$unique_id', username = '$newUsername', password = '$password', municipality = '$municipality', province = '$province', barangay = '$barangay' WHERE username = '$username'";
+            $sql = null;
+
+            if(!empty($password)) {
+                $sql = "UPDATE accounts SET email = '$email', unique_id = '$unique_id', username = '$newUsername', password = '$newPass', municipality = '$municipality', province = '$province', barangay = '$barangay' WHERE username = '$username'";
+            } else {
+                $sql = "UPDATE accounts SET email = '$email', unique_id = '$unique_id', username = '$newUsername', municipality = '$municipality', province = '$province', barangay = '$barangay' WHERE username = '$username'";
+            }
 
             if ( mysqli_query( $conn, $sql ) ) {
+                logUser($_SESSION[ 'username' ], 'Admin account updated successfully!');
                 echo '
                 <script>
                     $(document).ready(function() {

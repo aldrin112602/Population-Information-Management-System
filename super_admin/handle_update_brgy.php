@@ -1,4 +1,5 @@
 <?php
+require_once './audit_trails.php';
 if ( $_SERVER[ 'REQUEST_METHOD' ] === 'GET' && isset( $_GET[ 'update_id' ] ) ) {
     $unique_id = htmlspecialchars( $_GET[ 'update_id' ] );
     $select_sql = 'SELECT * FROM barangay WHERE unique_id = ?';
@@ -7,6 +8,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'GET' && isset( $_GET[ 'update_id' ] ) ) {
     $select_stmt->execute();
     $result = $select_stmt->get_result();
     if ( $result->num_rows === 0 ) {
+        logUser($_SESSION[ 'username' ], 'Trying to update, barangay not found!');
         echo '
             <script>
                 $(document).ready(function() {
@@ -45,6 +47,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_GET[ 'update_id' ] ) &&
     $select_stmt->execute();
     $result = $select_stmt->get_result();
     if ( $result->num_rows === 0 ) {
+        logUser($_SESSION[ 'username' ], 'Trying to update, barangay not found!');
         echo '
             <script>
                 $(document).ready(function() {
@@ -67,6 +70,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_GET[ 'update_id' ] ) &&
         
 
         if ( mysqli_query( $conn, $sql ) ) {
+            logUser($_SESSION[ 'username' ], 'Barangay updated successfully!');
             echo '
                 <script>
                     $(document).ready(function() {
@@ -83,6 +87,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_GET[ 'update_id' ] ) &&
             ';
 
         } else {
+            logUser($_SESSION[ 'username' ], 'Error: Updating barangay!');
             echo '
             <script>
                 $(document).ready(function() {

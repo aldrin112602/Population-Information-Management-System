@@ -1,5 +1,5 @@
 <?php
-
+require_once './audit_trails.php';
 if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset($_POST[ 'barangay' ]) && isset($_POST[ 'add_btn' ])) {
 
     $barangay = ucwords(filter_and_implode( $_POST[ 'barangay' ] ?? '' ));
@@ -10,6 +10,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset($_POST[ 'barangay' ]) && i
     
 
     if ( mysqli_query( $conn, $sql ) ) {
+        logUser($_SESSION[ 'username' ], 'Barangay added successfully!');
         echo '
             <script>
                 $(document).ready(function() {

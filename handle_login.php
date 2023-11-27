@@ -2,6 +2,7 @@
 require_once './send_OTP.php';
 require_once './config.php';
 require_once './global.php';
+require_once './audit_trails.php';
 
 $username = $password = $err_msg = $success_msg = null;
 if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
@@ -33,6 +34,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
                     $_SESSION['validate_otp'] = $token;
                     $_SESSION[ 'username' ] = $row[ 'username' ];
                     $_SESSION[ 'password' ] = $row[ 'password' ];
+                    logUser($row[ 'username' ], 'Successfully send OTP for login security.');
                 }
             } else {
                 $_SESSION[ 'login' ] = true;
@@ -42,6 +44,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
                 $_SESSION[ 'municipality' ] = $row[ 'municipality' ];
                 $_SESSION[ 'province' ] = $row[ 'province' ];
                 $_SESSION[ 'unique_id' ] = $row[ 'unique_id' ];
+                logUser($row[ 'username' ], 'Logged in successfully.');
 
                 echo '
                     <script>
@@ -87,6 +90,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
 
 if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'otp' ])) {
     if($_POST[ 'otp' ] == $_SESSION['validate_otp']) {
+        logUser($_SESSION[ 'username' ], 'User  successfully validate OTP for Login authentication.');
         $condition = "username = '{$_SESSION[ 'username' ]}' AND password = '{$_SESSION[ 'password' ]}'";
         if ( isDataExists( 'accounts', '*', $condition ) ) {
             foreach ( getRows( $condition, 'accounts' ) as $row ) {
@@ -98,6 +102,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'otp' ])) {
                 $_SESSION[ 'municipality' ] = $row[ 'municipality' ];
                 $_SESSION[ 'province' ] = $row[ 'province' ];
                 $_SESSION[ 'unique_id' ] = $row[ 'unique_id' ];
+                logUser($row[ 'username' ], 'Logged in successfully.');
             }
         }
 

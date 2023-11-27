@@ -1,6 +1,7 @@
 <?php 
     require_once '../config.php';
     require_once '../global.php';
+    require_once './audit_trails.php';
 
     if(isset($_SESSION['role'])) {
         if($_SESSION['role'] == 'super_admin') {
@@ -451,6 +452,7 @@
                                 $query = "unique_id = '{$_SESSION['unique_id']}' AND (belongs_to IS NULL OR belongs_to = '')";
                                 if (!empty($sqlCondition)) {
                                     $query .= " AND $sqlCondition";
+                                    logUser($_SESSION[ 'username' ], 'User selected filter by: ' . $selectedFilter);
                                 }
                                 $query .= " LIMIT $initial_page, $limit";
 

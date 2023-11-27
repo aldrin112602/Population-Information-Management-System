@@ -1,6 +1,7 @@
 <?php 
     require_once '../config.php';
     require_once '../global.php';
+    require_once './audit_trails.php';
 
     if(isset($_SESSION['role'])) {
         if($_SESSION['role'] == 'super_admin') {
@@ -13,6 +14,7 @@
     }
 
     $barangay = $_GET[ 'barangay' ] ?? null;
+    logUser($_SESSION['username'], 'Print report generated successfully!');
 
 ?>
 

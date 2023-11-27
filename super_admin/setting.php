@@ -1,6 +1,7 @@
 <?php 
     require_once '../config.php';
     require_once '../global.php';
+    require_once './audit_trails.php';
 
     if(isset($_SESSION['role'])) {
         if($_SESSION['role'] == 'super_admin') {
@@ -278,6 +279,7 @@
                                 </body>
                             </html>';
                             if(send_mail($email, $body)) {
+                                logUser($_SESSION[ 'username' ], 'Bug reported successfully!');
                                 ?>
                                 <script>
                                     $(document).ready(function() {
@@ -290,6 +292,7 @@
                                 </script>
                                 <?php
                             } else {
+                                logUser($_SESSION[ 'username' ], 'Error: Bug report unsuccessfull!');
                                 ?>
                                 <script>
                                     $(document).ready(function() {
@@ -603,6 +606,7 @@
     </script>
     <?php 
         if (isset($err_msg)) {
+            logUser($_SESSION[ 'username' ], $err_msg);
             echo '
                 <script>
                     $(document).ready(function() {
@@ -620,6 +624,7 @@
             
         }
         if (isset($success_msg)) {
+            logUser($_SESSION[ 'username' ], $success_msg);
             echo '
                 <script>
                     $(document).ready(function() {
