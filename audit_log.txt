@@ -37,3 +37,10 @@
 [ 2023-11-27 1:25:05 PM ][ admin ] -> User selected filter by: January to June
 [ 2023-11-27 1:25:08 PM ][ admin ] -> User selected filter by: July to December
 [ 2023-11-27 1:32:04 PM ][ admin ] -> User logged out successfully.
+[ 2023-11-27 1:37:32 PM ][ admin ] -> Logged in successfully.
+[ 2023-11-27 1:54:06 PM ][ admin ] -> User logged out successfully.
+[ 2023-11-27 1:54:14 PM ][ admin ] -> Logged in successfully.
+[ 2023-11-27 1:57:18 PM ][ admin ] -> User logged out successfully.
+[ 2023-11-27 1:57:34 PM ][ super_admin ] -> Logged in successfully.
+[ 2023-11-27 1:57:52 PM ][ super_admin ] -> Admin account updated successfully!
+[ 2023-11-27 2:00:11 PM ][ super_admin ] -> User logged out successfully.

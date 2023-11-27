@@ -98,9 +98,9 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' && isset( $_GET[ 'update_username' 
             $sql = null;
 
             if(!empty($password)) {
-                $sql = "UPDATE accounts SET email = '$email', unique_id = '$unique_id', username = '$newUsername', password = '$newPass', municipality = '$municipality', province = '$province', barangay = '$barangay' WHERE username = '$username'";
+                $sql = "UPDATE accounts SET email = '$email', username = '$newUsername', password = '$newPass', municipality = '$municipality', province = '$province', barangay = '$barangay' WHERE username = '$username'";
             } else {
-                $sql = "UPDATE accounts SET email = '$email', unique_id = '$unique_id', username = '$newUsername', municipality = '$municipality', province = '$province', barangay = '$barangay' WHERE username = '$username'";
+                $sql = "UPDATE accounts SET email = '$email', username = '$newUsername', municipality = '$municipality', province = '$province', barangay = '$barangay' WHERE username = '$username'";
             }
 
             if ( mysqli_query( $conn, $sql ) ) {
