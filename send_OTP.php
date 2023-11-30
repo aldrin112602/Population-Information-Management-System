@@ -36,7 +36,7 @@ function send_mail($email, $bodytemplate, $subject = 'Login Verification: Your O
             $mail->send();
             $success = true;
         } catch ( Exception $e ) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $success = false;
         }
 
         return $success;

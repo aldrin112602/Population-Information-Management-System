@@ -4,6 +4,9 @@ require_once './config.php';
 require_once './global.php';
 require_once './audit_trails.php';
 
+if(isset($_SESSION['reset_verification']) || isset($_SESSION['new_password'])) header('location: ./forgot_password.php');
+
+
 $username = $password = $err_msg = $success_msg = null;
 if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
     $post = validate_post_data( $_POST );

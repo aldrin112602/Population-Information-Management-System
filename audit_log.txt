@@ -44,3 +44,7 @@
 [ 2023-11-27 1:57:34 PM ][ super_admin ] -> Logged in successfully.
 [ 2023-11-27 1:57:52 PM ][ super_admin ] -> Admin account updated successfully!
 [ 2023-11-27 2:00:11 PM ][ super_admin ] -> User logged out successfully.
+[ 2023-11-30 9:03:31 PM ][ super_admin ] -> Logged in successfully.
+[ 2023-11-30 9:04:01 PM ][ super_admin ] -> User logged out successfully.
+[ 2023-11-30 9:10:43 PM ][ super_admin ] -> Password reset successfully!
+[ 2023-11-30 9:12:22 PM ][ super_admin ] -> Password reset successfully!
