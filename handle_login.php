@@ -37,6 +37,8 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset($_POST[ 'username' ])) {
                     $_SESSION['validate_otp'] = $token;
                     $_SESSION[ 'username' ] = $row[ 'username' ];
                     $_SESSION[ 'password' ] = $row[ 'password' ];
+                    $_SESSION['start'] = time();
+                    $_SESSION['expire'] = $_SESSION['start'] + (10 * 60);
                     logUser($row[ 'username' ], 'Successfully send OTP for login security.');
                 }
             } else {

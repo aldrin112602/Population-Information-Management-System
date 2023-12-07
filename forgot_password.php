@@ -189,13 +189,23 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['password'])) {
         ?>
         <script>
         let remaining_time = parseInt(<?php echo(($_SESSION['expire'] - time()) / 60) * 60 ?>);
-        setInterval(() => {
+        let interval = setInterval(() => {
             if (remaining_time > 0) remaining_time--;
             else {
                 $('#time').html('<code>Verification code expired!</code>');
+                Swal.fire({
+                    title: "Opsss!",
+                    text: "verification code expired!",
+                    icon: "error",
+                    onClose: function() {
+                        location.href = "./clear_session.php";
+                    }
+                });
+                clearInterval(interval);
                 return;
             }
-            $('#time').html('Verification code will be expired <br> after <code>' + remaining_time + 's</code>');
+            $('#time').html('Verification code will be expired <br> after <code>' + remaining_time +
+            's</code>');
         }, 1000);
         </script>
         <form action="" method="post" class="form p-5 text-white col-12 col-md-4 col-lg-3">
@@ -217,7 +227,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['password'])) {
         <form action="" method="post" class="form p-5 text-white col-12 col-md-4 col-lg-3">
             <h1 class="text-center fw-bolder fs-4">Create new password</h1>
             <div class="container my-3">
-                <label class="mx-2">Enter password password</label>
+                <label class="mx-2">Enter password</label>
                 <input value="<?php echo $_POST[ 'password' ] ?? null ?>" required type="password"
                     class="form-control form-control-lg input" name="password">
             </div>

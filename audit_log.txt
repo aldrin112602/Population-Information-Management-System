@@ -48,3 +48,33 @@
 [ 2023-11-30 9:04:01 PM ][ super_admin ] -> User logged out successfully.
 [ 2023-11-30 9:10:43 PM ][ super_admin ] -> Password reset successfully!
 [ 2023-11-30 9:12:22 PM ][ super_admin ] -> Password reset successfully!
+[ 2023-11-30 9:34:26 AM ][ super_admin ] -> Logged in successfully.
+[ 2023-11-30 9:39:22 AM ][ super_admin ] -> User logged out successfully.
+[ 2023-12-01 12:51:25 PM ][ super_admin ] -> Logged in successfully.
+[ 2023-12-01 1:09:44 PM ][ super_admin ] -> User logged out successfully.
+[ 2023-12-01 1:10:51 PM ][ admin ] -> Logged in successfully.
+[ 2023-12-01 5:46:27 PM ][ admin ] -> User logged out successfully.
+[ 2023-12-01 5:58:33 PM ][ super_admin ] -> Logged in successfully.
+[ 2023-12-01 6:50:46 PM ][ super_admin ] -> User logged out successfully.
+[ 2023-12-01 6:50:55 PM ][ admin ] -> Logged in successfully.
+[ 2023-12-01 9:05:25 PM ][ admin ] -> User logged out successfully.
+[ 2023-12-01 9:31:35 PM ][ super_admin ] -> Logged in successfully.
+[ 2023-12-01 9:45:21 PM ][ super_admin ] -> User logged out successfully.
+[ 2023-12-01 9:45:46 PM ][ admin ] -> Logged in successfully.
+[ 2023-12-01 9:59:19 PM ][ admin ] -> User logged out successfully.
+[ 2023-12-06 10:36:37 AM ][ admin ] -> Logged in successfully.
+[ 2023-12-06 10:37:25 AM ][ admin ] -> 2FA (ON) successfully!
+[ 2023-12-06 10:37:34 AM ][ admin ] -> User logged out successfully.
+[ 2023-12-06 10:37:52 AM ][ admin ] -> Successfully send OTP for login security.
+[ 2023-12-06 10:38:22 AM ][ admin ] -> User  successfully validate OTP for Login authentication.
+[ 2023-12-06 10:38:22 AM ][ admin ] -> Logged in successfully.
+[ 2023-12-06 10:40:15 AM ][ admin ] -> User logged out successfully.
+[ 2023-12-06 11:02:09 AM ][ super_admin ] -> Password reset successfully!
+[ 2023-12-06 11:03:27 AM ][ super_admin ] -> Logged in successfully.
+[ 2023-12-06 11:03:43 AM ][ super_admin ] -> 2FA (ON) successfully!
+[ 2023-12-06 11:03:47 AM ][ super_admin ] -> User logged out successfully.
+[ 2023-12-06 11:04:03 AM ][ super_admin ] -> Successfully send OTP for login security.
+[ 2023-12-06 11:04:58 AM ][ super_admin ] -> Successfully send OTP for login security.
+[ 2023-12-06 11:16:29 AM ][ super_admin ] -> Successfully send OTP for login security.
+[ 2023-12-06 11:18:50 AM ][ super_admin ] -> User  successfully validate OTP for Login authentication.
+[ 2023-12-06 11:18:50 AM ][ super_admin ] -> Logged in successfully.

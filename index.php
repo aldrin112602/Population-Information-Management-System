@@ -80,7 +80,7 @@
                                 <span style="letter-spacing: 2px; font-size: 7rem; color: #009FBD;">PIMS</span>
                             </h1>
                             <h4 style="line-height: 35px;">
-                                The Future of Population Management: Cabarroguis Municipality's Information Monitoring
+                                The Future of Population Management: Tanay Municipality's Information Monitoring
                                 System
                             </h4>
                         </div>

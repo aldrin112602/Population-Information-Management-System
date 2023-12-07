@@ -80,7 +80,7 @@
       " class="w-full d-flex align-items-center justify-content-center flex-column px-3">
         <img src="img/pims logo.png" alt="pims logo" class="img-fluid mb-4" width="330px">
         <?php if(!isset($_SESSION['validate_otp'])) { ?>
-        <form action="" method="post" class="form p-5 text-white col-12 col-md-4 col-lg-3">
+        <form action="" method="post" class="form p-5 text-white col-12 col-md-4">
             <h1 class="text-center fw-bolder">Login</h1>
             <div class="container my-3">
                 <label for="username" class="mx-2">USERNAME</label>
@@ -92,7 +92,7 @@
                 <input value="<?php echo $password ?>" required type="password"
                     class="form-control form-control-lg input" id="password" name="password">
             </div>
-            <div class="d-flex align-items-center justify-content-end px-4">
+            <div class="d-flex align-items-center justify-content-end px-4" style="margin-right: 30px">
                 <a href="./forgot_password.php" class="nav-link"><small>Forgot password?</small></a>
             </div>
             <div class="container my-3 text-center">
@@ -100,8 +100,32 @@
             </div>
         </form>
         <?php } else { ?>
-        <form action="" method="post" class="form p-5 text-white col-12 col-md-4 col-lg-3">
+        <script>
+        let remaining_time = parseInt(<?php echo(($_SESSION['expire'] - time()) / 60) * 60 ?>);
+        let interval = setInterval(() => {
+            if (remaining_time > 0) remaining_time--;
+            else {
+                $('#time').html('<code>Verification code expired!</code>');
+                Swal.fire({
+                    title: "Opsss!",
+                    text: "verification code expired!",
+                    icon: "error",
+                    onClose: function() {
+                        location.href = "./clear_session.php";
+                    }
+                });
+                clearInterval(interval);
+                return;
+            }
+            $('#time').html('Verification code will be expired <br> after <code>' + remaining_time +
+            's</code>');
+        }, 1000);
+        </script>
+        <form action="" method="post" class="form p-5 text-white col-12 col-md-4">
             <h1 class="text-center fw-bolder fs-4">OTP verification</h1>
+            <h3 class="text-center fw-semibold fs-6 p-3 text-muted">We have sent a six digit code in your email address!
+            </h3>
+            <p id="time" class=" text-muted px-3 text-center" style="font-size: 14px;"></p>
             <div class="container my-3">
                 <label for="otp" class="mx-2">Enter 6 digits code:</label>
                 <input placeholder="xxxxxx" value="<?php echo $_POST[ 'otp' ] ?? null ?>" required type="number"
@@ -109,7 +133,7 @@
             </div>
             <div class="container my-3 text-center">
                 <button type="submit" class="btn">Verify</button><br>
-                <p class="mt-3 fs-6">Didn't receive OTP? <a href="" class="text-white">Resend</a></p>
+                <!-- <p class="mt-3 fs-6">Didn't receive OTP? <a href="" class="text-white">Resend</a></p> -->
             </div>
         </form>
 
