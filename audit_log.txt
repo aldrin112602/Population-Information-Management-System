@@ -78,3 +78,20 @@
 [ 2023-12-06 11:16:29 AM ][ super_admin ] -> Successfully send OTP for login security.
 [ 2023-12-06 11:18:50 AM ][ super_admin ] -> User  successfully validate OTP for Login authentication.
 [ 2023-12-06 11:18:50 AM ][ super_admin ] -> Logged in successfully.
+[ 2023-12-06 11:29:28 AM ][ super_admin ] -> User logged out successfully.
+[ 2023-12-06 11:29:43 AM ][ admin ] -> Successfully send OTP for login security.
+[ 2023-12-06 11:30:16 AM ][ admin ] -> User  successfully validate OTP for Login authentication.
+[ 2023-12-06 11:30:16 AM ][ admin ] -> Logged in successfully.
+[ 2023-12-06 11:30:33 AM ][ admin ] -> User selected filter by: January to June
+[ 2023-12-06 11:30:38 AM ][ admin ] -> User selected filter by: July to December
+[ 2023-12-06 11:30:44 AM ][ admin ] -> Print report generated successfully!
+[ 2023-12-06 11:31:00 AM ][ admin ] -> User selected filter by: July to December
+[ 2023-12-06 11:31:01 AM ][ admin ] -> Print report generated successfully!
+[ 2023-12-06 11:31:22 AM ][ admin ] -> 2FA (OFF) successfully!
+[ 2023-12-06 11:31:45 AM ][ admin ] -> Logged in successfully.
+[ 2023-12-06 11:31:56 AM ][ admin ] -> User selected filter by: July to December
+[ 2023-12-06 11:31:59 AM ][ admin ] -> Print report generated successfully!
+[ 2023-12-06 11:56:30 AM ][ admin ] -> Incorrect password!
+[ 2023-12-06 11:56:39 AM ][ admin ] -> Password must atleast have one digit!
+[ 2023-12-06 11:57:54 AM ][ admin ] -> Incorrect password!
+[ 2023-12-06 11:58:05 AM ][ admin ] -> Password must atleast have one digit!

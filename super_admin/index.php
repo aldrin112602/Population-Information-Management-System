@@ -311,7 +311,7 @@
                             })
                             </script>
                         </div>
-                        <a role="button" href="./print_report.php?barangay=<?php echo $_GET['barangay'] ?? $brgy ?>"
+                        <a role="button" href="./output-csv.php?barangay=<?php echo $_GET['barangay'] ?? $brgy ?>"
                             class="btn btn-primary d-flex align-items-center justify-content-start gap-2"><i
                                 class="fa fa-download" aria-hidden="true"></i> Download data</a>
                     </div>

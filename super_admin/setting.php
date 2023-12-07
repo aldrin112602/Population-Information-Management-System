@@ -120,8 +120,14 @@
             }
         }
 
+        $sql = "SELECT * FROM accounts WHERE username = '{$_SESSION['username']}' LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+
         // handle change password
         if(isset($_POST['change-password'])) {
+            
+            $pwd = md5(trim($_POST['password']));
             $inpt_password = trim($_POST['pswd']);
             $hashPass = md5($inpt_password);
             $confirm_password = trim($_POST['con-pswd']);
@@ -133,7 +139,8 @@
             $length       =  strlen( $inpt_password ) < 8;
 
             // validate code 
-            if ( !$lowercase ) $err_msg  = 'Password must atleast have one lowercase!';
+            if($pwd != $row['password']) $err_msg  = 'Incorrect password!';
+            elseif ( !$lowercase ) $err_msg  = 'Password must atleast have one lowercase!';
             elseif ( !$_number ) $err_msg = 'Password must atleast have one digit!';
             elseif ( !$specialChars ) $err_msg  = 'Password must atleast have one special character!';
             elseif ( $length ) $err_msg  = 'Password must atleast eight characters!';
@@ -469,11 +476,14 @@
                                             CHANGE PASSWORD
                                         </h5>
                                         <form action="" method="post" class="px-md-4 col-md-8 mx-md-4">
+                                            <p>Ensure your account is using a long, random password to stay secure.</p>
                                             <div class="position-relative px-md-4 my-3">
                                                 <label for="" class="mb-1 form-label fw-semibold fs-5">Current
                                                     Password</label>
-                                                <input id="pswd" readonly type="password"
-                                                    value="<?php echo $password; ?>"
+                                                <input id="pswd" type="password"
+                                                    value="<?php echo $_POST['password'] ?? null ?>"
+                                                    required
+                                                    name="password"
                                                     class="form-control form-control-lg border-1 border-primary">
                                                 <!-- eye icon -->
                                                 <span class="material-symbols-outlined position-absolute" id="eye"
