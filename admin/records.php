@@ -1,7 +1,6 @@
 <?php 
     require_once '../config.php';
     require_once '../global.php';
-    require_once './audit_trails.php';
 
     if(isset($_SESSION['role'])) {
         if($_SESSION['role'] == 'super_admin') {
@@ -47,6 +46,8 @@
     <!-- google icons -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
@@ -63,6 +64,12 @@
 
     <!-- w3JS -->
     <script src="https://www.w3schools.com/lib/w3.js"></script>
+
+    <!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
     <!-- custom styles -->
@@ -87,6 +94,17 @@
         resize: both;
         cursor: none;
     }
+    .modal {
+    z-index: 1050; /* Adjust this value as needed */
+}
+
+    .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
     </style>
 </head>
 
@@ -103,12 +121,11 @@
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav flex-column">
                             <li class="nav-item text-center">
                                 <img src="../img/pims logo.png" alt="pims logo" class="img-fluid" width="200px">
@@ -132,18 +149,18 @@
                                     Records
                                 </a>
                             </li>
+                            <!-- <li class="nav-item my-1">
+                                <a href="./print_report.php"
+                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
+                                    <span class="material-symbols-outlined">print</span>
+                                    Print report
+                                </a>
+                            </li> -->
                             <li class="nav-item my-1">
                                 <a href="setting.php"
                                     class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
                                     <span class="material-symbols-outlined">settings</span>
                                     Settings
-                                </a>
-                            </li>
-                            <li class="nav-item my-1">
-                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#bugReport"
-                                    class="text-center text-white d-flex align-items-center justify-content-start gap-2 ml-4 fs-6">
-                                    <span class="material-symbols-outlined">bug_report</span>
-                                    Bug report
                                 </a>
                             </li>
                             <li class="nav-item mt-3">
@@ -170,97 +187,6 @@
                     <!-- ============================================================== -->
                     <!-- pageheader  -->
                     <!-- ============================================================== -->
-                    <?php 
-                        require_once('../bug_report.php');
-                        if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bugTitle'])) {
-                            $bugTitle = trim($_POST['bugTitle']);
-                            $bugDescription = trim($_POST['bugDescription']);
-                            $expectedOutcome = trim($_POST['expectedOutcome']);
-                            $actualOutcome = trim($_POST['actualOutcome']);
-                            $email = 'caballeroaldrin02@gmail.com';
-
-                            $body = '
-                            <!DOCTYPE html>
-                            <html>
-                                <head>
-                                    <title>Bug reported</title>
-                                </head>
-                                <body>
-                                    <p>Dear ' . $email . ',</p>
-                                    <p>A bug has been reported with the following details:</p>
-                                    <p><b>Title:</b> ' . $bugTitle . '</p>
-                                    <p><b>Description:</b> ' . $bugDescription . '</p>
-                                    <p><b>Expected Outcome:</b> ' . $expectedOutcome . '</p>
-                                    <p><b>Actual Outcome:</b> ' . $actualOutcome . '</p>
-                                    <p>If you have any additional information or if further clarification is needed, please respond to this email.</p>
-                                    <p>Thank you for your attention to this matter.</p>
-                                    <p>Sincerely,<br>Your Bug Reporting System</p>
-                                </body>
-                            </html>';
-                            if(send_mail($email, $body)) {
-                                ?>
-                                <script>
-                                    $(document).ready(function() {
-                                        Swal.fire({
-                                            title: "Success!",
-                                            text: "Bug reported successfully",
-                                            icon: "success"
-                                        });
-                                    })
-                                </script>
-                                <?php
-                            } else {
-                                ?>
-                                <script>
-                                    $(document).ready(function() {
-                                        Swal.fire({
-                                            title: "Error!",
-                                            text: "Something went wrong, please try again",
-                                            icon: "error"
-                                        });
-                                    })
-                                </script>
-                                <?php
-                            }
-
-                        }
-                    ?>
-                    <form action="#" method="post" class="modal fade" id="bugReport" data-bs-backdrop="static"
-                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5 d-flex align-items-center justify-content-between gap-3"
-                                        id="staticBackdropLabel">Bug report <span
-                                            class="material-symbols-outlined fs-3">bug_report</span></h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Please let us know if you encountered a problem while using the app. Your feedback helps improve the System.</p>
-                                    <label for="bugTitle" class="form-label">Bug Title:</label>
-                                    <input type="text" id="bugTitle" name="bugTitle" class="form-control rounded" required>
-                                    <br>
-                                    <label for="bugDescription" class="form-label">Bug Description:</label>
-                                    <textarea id="bugDescription" name="bugDescription" class="form-control rounded"
-                                        required></textarea>
-                                    <br>
-                                    <label for="expectedOutcome" class="form-label">Expected Outcome:</label>
-                                    <textarea id="expectedOutcome" name="expectedOutcome" class="form-control rounded"
-                                        required></textarea>
-                                    <br>
-                                    <label for="actualOutcome" class="form-label">Actual Outcome:</label>
-                                    <textarea id="actualOutcome" name="actualOutcome" class="form-control rounded"
-                                        required></textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="page-header">
@@ -269,27 +195,18 @@
                                     <form action="javascript:void(0)"
                                         class="col-12 col-md-6 d-flex align-items-center justify-content-between gap-2 mb-3">
                                         <div class="position-relative" style="width: 100%; ">
-                                            <!-- search icon -->
+                                          
                                             <span class="material-symbols-outlined position-absolute" style="top: 50%;
                                                          left: 13px;
-                                                         transform: translateY(-50%);">
-                                                search
-                                            </span>
+                                                         transform: translateY(-50%);">search</span>
                                             <input oninput="w3.filterHTML('#tbl', 'tr', this.value);" type="text"
                                                 placeholder="Search here" id="searchInput"
                                                 class="form-control form-control-lg" style="
                                                 border-radius: 50px;
-                                                padding-left: 40px;
-                                            ">
-                                            <!-- voice icon -->
-                                            <span class="material-symbols-outlined position-absolute" id="startButton"
-                                                style="top: 50%;
-                                                         right: 13px;
-                                                         transform: translateY(-50%);
-                                                         cursor: pointer;">
-                                                keyboard_voice
+                                                padding-left: 40px;">
+
                                             </span>
-                                        </div>
+                                        </div> 
                                         <?php 
                                          $household_id = uniqid();
                                         ?>
@@ -378,26 +295,26 @@
                         });
                         </script>
 
-                        <div class="p-0 py-4 d-flex align-items-end justify-content-between px-0" style="width: 100%;">
-                            <div>
-                                <label for="">Filter by: </label>
-                                <select name="" id="filter_by" class="form-select">
-                                    <option value="None">None</option>
-                                    <option value="January to June"
-                                        <?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'January to June' ? 'selected' : '' ?>>
-                                        January to June</option>
-                                    <option value="July to December"
-                                        <?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'July to December' ? 'selected' : '' ?>>
-                                        July to December</option>
-                                </select>
-                            </div>
+                                <div class="p-0 py-4 d-flex justify-content-between px-0" style="width: 100%;">
+                                    <div class="d-flex align-items-center">
+                                      
+                                    </div>
 
-                            <a
-                                class="<?php echo isset($_GET['filter_by']) && $_GET['filter_by'] == 'None' || !isset($_GET['filter_by']) ? 'd-none' : 'd-flex' ?> btn text-white btn-sm  align-items-center justify-content-between gap-2 mt-5" style="background-color: #1D5B79;"
-                                href="./print_report.php?filter_by=<?php echo $_GET['filter_by'] ?>">
-                                <span class="material-symbols-outlined">print</span> Print report</a>
+                                    <div class="ms-auto d-flex gap-4">
+                                    <a class="btn text-white btn-sm align-items-center justify-content-between" style="background-color: #1D5B79;" href="./print_report.php">
+    <span class="material-symbols-outlined">print</span> Print Report
+</a>
 
-                        </div>
+<a class="btn text-white btn-sm align-items-center justify-content-between" style="background-color: #1D5B79;" href="./save_pdf_report.php">
+    <span class="material-symbols-outlined">picture_as_pdf</span> Export Report
+</a>
+
+
+                                    </div>
+                                </div>
+
+
+
                         <script>
                         $(document).ready(function() {
                             $('#filter_by').on('change', function(ev) {
@@ -407,14 +324,6 @@
                         </script>
 
                     </div>
-                    <div class="alert alert-info alert-dismissible fade show py-3" role="alert">
-                        <strong>
-                            You can edit the content inline in this table
-                        </strong>
-                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                    </div>
-
                     <div class="table-responsive mt-3" style="display: none;" id="container1">
 
                         <h5 class="fw-bold text-primary">Household data:</h5>
@@ -430,50 +339,29 @@
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                                <?php
-                                
-                                $selectedFilter = $_GET['filter_by'] ?? '';
-                                
-                                $filterConditions = [
-                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
-                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
-                                ];
+                            <?php
+    $household_page_number = (int) ($_GET['household_page'] ?? 1);
+    $limit = 5;
+    $initial_page = ($household_page_number - 1) * $limit;
 
-                                $sqlCondition = '';
+    $query = "unique_id = '{$_SESSION['unique_id']}' AND (belongs_to IS NULL OR belongs_to = '')  ORDER BY name ASC LIMIT $initial_page, $limit";
 
-                                if (array_key_exists($selectedFilter, $filterConditions)) {
-                                    $sqlCondition = $filterConditions[$selectedFilter];
-                                }
+    $data = getRows($query, 'survey_form_records_husband');
 
-                                $household_page_number = (int)($_GET['household_page'] ?? 1);
-                                $limit = 5;
-                                $initial_page = ($household_page_number - 1) * $limit;
-
-                                $query = "unique_id = '{$_SESSION['unique_id']}' AND (belongs_to IS NULL OR belongs_to = '')";
-                                if (!empty($sqlCondition)) {
-                                    $query .= " AND $sqlCondition";
-                                    logUser($_SESSION[ 'username' ], 'User selected filter by: ' . $selectedFilter);
-                                }
-                                $query .= " LIMIT $initial_page, $limit";
-
-                                $data = getRows($query, 'survey_form_records_husband');
-
-
-                                 
-                                 $rows_count = 1;
-                                 foreach($data as $row) {
-                                    ?>
-                                <tr>
+    $rows_count = 1;
+    foreach ($data as $row) {
+    ?>
+      <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['name']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_husband')">
                                         <?php echo $row['name'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household_id'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')">
@@ -482,14 +370,14 @@
 
 
                                     <!-- household -->
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')">
                                         <?php echo $row['household'] ?>
                                     </th>
 
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')">
@@ -505,9 +393,11 @@
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
-                                        <button class="btn btn-sm btn-primary"
+                                            <button class="btn btn-sm btn-primary"
                                             onclick="showMoreData(<?php echo $row['id'] ?>, 'survey_form_records_husband')">View
                                             more</button>
+
+
 
                                     </td>
                                 </tr>
@@ -518,29 +408,30 @@
                             </tbody>
                         </table>
                         <nav class="d-flex align-items-center justify-content-end py-3">
-                            <ul class="pagination gap-0">
-                                <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?<?php echo isset($_GET['filter_by']) ? 'filter_by=' . $_GET['filter_by'] . '&' : '' ?>household_page=<?php 
-                                    if ($household_page_number > 1) {
-                                        $household_page_number--;
-                                    }
-                                    echo $household_page_number;
-                                    ?>">Previous</a>
-                                </li>
-                                <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary"
-                                        href="?<?php echo isset($_GET['filter_by']) ? 'filter_by=' . $_GET['filter_by'] . '&' : '' ?>household_page=<?php echo $household_page_number; ?>">
-                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
-                                    </a>
-                                </li>
-                                <li class="page-item p-2 bg-light">
-                                    <a class="page-link bg-primary" href="?<?php echo isset($_GET['filter_by']) ? 'filter_by=' . $_GET['filter_by'] . '&' : '' ?>household_page=<?php 
-                                    $household_page_number++;
-                                    echo $household_page_number;
-                                    ?>">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
+    <ul class="pagination gap-0">
+        <li class="page-item p-2 bg-light">
+            <a class="page-link bg-primary" href="?household_page=<?php 
+            if ($household_page_number > 1) {
+                $household_page_number--;
+            }
+            echo $household_page_number;
+            ?>">Previous</a>
+        </li>
+        <li class="page-item p-2 bg-light">
+            <a class="page-link bg-primary"
+                href="?household_page=<?php echo $household_page_number; ?>">
+                <?php echo $_GET['household_page'] ?? $household_page_number ?>
+            </a>
+        </li>
+        <li class="page-item p-2 bg-light">
+            <a class="page-link bg-primary" href="?household_page=<?php 
+            $household_page_number++;
+            echo $household_page_number;
+            ?>">Next</a>
+        </li>
+    </ul>
+</nav>
+
                     </div>
                     <div class="table-responsive mt-3" style="display: none;" id="container2">
 
@@ -557,47 +448,32 @@
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                                <?php
+                            <?php
+$families_page_number = (int) ($_GET['families_page'] ?? 1);
+$limit = 5;
+$initial_page = ($families_page_number - 1) * $limit;
 
-                                $selectedFilter = $_GET['filter_by'] ?? '';
-                                $filterConditions = [
-                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
-                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
-                                ];
+$query = "unique_id = '{$_SESSION['unique_id']}' ORDER BY name ASC LIMIT $initial_page, $limit"; // Default query without filter
 
-                                $sqlCondition = '';
+$data = getRows($query, 'survey_form_records_husband');
 
-                                if (array_key_exists($selectedFilter, $filterConditions)) {
-                                    $sqlCondition = $filterConditions[$selectedFilter];
-                                }
+$rows_count = 1;
+foreach ($data as $row) {
+    // Your code to handle the retrieved data
 
-                                $families_page_number = (int)($_GET['families_page'] ?? 1);
-                                $limit = 5;
-                                $initial_page = ($families_page_number - 1) * $limit;
+?>
 
-                                $query = "unique_id = '{$_SESSION['unique_id']}'";
-                                if (!empty($sqlCondition)) {
-                                    $query .= " AND $sqlCondition";
-                                }
-                                $query .= " LIMIT $initial_page, $limit";
-
-                                $data = getRows($query, 'survey_form_records_husband');
-
-                                 
-                                 $rows_count = 1;
-                                 foreach($data as $row) {
-                                    ?>
                                 <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['name']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_husband')">
                                         <?php echo $row['name'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household_id'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')">
@@ -606,14 +482,14 @@
 
 
                                     <!-- household -->
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')">
                                         <?php echo $row['household'] ?>
                                     </th>
 
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')">
@@ -667,7 +543,46 @@
                         </nav>
                     </div>
                     <div class="table-responsive mt-3" style="display: none;" id="container3">
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="husbandModal" tabindex="-1" role="dialog" aria-labelledby="husbandModalLabel" aria-hidden="true">
+    <!-- Modal content -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="husbandModalLabel">Husband Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            
+                <div id="husbandData"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script>
+    function openHusbandModal(rowId) {
+        // Ajax call to retrieve data based on rowId
+        $.ajax({
+            url: 'retrieve_husband_data.php', // Replace with your PHP file to fetch husband data
+            method: 'POST',
+            data: { id: rowId },
+            success: function(response) {
+                // Update the modal content with the retrieved data
+                $('#husbandData').html(response);
+                $('#husbandModal').modal('show'); // Show the modal
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
                         <h5 class="fw-bold text-primary">Husband data:</h5>
                         <table class="table table-hover table-striped">
                             <thead>
@@ -681,46 +596,30 @@
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                                <?php
-                                // Get the selected filter value from the URL parameter
-                                $selectedFilter = $_GET['filter_by'] ?? '';
-                                $filterConditions = [
-                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
-                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
-                                ];
+                            <?php
+$husband_page_number = (int) ($_GET['husband_page'] ?? 1);
+$limit = 5;
+$initial_page = ($husband_page_number - 1) * $limit;
 
-                                $sqlCondition = '';
+$query = "unique_id = '{$_SESSION['unique_id']}' ORDER BY name ASC LIMIT $initial_page, $limit"; // Default query without filter
 
-                                if (array_key_exists($selectedFilter, $filterConditions)) {
-                                    $sqlCondition = $filterConditions[$selectedFilter];
-                                }
+$data = getRows($query, 'survey_form_records_husband');
 
-                                $husband_page_number = (int)($_GET['husband_page'] ?? 1);
-                                $limit = 5;
-                                $initial_page = ($husband_page_number - 1) * $limit;
+foreach ($data as $row) {
+    // Your code to handle the retrieved data
 
-                                $query = "unique_id = '{$_SESSION['unique_id']}'";
-                                if (!empty($sqlCondition)) {
-                                    $query .= " AND $sqlCondition";
-                                }
-                                $query .= " LIMIT $initial_page, $limit";
-
-                                $data = getRows($query, 'survey_form_records_husband');
-
-
-                                 foreach($data as $row) {
-                                    ?>
-                                <tr>
+?>
+ <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['name']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_husband')">
                                         <?php echo $row['name'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household_id'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_husband')">
@@ -729,14 +628,14 @@
 
 
                                     <!-- household -->
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_husband')">
                                         <?php echo $row['household'] ?>
                                     </th>
 
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_husband')">
@@ -803,48 +702,36 @@
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                                <?php
-                                // Get the selected filter value from the URL parameter
-                                $selectedFilter = $_GET['filter_by'] ?? '';
-                                $filterConditions = [
-                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
-                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
-                                ];
+                            <?php
+// Other existing code remains unchanged...
 
-                                $sqlCondition = '';
+$wife_page_number = (int)($_GET['wife_page'] ?? 1);
+$limit = 5;
+$initial_page = ($wife_page_number - 1) * $limit;
 
-                                if (array_key_exists($selectedFilter, $filterConditions)) {
-                                    $sqlCondition = $filterConditions[$selectedFilter];
-                                }
+// Construct the basic query without the filter condition
+$query = "unique_id = '{$_SESSION['unique_id']}' ORDER BY name ASC LIMIT $initial_page, $limit";
 
-                                $wife_page_number = (int)($_GET['wife_page'] ?? 1);
-                                $limit = 5;
-                                $initial_page = ($wife_page_number - 1) * $limit;
+// Fetch data without applying any filter condition
+$data = getRows($query, 'survey_form_records_wife');
 
-                                $query = "unique_id = '{$_SESSION['unique_id']}'";
-                                if (!empty($sqlCondition)) {
-                                    $query .= " AND $sqlCondition";
-                                }
-                                $query .= " LIMIT $initial_page, $limit";
+// Display the fetched data
+foreach($data as $row) {
+    // Display data rows here
 
-                                $data = getRows($query, 'survey_form_records_wife');
-
-
-                                 
-                                 $rows_count = 1;
-                                 foreach($data as $row) {
-                                    ?>
-                                <tr>
+?>
+ 
+                            <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['name']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_wife')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_wife')">
                                         <?php echo $row['name'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household_id'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_wife')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_wife')">
@@ -853,14 +740,14 @@
 
 
                                     <!-- household -->
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_wife')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_wife')">
                                         <?php echo $row['household'] ?>
                                     </th>
 
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_wife')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_wife')">
@@ -884,7 +771,7 @@
                                 </tr>
                                 <?php
                                 $rows_count++;
-                                 }
+}
                                 ?>
 
                             </tbody>
@@ -927,47 +814,37 @@
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                                <?php
-                                // Get the selected filter value from the URL parameter
-                                $selectedFilter = $_GET['filter_by'] ?? '';
-                                $filterConditions = [
-                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
-                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
-                                ];
+                            <?php
+// Other existing code remains unchanged...
 
-                                $sqlCondition = '';
+$children_page_number = (int)($_GET['children_page'] ?? 1);
+$limit = 5;
+$initial_page = ($children_page_number - 1) * $limit;
 
-                                if (array_key_exists($selectedFilter, $filterConditions)) {
-                                    $sqlCondition = $filterConditions[$selectedFilter];
-                                }
+// Construct the basic query without the filter condition
+$query = "unique_id = '{$_SESSION['unique_id']}' ORDER by name ASC LIMIT $initial_page, $limit";
 
-                                $children_page_number = (int)($_GET['children_page'] ?? 1);
-                                $limit = 5;
-                                $initial_page = ($children_page_number - 1) * $limit;
+// Fetch data without applying any filter condition
+$data = getRows($query, 'survey_form_records_children');
 
-                                $query = "unique_id = '{$_SESSION['unique_id']}'";
-                                if (!empty($sqlCondition)) {
-                                    $query .= " AND $sqlCondition";
-                                }
-                                $query .= " LIMIT $initial_page, $limit";
+// Display the fetched data
 
-                                $data = getRows($query, 'survey_form_records_children');
+foreach($data as $row) {
+    // Display data rows here
 
-                                 
-                                 $rows_count = 1;
-                                 foreach($data as $row) {
-                                    ?>
-                                <tr>
+?>
+  
+                            <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['name']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_children')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_children')">
                                         <?php echo $row['name'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household_id'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_children')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_children')">
@@ -976,14 +853,14 @@
 
 
                                     <!-- household -->
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_children')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_children')">
                                         <?php echo $row['household'] ?>
                                     </th>
 
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_children')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_children')">
@@ -1050,49 +927,36 @@
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                                <?php
-                                // Get the selected filter value from the URL parameter
-                                $selectedFilter = $_GET['filter_by'] ?? '';
-                                $filterConditions = [
-                                    'January to June' => "MONTH(filter_month) BETWEEN 1 AND 6",
-                                    'July to December' => "MONTH(filter_month) BETWEEN 7 AND 12",
-                                ];
+                            <?php
+// Other existing code remains unchanged...
 
-                                $sqlCondition = '';
+$otherhousehold_page_number = (int)($_GET['otherhousehold_page'] ?? 1);
+$limit = 5;
+$initial_page = ($otherhousehold_page_number - 1) * $limit;
 
-                                if (array_key_exists($selectedFilter, $filterConditions)) {
-                                    $sqlCondition = $filterConditions[$selectedFilter];
-                                }
+// Construct the basic query without the filter condition
+$query = "unique_id = '{$_SESSION['unique_id']}' ORDER by name ASC LIMIT $initial_page, $limit";
 
-                                $otherhousehold_page_number = (int)($_GET['otherhousehold_page'] ?? 1);
-                                $limit = 5;
-                                $initial_page = ($otherhousehold_page_number - 1) * $limit;
+// Fetch data without applying any filter condition
+$data = getRows($query, 'survey_form_records_household_member');
 
-                                $query = "unique_id = '{$_SESSION['unique_id']}'";
-                                if (!empty($sqlCondition)) {
-                                    $query .= " AND $sqlCondition";
-                                }
-                                $query .= " LIMIT $initial_page, $limit";
+// Display the fetched data
+$rows_count = 1;
+foreach($data as $row) {
+    // Display data rows here
 
-                                $data = getRows($query, 'survey_form_records_household_member');
-
-
-
-                                 
-                                 $rows_count = 1;
-                                 foreach($data as $row) {
-                                    ?>
-                                <tr>
+?>
+   <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['name']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_household')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'name', 'survey_form_records_household')">
                                         <?php echo $row['name'] ?>
                                     </th>
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household_id'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_household')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household_id', 'survey_form_records_household')">
@@ -1101,14 +965,14 @@
 
 
                                     <!-- household -->
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['household']  ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_household')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'household', 'survey_form_records_household')">
                                         <?php echo $row['household'] ?>
                                     </th>
 
-                                    <th scope="row" spellcheck="false" contenteditable="true" title="Click to edit"
+                                    <th scope="row" spellcheck="false" contenteditable="false" title="Click to edit"
                                         data-original-value="<?php echo $row['sex'] ?>"
                                         onblur="updateContent(this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_household')"
                                         onkeypress="handleKeyPress(event, this, <?php echo $row['id']; ?>, 'sex', 'survey_form_records_household')">
@@ -1323,6 +1187,11 @@
     <script>
     'use strict'
 
+    $('.edit_details').click(function(){
+		uni_modal("Manage Details","edit_details.php?id="+$(this).attr('data-id'),"mid-large")
+		
+	})
+
     function expandCamelCase(input) {
         return input.replace(/([A-Z])/g, ' $1')
             .replace(/^./, function(str) {
@@ -1330,24 +1199,106 @@
             })
             .trim();
     }
+    <?php
+                $purokquery = "SELECT puroks AS purok_counter FROM barangay WHERE unique_id = '{$_SESSION['unique_id']}'";
+                $resulta = mysqli_query($conn, $purokquery);
+                $rowa = mysqli_fetch_assoc($resulta);
+                $purokCounter = $rowa['purok_counter'];
+            ?>
 
     function showMoreData(id, table_name) {
         fetchDatabaseData(id, table_name).then((data) => {
             if (data.length == 0) return
             let keyPairs = Object.entries(data[0])
-            let form_template = `<form id="editForm" class="swal2-form text-left">
+            let form_template = `<form id="editForm" class="swal2-form text-left" style="width: 100%;">
             <h5 class="fs-4 text-center">More details</h5>
             <input type="hidden" name="table_name" value="${table_name}">
-            <input type="hidden" name="id" value="${id}">
-            `;
+            <input type="hidden" name="id" value="${id}">`;
+
+            const readOnlyFields = ['barangay', 'municipality', 'province', 'household_id'];
             for (const [k, v] of keyPairs) {
-                if (!v || ['unique_id', 'id'].includes(k)) continue
-                form_template += `
-                <label class="text-left mt-2 fw-bold" style="">${expandCamelCase(k)}</label>
-                <input id="${k}" value="${v}" name="${k}" type="text" class="swal2-input my-0" required>`;
+    if (!v || k === 'id' || k === 'unique_id') continue;
+
+    const readonlyAttribute = readOnlyFields.includes(k.toLowerCase()) ? 'readonly' : '';
+  
+    let isDropdown = false;
+    let options = [];
+
+    switch (k) {
+        case 'status':
+            isDropdown = true;
+            options = ['Single', 'Married', 'Divorced', 'Widowed'];
+            break;
+        
+            case 'educationalAttainment':
+            isDropdown = true;
+            options = ['High School Graduate', 'Bachelor\'s Degree', 'Master\'s Degree', 'Doctorate', 'Other'];
+            break;
+
+        case 'sex':
+            isDropdown = true;
+            options = ['Male', 'Female', 'Other'];
+            break;
+
+        case 'occupation':
+            isDropdown = true;
+            options = ['Government Employee', 'Private Employee', 'Farmer', 'Fisherfolks',
+            'Housekeeper', 'Driver', 'Entrepreneur','Daily Wager', 'Student','None'];
+            break;
+
+        case 'placeOfWork':
+            isDropdown = true;
+            options = ['Within the Philippines', 'Abroad'];
+            break;
+
+        case 'religion':
+            isDropdown = true;
+            options = ['Christianity', 'Islam', 'Buddhism', 'Hinduism', 'Other'];
+            break;
+
+        case 'ethnicGroup':
+            isDropdown = true;
+            options = ['Bicolano', 'Ibanag', 'Ilocano', 'Other'];
+            break;
+        case 'purok':
+    isDropdown = true;
+    // Generate 'PUROK' options based on the 'purokCounter' value
+    options = [];
+    for (let i = 1; i <= parseInt('<?php echo $purokCounter; ?>'); i++) {
+        options.push(i.toString());
+    }
+    break;
+
+               default:
+                    if (k === 'dateOfBirth') {
+                        form_template += `
+                            <div style="width: 100%;">
+                                <label class="text-left mt-2 fw-bold">${expandCamelCase(k)}</label>
+                                <input id="${k}" value="${v}" name="${k}" type="date" class="swal2-input my-0" ${readonlyAttribute} style="width: 100%;">`;
+                    } else {
+                        form_template += `
+                            <div style="width: 100%;">
+                                <label class="text-left mt-2 fw-bold">${expandCamelCase(k)}</label>
+                                <input id="${k}" value="${v}" name="${k}" type="text" class="swal2-input my-0" ${readonlyAttribute} style="width: 100%;">`;
+                    }
+                    break;
             }
-            form_template += `</form>`;
-            Swal.fire({
+
+            if (isDropdown) {
+                form_template += `
+                    <div style="width: 100%;">
+                        <label class="text-left mt-2 fw-bold">${expandCamelCase(k)}</label>
+                        <select id="${k}" name="${k}" type="text" class="swal2-input my-0 styled-dropdown" style="width: 100%;">
+                            ${options.map(option => `
+                                <option value="${option}" ${v.toLowerCase() === option.toLowerCase() ? 'selected' : ''}>${option}</option>
+                            `).join('')}
+                        </select>`;
+            }
+            form_template += `</div>`;
+        }
+
+        form_template += `</form>`;
+                    Swal.fire({
                 html: form_template,
                 showCancelButton: true,
                 cancelButtonText: 'Cancel',
@@ -1368,10 +1319,8 @@
                                 timer: 3000,
                                 timerProgressBar: true,
                                 didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter',
-                                        Swal.stopTimer)
-                                    toast.addEventListener('mouseleave',
-                                        Swal.resumeTimer)
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
                                 }
                             })
 
@@ -1392,10 +1341,8 @@
                                 timer: 3000,
                                 timerProgressBar: true,
                                 didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter',
-                                        Swal.stopTimer)
-                                    toast.addEventListener('mouseleave',
-                                        Swal.resumeTimer)
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
                                 }
                             })
 
@@ -1412,6 +1359,7 @@
 
         });
     }
+
 
 
     function fetchDatabaseData(id, table_name) {
@@ -1458,7 +1406,7 @@
         t.addEventListener("click", function() {
             r.start();
         });
-    })();
+    });
 
     function updateContent(cell, id, column, tableName) {
         const newValue = cell.innerText.trim(),
@@ -1579,12 +1527,20 @@
     });
     </script>
 
+
     <!-- <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
     <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <script src="../assets/libs/js/main-js.js"></script>
+    
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

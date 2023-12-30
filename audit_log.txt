@@ -95,3 +95,34 @@
 [ 2023-12-06 11:56:39 AM ][ admin ] -> Password must atleast have one digit!
 [ 2023-12-06 11:57:54 AM ][ admin ] -> Incorrect password!
 [ 2023-12-06 11:58:05 AM ][ admin ] -> Password must atleast have one digit!
+[ 2023-12-13 10:00:59 AM ][ admin ] -> User logged out successfully.
+[ 2023-12-13 10:14:45 AM ][ super_admin ] -> Password reset successfully!
+[ 2023-12-13 10:14:57 AM ][ super_admin ] -> Successfully send OTP for login security.
+[ 2023-12-13 10:15:00 AM ][ super_admin ] -> Successfully send OTP for login security.
+[ 2023-12-13 10:15:20 AM ][ super_admin ] -> User  successfully validate OTP for Login authentication.
+[ 2023-12-13 10:15:20 AM ][ super_admin ] -> Logged in successfully.
+[ 2023-12-13 10:16:52 AM ][ super_admin ] -> Barangay added successfully!
+[ 2023-12-13 10:17:02 AM ][ super_admin ] -> Barangay removed successfully!
+[ 2023-12-13 10:18:45 AM ][ super_admin ] -> 2FA (OFF) successfully!
+[ 2023-12-13 10:19:12 AM ][ super_admin ] -> Bug reported successfully!
+[ 2023-12-13 10:19:34 AM ][ super_admin ] -> User logged out successfully.
+[ 2023-12-13 10:20:26 AM ][ admin ] -> Logged in successfully.
+[ 2023-12-13 10:22:12 AM ][ admin ] -> User selected filter by: January to June
+[ 2023-12-13 10:22:22 AM ][ admin ] -> User selected filter by: July to December
+[ 2023-12-13 10:22:30 AM ][ admin ] -> Print report generated successfully!
+[ 2023-12-13 10:22:45 AM ][ admin ] -> User selected filter by: January to June
+[ 2023-12-13 10:22:46 AM ][ admin ] -> User selected filter by: July to December
+[ 2023-12-13 10:22:48 AM ][ admin ] -> Print report generated successfully!
+[ 2023-12-13 10:23:00 AM ][ admin ] -> User selected filter by: July to December
+[ 2023-12-13 10:23:02 AM ][ admin ] -> Print report generated successfully!
+[ 2023-12-13 10:23:16 AM ][ admin ] -> User selected filter by: July to December
+[ 2023-12-13 10:23:17 AM ][ admin ] -> Print report generated successfully!
+[ 2023-12-13 10:23:33 AM ][ admin ] -> User selected filter by: July to December
+[ 2023-12-13 10:25:29 AM ][ admin ] -> User selected filter by: July to December
+[ 2023-12-13 10:25:30 AM ][ admin ] -> Print report generated successfully!
+[ 2023-12-13 10:25:54 AM ][ admin ] -> User logged out successfully.
+[ 2023-12-20 1:10:44 PM ][ admin ] -> Logged in successfully.
+[ 2023-12-30 6:27:12 AM ][ admin ] -> Logged in successfully.
+[ 2023-12-30 6:31:36 AM ][ admin ] -> User logged out successfully.
+[ 2023-12-30 6:31:47 AM ][ admin ] -> Logged in successfully.
+[ 2023-12-30 6:31:54 AM ][ admin ] -> Print report generated successfully!

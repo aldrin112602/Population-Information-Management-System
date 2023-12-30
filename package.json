@@ -1,0 +1,15 @@
+{
+  "name": "pims",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "push": "git add . && git commit -m Updated && git push"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Aldrin Caballero",
+    "email": "caballeroaldrin02@gmail.com"
+  },
+  "license": "ISC"
+}
