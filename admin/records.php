@@ -46,8 +46,8 @@
     <!-- google icons -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<!-- Bootstrap CSS -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
@@ -66,10 +66,10 @@
     <script src="https://www.w3schools.com/lib/w3.js"></script>
 
     <!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
     <!-- custom styles -->
@@ -94,17 +94,18 @@
         resize: both;
         cursor: none;
     }
-    .modal {
-    z-index: 1050; /* Adjust this value as needed */
-}
 
     .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+        z-index: 1050;
+        /* Adjust this value as needed */
+    }
 
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
     </style>
 </head>
 
@@ -195,7 +196,7 @@
                                     <form action="javascript:void(0)"
                                         class="col-12 col-md-6 d-flex align-items-center justify-content-between gap-2 mb-3">
                                         <div class="position-relative" style="width: 100%; ">
-                                          
+
                                             <span class="material-symbols-outlined position-absolute" style="top: 50%;
                                                          left: 13px;
                                                          transform: translateY(-50%);">search</span>
@@ -206,7 +207,7 @@
                                                 padding-left: 40px;">
 
                                             </span>
-                                        </div> 
+                                        </div>
                                         <?php 
                                          $household_id = uniqid();
                                         ?>
@@ -295,23 +296,25 @@
                         });
                         </script>
 
-                                <div class="p-0 py-4 d-flex justify-content-between px-0" style="width: 100%;">
-                                    <div class="d-flex align-items-center">
-                                      
-                                    </div>
+                        <div class="p-0 py-4 d-flex justify-content-between px-0" style="width: 100%;">
+                            <div class="d-flex align-items-center">
 
-                                    <div class="ms-auto d-flex gap-4">
-                                    <a class="btn text-white btn-sm align-items-center justify-content-between" style="background-color: #1D5B79;" href="./print_report.php">
-    <span class="material-symbols-outlined">print</span> Print Report
-</a>
+                            </div>
 
-<a class="btn text-white btn-sm align-items-center justify-content-between" style="background-color: #1D5B79;" href="./save_pdf_report.php">
-    <span class="material-symbols-outlined">picture_as_pdf</span> Export Report
-</a>
+                            <div class="ms-auto d-flex gap-4">
+                                <a class="btn text-white btn-sm d-flex gap-2 align-items-center justify-content-between"
+                                    style="background-color: #1D5B79;" href="./print_report.php">
+                                    <span class="material-symbols-outlined">print</span> Print Report
+                                </a>
+
+                                <a class="btn text-white btn-sm d-flex gap-2 align-items-center justify-content-between"
+                                    style="background-color: #1D5B79;" href="./save_pdf_report.php">
+                                    <span class="material-symbols-outlined">picture_as_pdf</span> Export Report
+                                </a>
 
 
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
 
 
 
@@ -339,7 +342,7 @@
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                            <?php
+                                <?php
     $household_page_number = (int) ($_GET['household_page'] ?? 1);
     $limit = 5;
     $initial_page = ($household_page_number - 1) * $limit;
@@ -351,7 +354,7 @@
     $rows_count = 1;
     foreach ($data as $row) {
     ?>
-      <tr>
+                                <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
@@ -393,9 +396,7 @@
                                             <span class="material-symbols-outlined fs-6">
                                                 close
                                             </span></button>
-                                            <button class="btn btn-sm btn-primary"
-                                            onclick="showMoreData(<?php echo $row['id'] ?>, 'survey_form_records_husband')">View
-                                            more</button>
+                                        <a href="./update_form.php?household_id=<?php echo $row['household_id'] ?>" class="btn btn-sm btn-primary">View more</a>
 
 
 
@@ -408,29 +409,29 @@
                             </tbody>
                         </table>
                         <nav class="d-flex align-items-center justify-content-end py-3">
-    <ul class="pagination gap-0">
-        <li class="page-item p-2 bg-light">
-            <a class="page-link bg-primary" href="?household_page=<?php 
+                            <ul class="pagination gap-0">
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
             if ($household_page_number > 1) {
                 $household_page_number--;
             }
             echo $household_page_number;
             ?>">Previous</a>
-        </li>
-        <li class="page-item p-2 bg-light">
-            <a class="page-link bg-primary"
-                href="?household_page=<?php echo $household_page_number; ?>">
-                <?php echo $_GET['household_page'] ?? $household_page_number ?>
-            </a>
-        </li>
-        <li class="page-item p-2 bg-light">
-            <a class="page-link bg-primary" href="?household_page=<?php 
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary"
+                                        href="?household_page=<?php echo $household_page_number; ?>">
+                                        <?php echo $_GET['household_page'] ?? $household_page_number ?>
+                                    </a>
+                                </li>
+                                <li class="page-item p-2 bg-light">
+                                    <a class="page-link bg-primary" href="?household_page=<?php 
             $household_page_number++;
             echo $household_page_number;
             ?>">Next</a>
-        </li>
-    </ul>
-</nav>
+                                </li>
+                            </ul>
+                        </nav>
 
                     </div>
                     <div class="table-responsive mt-3" style="display: none;" id="container2">
@@ -448,7 +449,7 @@
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                            <?php
+                                <?php
 $families_page_number = (int) ($_GET['families_page'] ?? 1);
 $limit = 5;
 $initial_page = ($families_page_number - 1) * $limit;
@@ -543,46 +544,50 @@ foreach ($data as $row) {
                         </nav>
                     </div>
                     <div class="table-responsive mt-3" style="display: none;" id="container3">
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="husbandModal" tabindex="-1" role="dialog" aria-labelledby="husbandModalLabel" aria-hidden="true">
-    <!-- Modal content -->
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="husbandModalLabel">Husband Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            
-                <div id="husbandData"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+                        <!-- Bootstrap Modal -->
+                        <div class="modal fade" id="husbandModal" tabindex="-1" role="dialog"
+                            aria-labelledby="husbandModalLabel" aria-hidden="true">
+                            <!-- Modal content -->
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="husbandModalLabel">Husband Details</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
 
-<script>
-    function openHusbandModal(rowId) {
-        // Ajax call to retrieve data based on rowId
-        $.ajax({
-            url: 'retrieve_husband_data.php', // Replace with your PHP file to fetch husband data
-            method: 'POST',
-            data: { id: rowId },
-            success: function(response) {
-                // Update the modal content with the retrieved data
-                $('#husbandData').html(response);
-                $('#husbandModal').modal('show'); // Show the modal
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-</script>
+                                        <div id="husbandData"></div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                        function openHusbandModal(rowId) {
+                            // Ajax call to retrieve data based on rowId
+                            $.ajax({
+                                url: 'retrieve_husband_data.php', // Replace with your PHP file to fetch husband data
+                                method: 'POST',
+                                data: {
+                                    id: rowId
+                                },
+                                success: function(response) {
+                                    // Update the modal content with the retrieved data
+                                    $('#husbandData').html(response);
+                                    $('#husbandModal').modal('show'); // Show the modal
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(error);
+                                }
+                            });
+                        }
+                        </script>
                         <h5 class="fw-bold text-primary">Husband data:</h5>
                         <table class="table table-hover table-striped">
                             <thead>
@@ -596,7 +601,7 @@ foreach ($data as $row) {
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                            <?php
+                                <?php
 $husband_page_number = (int) ($_GET['husband_page'] ?? 1);
 $limit = 5;
 $initial_page = ($husband_page_number - 1) * $limit;
@@ -609,7 +614,7 @@ foreach ($data as $row) {
     // Your code to handle the retrieved data
 
 ?>
- <tr>
+                                <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
@@ -702,7 +707,7 @@ foreach ($data as $row) {
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                            <?php
+                                <?php
 // Other existing code remains unchanged...
 
 $wife_page_number = (int)($_GET['wife_page'] ?? 1);
@@ -720,8 +725,8 @@ foreach($data as $row) {
     // Display data rows here
 
 ?>
- 
-                            <tr>
+
+                                <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
@@ -814,7 +819,7 @@ foreach($data as $row) {
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                            <?php
+                                <?php
 // Other existing code remains unchanged...
 
 $children_page_number = (int)($_GET['children_page'] ?? 1);
@@ -833,8 +838,8 @@ foreach($data as $row) {
     // Display data rows here
 
 ?>
-  
-                            <tr>
+
+                                <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
@@ -927,7 +932,7 @@ foreach($data as $row) {
                                 </tr>
                             </thead>
                             <tbody id="tbl">
-                            <?php
+                                <?php
 // Other existing code remains unchanged...
 
 $otherhousehold_page_number = (int)($_GET['otherhousehold_page'] ?? 1);
@@ -946,7 +951,7 @@ foreach($data as $row) {
     // Display data rows here
 
 ?>
-   <tr>
+                                <tr>
                                     <th scope="row" spellcheck="false">
                                         <?php echo $row['id'] ?>
                                     </th>
@@ -1187,10 +1192,10 @@ foreach($data as $row) {
     <script>
     'use strict'
 
-    $('.edit_details').click(function(){
-		uni_modal("Manage Details","edit_details.php?id="+$(this).attr('data-id'),"mid-large")
-		
-	})
+    $('.edit_details').click(function() {
+        uni_modal("Manage Details", "edit_details.php?id=" + $(this).attr('data-id'), "mid-large")
+
+    })
 
     function expandCamelCase(input) {
         return input.replace(/([A-Z])/g, ' $1')
@@ -1217,75 +1222,80 @@ foreach($data as $row) {
 
             const readOnlyFields = ['barangay', 'municipality', 'province', 'household_id'];
             for (const [k, v] of keyPairs) {
-    if (!v || k === 'id' || k === 'unique_id') continue;
+                if (!v || k === 'id' || k === 'unique_id') continue;
 
-    const readonlyAttribute = readOnlyFields.includes(k.toLowerCase()) ? 'readonly' : '';
-  
-    let isDropdown = false;
-    let options = [];
+                const readonlyAttribute = readOnlyFields.includes(k.toLowerCase()) ? 'readonly' : '';
 
-    switch (k) {
-        case 'status':
-            isDropdown = true;
-            options = ['Single', 'Married', 'Divorced', 'Widowed'];
-            break;
-        
-            case 'educationalAttainment':
-            isDropdown = true;
-            options = ['High School Graduate', 'Bachelor\'s Degree', 'Master\'s Degree', 'Doctorate', 'Other'];
-            break;
+                let isDropdown = false;
+                let options = [];
 
-        case 'sex':
-            isDropdown = true;
-            options = ['Male', 'Female', 'Other'];
-            break;
+                switch (k) {
+                    case 'status':
+                        isDropdown = true;
+                        options = ['Single', 'Married', 'Divorced', 'Widowed'];
+                        break;
 
-        case 'occupation':
-            isDropdown = true;
-            options = ['Government Employee', 'Private Employee', 'Farmer', 'Fisherfolks',
-            'Housekeeper', 'Driver', 'Entrepreneur','Daily Wager', 'Student','None'];
-            break;
+                    case 'educationalAttainment':
+                        isDropdown = true;
+                        options = ['High School Graduate', 'Bachelor\'s Degree', 'Master\'s Degree',
+                            'Doctorate', 'Other'
+                        ];
+                        break;
 
-        case 'placeOfWork':
-            isDropdown = true;
-            options = ['Within the Philippines', 'Abroad'];
-            break;
+                    case 'sex':
+                        isDropdown = true;
+                        options = ['Male', 'Female', 'Other'];
+                        break;
 
-        case 'religion':
-            isDropdown = true;
-            options = ['Christianity', 'Islam', 'Buddhism', 'Hinduism', 'Other'];
-            break;
+                    case 'occupation':
+                        isDropdown = true;
+                        options = ['Government Employee', 'Private Employee', 'Farmer', 'Fisherfolks',
+                            'Housekeeper', 'Driver', 'Entrepreneur', 'Daily Wager', 'Student', 'None'
+                        ];
+                        break;
 
-        case 'ethnicGroup':
-            isDropdown = true;
-            options = ['Bicolano', 'Ibanag', 'Ilocano', 'Other'];
-            break;
-        case 'purok':
-    isDropdown = true;
-    // Generate 'PUROK' options based on the 'purokCounter' value
-    options = [];
-    for (let i = 1; i <= parseInt('<?php echo $purokCounter; ?>'); i++) {
-        options.push(i.toString());
-    }
-    break;
+                    case 'placeOfWork':
+                        isDropdown = true;
+                        options = ['Within the Philippines', 'Abroad'];
+                        break;
 
-               default:
-                    if (k === 'dateOfBirth') {
-                        form_template += `
+                    case 'religion':
+                        isDropdown = true;
+                        options = ['Christianity', 'Islam', 'Buddhism', 'Hinduism', 'Other'];
+                        break;
+
+                    case 'ethnicGroup':
+                        isDropdown = true;
+                        options = ['Bicolano', 'Ibanag', 'Ilocano', 'Other'];
+                        break;
+                    case 'purok':
+                        isDropdown = true;
+                        // Generate 'PUROK' options based on the 'purokCounter' value
+                        options = [];
+                        for (let i = 1; i <= parseInt('<?php echo $purokCounter; ?>'); i++) {
+                            options.push(i.toString());
+                        }
+                        break;
+
+                    default:
+                        if (k === 'dateOfBirth') {
+                            form_template +=
+                                `
                             <div style="width: 100%;">
                                 <label class="text-left mt-2 fw-bold">${expandCamelCase(k)}</label>
                                 <input id="${k}" value="${v}" name="${k}" type="date" class="swal2-input my-0" ${readonlyAttribute} style="width: 100%;">`;
-                    } else {
-                        form_template += `
+                        } else {
+                            form_template +=
+                                `
                             <div style="width: 100%;">
                                 <label class="text-left mt-2 fw-bold">${expandCamelCase(k)}</label>
                                 <input id="${k}" value="${v}" name="${k}" type="text" class="swal2-input my-0" ${readonlyAttribute} style="width: 100%;">`;
-                    }
-                    break;
-            }
+                        }
+                        break;
+                }
 
-            if (isDropdown) {
-                form_template += `
+                if (isDropdown) {
+                    form_template += `
                     <div style="width: 100%;">
                         <label class="text-left mt-2 fw-bold">${expandCamelCase(k)}</label>
                         <select id="${k}" name="${k}" type="text" class="swal2-input my-0 styled-dropdown" style="width: 100%;">
@@ -1293,12 +1303,12 @@ foreach($data as $row) {
                                 <option value="${option}" ${v.toLowerCase() === option.toLowerCase() ? 'selected' : ''}>${option}</option>
                             `).join('')}
                         </select>`;
+                }
+                form_template += `</div>`;
             }
-            form_template += `</div>`;
-        }
 
-        form_template += `</form>`;
-                    Swal.fire({
+            form_template += `</form>`;
+            Swal.fire({
                 html: form_template,
                 showCancelButton: true,
                 cancelButtonText: 'Cancel',
@@ -1319,8 +1329,10 @@ foreach($data as $row) {
                                 timer: 3000,
                                 timerProgressBar: true,
                                 didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    toast.addEventListener('mouseenter',
+                                        Swal.stopTimer)
+                                    toast.addEventListener('mouseleave',
+                                        Swal.resumeTimer)
                                 }
                             })
 
@@ -1341,8 +1353,10 @@ foreach($data as $row) {
                                 timer: 3000,
                                 timerProgressBar: true,
                                 didOpen: (toast) => {
-                                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    toast.addEventListener('mouseenter',
+                                        Swal.stopTimer)
+                                    toast.addEventListener('mouseleave',
+                                        Swal.resumeTimer)
                                 }
                             })
 
@@ -1534,12 +1548,12 @@ foreach($data as $row) {
     </script>
     <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <script src="../assets/libs/js/main-js.js"></script>
-    
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 

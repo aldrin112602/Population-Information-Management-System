@@ -1,5 +1,6 @@
 <?php 
     require_once '../config.php';
+    require_once '../global.php';
 
     if(isset($_SESSION['role'])) {
         if($_SESSION['role'] == 'super_admin') {
@@ -11,7 +12,7 @@
         header('location: ../');
     }
 
-    if(!isset($_GET['household_id']) && !isset($_GET['sup_household_id'])) {
+    if(!isset($_GET['household_id'])) {
      header('location: records.php');
     }
 
@@ -24,7 +25,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Survey Form - PIMS | Population Information Monitoring System</title>
+    <title>Update Survey Form - PIMS | Population Information Monitoring System</title>
     <link rel="stylesheet" href="../src/bootstrap.min.css" />
     <!-- Favicon -->
     <link rel="icon" href="../img/favicon.ico" type="image/x-icon" />
@@ -93,6 +94,11 @@
 </head>
 
 <body>
+    <?php
+
+$husband = getRows("household_id='{$_GET['household_id']}'", "survey_form_records_husband");
+if(count($husband) == 0) header('Location: ./records.php');
+?>
     <div class="container-fluid bg-white">
         <br><br>
         <form action="" method="post" class="px-4 pr-0">
@@ -106,13 +112,13 @@
                     <div class="row p-3 rounded bg-white col-12 col-md-6 my-2">
                         <div class="container my-2">
                             <label for="purok" class="">PUROK</label>
-                            <input value="" required type="text" class="form-control form-control-lg" id="purok"
-                                name="purok">
+                            <input value="<?php echo $husband[0]['purok'] ?>" required type="text"
+                                class="form-control form-control-lg" id="purok" name="purok">
                         </div>
                         <div class="container my-2">
                             <label for="barangay" class="">BARANGAY</label>
                             <input title="This can't be change, read-only" readonly
-                                value="<?php echo $_SESSION['barangay'] ?>" required type="text"
+                                value="<?php echo $husband[0]['barangay'] ?>" required type="text"
                                 class="form-control form-control-lg" id="barangay" name="barangay">
 
                         </div>
@@ -122,31 +128,32 @@
                         <div class="container my-2">
                             <label for="municipality" class="">MUNICIPALITY</label>
                             <input title="This can't be change, read-only" readonly
-                                value="<?php echo $_SESSION['municipality'] ?>" required type="text"
+                                value="<?php echo $husband[0]['municipality'] ?>" required type="text"
                                 class="form-control form-control-lg" id="municipality" name="municipality">
                         </div>
                         <div class="container my-2">
                             <label for="province" class="">PROVINCE</label>
                             <input title="This can't be change, read-only" readonly
-                                value="<?php echo $_SESSION['province'] ?>" required type="text"
+                                value="<?php echo $husband[0]['province'] ?>" required type="text"
                                 class="form-control form-control-lg" id="province" name="province">
                         </div>
                     </div>
                 </div>
-                
+
 
                 <div class="row justify-content-between" id="form">
                     <div class="container my-2">
                         <label for="purok" class="">Household</label>
-                        <input value="" required type="text" class="form-control form-control-lg" id="household"
-                            name="household">
+                        <input value="<?php echo $husband[0]['household'] ?>" required type="text"
+                            class="form-control form-control-lg" id="household" name="household">
 
                     </div>
                     <div class="row border  py-5 p-3 rounded bg-white col-12 col-md-6 my-2">
                         <h5 class="col-12 fw-bold">Husband Information</h5>
                         <div class="col-12 col-md-6 my-2">
                             <label>Name</label>
-                            <input value="" required type="text" class="form-control form-control-lg" name="name[]">
+                            <input value="<?php echo $husband[0]['name'] ?>" required type="text"
+                                class="form-control form-control-lg" name="name[]">
                             <input value="husband" type="hidden" class="form-control form-control-lg" name="type[]">
 
                         </div>
@@ -154,21 +161,32 @@
                             <label class="">Civil Status</label>
                             <select required class="form-select form-select-lg" name="status[]">
                                 <option selected disabled value=""></option>
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                                <option value="Divorced">Divorced</option>
-                                <option value="Widowed">Widowed</option>
-                                <option value="Live-in">Live-in</option>
+                                <option value="Single"
+                                    <?php echo $husband[0]['status'] == 'Single' ? 'selected' : null ?>>Single</option>
+                                <option value="Married"
+                                    <?php echo $husband[0]['status'] == 'Married' ? 'selected' : null ?>>Married
+                                </option>
+                                <option value="Divorced"
+                                    <?php echo $husband[0]['status'] == 'Divorced' ? 'selected' : null ?>>Divorced
+                                </option>
+                                <option value="Widowed"
+                                    <?php echo $husband[0]['status'] == 'Widowed' ? 'selected' : null ?>>Widowed
+                                </option>
+                                <option value="Live-in"
+                                    <?php echo $husband[0]['status'] == 'Live-in' ? 'selected' : null ?>>Live-in
+                                </option>
                             </select>
+
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Date of Birth</label>
-                            <input oninput="setAge(this, '#age')" required type="date"
-                                class="form-control form-control-lg" name="dateOfBirth[]">
+                            <input value="<?php echo $husband[0]['dateOfBirth'] ?>" oninput="setAge(this, '#age')"
+                                required type="date" class="form-control form-control-lg" name="dateOfBirth[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Age</label>
-                            <input id="age" readonly type="number" class="form-control form-control-lg" name="age[]">
+                            <input value="<?php echo $husband[0]['age'] ?>" id="age" readonly type="number"
+                                class="form-control form-control-lg" name="age[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Sex</label>
@@ -179,36 +197,58 @@
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Birth Place</label>
-                            <input required type="text" class="form-control form-control-lg" name="birthPlace[]">
+                            <input value="<?php echo $husband[0]['birthPlace'] ?>" required type="text"
+                                class="form-control form-control-lg" name="birthPlace[]">
                         </div>
-                        
+
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Educational attainment</label>
                             <select required class="form-select form-select-lg" name="educationalAttainment[]">
                                 <option value="" disabled selected></option>
-                                <option value="no-schooling">No Schooling</option>
-                                <option value="elementary-school">Elementary School</option>
-                                <option value="middle-school">Middle School</option>
-                                <option value="high-school">High School</option>
-                                <option value="vocational-school">Vocational School</option>
-                                <option value="some-college">Some College</option>
-                                <option value="associate-degree">Associate Degree</option>
-                                <option value="bachelor-degree">Bachelor's Degree</option>
-                                <option value="master-degree">Master's Degree</option>
-                                <option value="doctoral-degree">Doctoral Degree</option>
+                                <option value="no-schooling"
+                                    <?php echo $husband[0]['educationalAttainment'] == 'no-schooling' ? 'selected' : null ?>>
+                                    No Schooling</option>
+                                <option value="elementary-school"
+                                    <?php echo $husband[0]['educationalAttainment'] == 'elementary-school' ? 'selected' : null ?>>
+                                    Elementary School</option>
+                                <option value="middle-school"
+                                    <?php echo $husband[0]['educationalAttainment'] == 'middle-school' ? 'selected' : null ?>>
+                                    Middle School</option>
+                                <option value="high-school"
+                                    <?php echo $husband[0]['educationalAttainment'] == 'high-school' ? 'selected' : null ?>>
+                                    High School</option>
+                                <option value="vocational-school"
+                                    <?php echo $husband[0]['educationalAttainment'] == 'vocational-school' ? 'selected' : null ?>>
+                                    Vocational School</option>
+                                <option value="some-college"
+                                    <?php echo $husband[0]['educationalAttainment'] == 'some-college' ? 'selected' : null ?>>
+                                    Some College</option>
+                                <option value="associate-degree"
+                                    <?php echo $husband[0]['educationalAttainment'] == 'associate-degree' ? 'selected' : null ?>>
+                                    Associate Degree</option>
+                                <option value="bachelor-degree"
+                                    <?php echo $husband[0]['educationalAttainment'] == 'bachelor-degree' ? 'selected' : null ?>>
+                                    Bachelor's Degree</option>
+                                <option value="master-degree"
+                                    <?php echo $husband[0]['educationalAttainment'] == 'master-degree' ? 'selected' : null ?>>
+                                    Master's Degree</option>
+                                <option value="doctoral-degree"
+                                    <?php echo $husband[0]['educationalAttainment'] == 'doctoral-degree' ? 'selected' : null ?>>
+                                    Doctoral Degree</option>
                             </select>
+
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Occupation</label>
-                            <input required type="text" class="form-control form-control-lg" name="occupation[]">
+                            <input value="<?php echo $husband[0]['occupation'] ?>" required type="text" class="form-control form-control-lg" name="occupation[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Place of work</label>
-                            <input required type="text" class="form-control form-control-lg" name="placeOfWork[]">
+                            <input value="<?php echo $husband[0]['placeOfWork'] ?>" required type="text" class="form-control form-control-lg" name="placeOfWork[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Religion</label>
-                            <input value="" required list="religion_list" name="religion[]"
+                            <input value="<?php echo $husband[0]['religion'] ?>" required list="religion_list" name="religion[]"
                                 class="form-control form-control-lg">
                             <datalist id="religion_list">
                                 <?php
@@ -249,14 +289,14 @@
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Ethnic Group</label>
-                            <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                            <input value="<?php echo $husband[0]['ethnicGroup'] ?>" required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Choose an option:</label>
                             <select required class="form-select form-select-lg" name="option[]">
                                 <option value="" disabled selected></option>
-                                <option value="Living">Living</option>
-                                <option value="Disease">Disease</option>
+                                <option value="Living" <?php echo $husband[0]['life_status'] == 'Living' ? 'selected' : null ?>>Living</option>
+                                <option value="Disease" <?php echo $husband[0]['life_status'] == 'Disease' ? 'selected' : null ?>>Disease</option>
                             </select>
                         </div>
                     </div>
@@ -514,7 +554,7 @@
                                     Caretaker
                                 </label>
                             </div>
-                            
+
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
                                     value="Permanent - concrete">
