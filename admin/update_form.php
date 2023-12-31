@@ -472,7 +472,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <div class="col-12 col-md-6">
                             <strong>Artificial Family Planning method</strong>
                             <?php
-                            $familyPlanningMethods = explode(',', $record[0]['artificialFamilyPlanningMethod'] ?? '');
+                            $familyPlanningMethods = explode(', ', $record[0]['artificialFamilyPlanningMethod'] ?? '');
                             $availableMethods = ['Pills', 'Condom', 'IUD', 'DMPA'];
 
                             foreach ($availableMethods as $method) {
@@ -491,7 +491,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <div class="col-12 col-md-6">
                             <strong>Permanent Family Planning method</strong>
                             <?php
-                            $permanentMethods = explode(',', $record[0]['permanentFamilyPlanningMethod'] ?? '');
+                            $permanentMethods = explode(', ', $record[0]['permanentFamilyPlanningMethod'] ?? '');
                             $availablePermanentMethods = ['Tubal Ligation', 'Vasectomy'];
 
                             foreach ($availablePermanentMethods as $method) {
@@ -883,7 +883,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             <p class="fw-bold">Type of Garbage Disposal</p>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Picked By Garbage Truck', explode(',', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Picked By Garbage Truck', explode(', ', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
                                     value="Picked By Garbage Truck">
                                 <label class="form-check-label">
@@ -892,7 +892,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Waste Segregation', explode(',', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Waste Segregation', explode(', ', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
                                     value="Waste Segregation">
                                 <label class="form-check-label">
@@ -901,7 +901,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Composting', explode(',', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Composting', explode(', ', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
                                     value="Composting">
                                 <label class="form-check-label">
@@ -910,7 +910,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Burning', explode(',', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Burning', explode(', ', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
                                     value="Burning">
                                 <label class="form-check-label">
@@ -919,7 +919,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Burying', explode(',', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Burying', explode(', ', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
                                     value="Burying">
                                 <label class="form-check-label">
@@ -933,7 +933,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             <p class="fw-bold">Communication Facility</p>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Cable', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Cable', explode(', ', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Cable">
                                 <label class="form-check-label">
@@ -942,7 +942,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Television', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Television', explode(', ', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Television">
                                 <label class="form-check-label">
@@ -951,7 +951,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Radio', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Radio', explode(', ', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Radio">
                                 <label class="form-check-label">
@@ -960,7 +960,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Two-way Radio', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Two-way Radio', explode(', ', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Two-way Radio">
                                 <label class="form-check-label">
@@ -969,7 +969,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Mobile Phone', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Mobile Phone', explode(', ', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Mobile Phone">
                                 <label class="form-check-label">
@@ -978,7 +978,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Landline Phone', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Landline Phone', explode(', ', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Landline Phone">
                                 <label class="form-check-label">
@@ -987,7 +987,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('None', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('None', explode(', ', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="None">
                                 <label class="form-check-label">
@@ -1000,7 +1000,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             <p class="fw-bold">Transport Facility</p>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Bicycle', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Bicycle', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="transportFacility[]" value="Bicycle">
                                 <label class="form-check-label">
                                     Bicycle
@@ -1008,7 +1008,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Motorcycle', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Motorcycle', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="transportFacility[]"
                                     value="Motorcycle">
                                 <label class="form-check-label">
@@ -1017,7 +1017,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Tricycle', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Tricycle', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="transportFacility[]"
                                     value="Tricycle">
                                 <label class="form-check-label">
@@ -1026,7 +1026,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Jeep', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Jeep', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="transportFacility[]" value="Jeep">
                                 <label class="form-check-label">
                                     Jeep
@@ -1034,7 +1034,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Car', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Car', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="transportFacility[]" value="Car">
                                 <label class="form-check-label">
                                     Car
@@ -1042,7 +1042,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Truck', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Truck', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="transportFacility[]" value="Truck">
                                 <label class="form-check-label">
                                     Truck
@@ -1050,7 +1050,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Van', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Van', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="transportFacility[]" value="Van">
                                 <label class="form-check-label">
                                     Van
@@ -1058,7 +1058,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Kuliglig', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Kuliglig', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="transportFacility[]"
                                     value="Kuliglig">
                                 <label class="form-check-label">
@@ -1067,7 +1067,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('None', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('None', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="transportFacility[]" value="None">
                                 <label class="form-check-label">
                                     None
@@ -1075,7 +1075,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input id="othersTransportFacility"
-                                    <?php echo in_array('Others', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Others', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox">
                                 <label class="form-check-label">
                                     Others, specify
@@ -1083,7 +1083,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                                 <input disabled name="transportFacility[]" style="display: none;"
                                     id="othersTransportFacilityInput" class="form-control form-control-sm" type="text"
                                     required
-                                    <?php echo in_array('Others', explode(',', $record[0]['transportFacility'] ?? '')) ? 'value="' . $record[0]['transportFacilityOthers'] . '"' : ''; ?>>
+                                    <?php echo in_array('Others', explode(', ', $record[0]['transportFacility'] ?? '')) ? 'value="' . $record[0]['transportFacilityOthers'] . '"' : ''; ?>>
                             </div>
 
                             <script>
@@ -1098,7 +1098,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             <p class="fw-bold">Agricultural Products</p>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Rice', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Rice', explode(', ', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="agriculturalProduct[]" value="Rice">
                                 <label class="form-check-label">
                                     Rice
@@ -1106,7 +1106,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Corn', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Corn', explode(', ', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="agriculturalProduct[]" value="Corn">
                                 <label class="form-check-label">
                                     Corn
@@ -1114,7 +1114,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Banana', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Banana', explode(', ', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="agriculturalProduct[]"
                                     value="Banana">
                                 <label class="form-check-label">
@@ -1123,7 +1123,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Taro/Gabi', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Taro/Gabi', explode(', ', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="agriculturalProduct[]"
                                     value="Taro/Gabi">
                                 <label class="form-check-label">
@@ -1132,7 +1132,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo in_array('Cassava', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Cassava', explode(', ', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="agriculturalProduct[]"
                                     value="Cassava">
                                 <label class="form-check-label">
@@ -1141,14 +1141,14 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input id="othersAgriculturalProduct"
-                                    <?php echo in_array('Others', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    <?php echo in_array('Others', explode(', ', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
                                     name="agriculturalProduct[]" class="form-check-input" type="checkbox">
                                 <label class="form-check-label">
                                     Others, specify
                                 </label>
                                 <input disabled style="display: none;" id="othersAgriculturalProductInput"
                                     class="form-control form-control-sm" type="text" required
-                                    <?php echo in_array('Others', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'value="' . $record[0]['agriculturalProductOthers'] . '"' : ''; ?>>
+                                    <?php echo in_array('Others', explode(', ', $record[0]['agriculturalProduct'] ?? '')) ? 'value="' . $record[0]['agriculturalProductOthers'] . '"' : ''; ?>>
                             </div>
 
                             <script>
@@ -1297,34 +1297,42 @@ if(count($husband) == 0) header('Location: ./records.php');
                             <p class="fw-bold">Other source of income</p>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="otherSourceOfIncome[]"
-                                    value="Sari-sari store">
+                                    value="Sari-sari store"
+                                    <?php echo in_array('Sari-sari store', explode(', ', $record[0]['otherSourceOfIncome'] ?? [])) ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Sari-sari store
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="otherSourceOfIncome[]"
-                                    value="Restaurant">
+                                    value="Restaurant"
+                                    <?php echo in_array('Restaurant', explode(', ', $record[0]['otherSourceOfIncome'] ?? [])) ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Restaurant
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="otherSourceOfIncome[]"
-                                    value="Bakeshop">
+                                    value="Bakeshop"
+                                    <?php echo in_array('Bakeshop', explode(', ', $record[0]['otherSourceOfIncome'] ?? [])) ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Bakeshop
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input id="othersOtherSourceOfIncome" name="otherSourceOfIncome[]"
-                                    class="form-check-input" type="checkbox">
+                                    class="form-check-input" type="checkbox"
+                                    <?php echo in_array('Others', explode(', ', $record[0]['otherSourceOfIncome'] ?? [])) ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Others, specify
                                 </label>
-                                <input disabled style="display: none;" id="othersOtherSourceOfIncomeInput"
-                                    class="form-control form-control-sm" type="text" required>
+                                <input disabled
+                                    style="display: <?php echo in_array('Others', explode(', ', $record[0]['otherSourceOfIncome'] ?? [])) ? 'block' : 'none'; ?>;"
+                                    id="othersOtherSourceOfIncomeInput" class="form-control form-control-sm" type="text"
+                                    required
+                                    value="<?php echo in_array('Others', explode(', ', $record[0]['otherSourceOfIncome'] ?? [])) ? $record[0]['otherSourceOfIncome'] : ''; ?>">
                             </div>
+
                             <script>
                             $("#othersOtherSourceOfIncome").on("change", function() {
                                 $("#othersOtherSourceOfIncomeInput").toggle(0, function() {
@@ -1337,21 +1345,26 @@ if(count($husband) == 0) header('Location: ./records.php');
                             <p class="fw-bold">Fishpond Owned</p>
                             <div class="form-check">
                                 <input id="abc" class="form-check-input" type="radio" required name="fishpondOwned"
-                                    value="With">
+                                    value="With"
+                                    <?php echo ($record[0]['fishpondOwned'] ?? null) === 'With' ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     With
                                 </label>
-                                <input disabled name="fishpondOwnedArea" placeholder="Enter area" disabled
-                                    style="display: none;" id="othersFishpondOwnedInput"
-                                    class="form-control form-control-sm" type="text" required>
+                                <input name="fishpondOwnedArea" placeholder="Enter area"
+                                    <?php echo ($record[0]['fishpondOwned'] ?? null) === 'With' ? '' : 'disabled'; ?>
+                                    style="display: <?php echo ($record[0]['fishpondOwned'] ?? null) === 'With' ? 'block' : 'none'; ?>;"
+                                    id="othersFishpondOwnedInput" class="form-control form-control-sm" type="text"
+                                    required>
                             </div>
                             <div class="form-check">
                                 <input id="wt" class="form-check-input" type="radio" required name="fishpondOwned"
-                                    value="Without">
+                                    value="Without"
+                                    <?php echo ($record[0]['fishpondOwned'] ?? null) === 'Without' ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Without
                                 </label>
                             </div>
+
                             <script>
                             $("#abc").on("change", function() {
                                 $("#othersFishpondOwnedInput").show().attr('disabled', false);
@@ -1368,32 +1381,43 @@ if(count($husband) == 0) header('Location: ./records.php');
                             <p class="fw-bold">Land Owned</p>
                             <div class="form-check">
                                 <input id="aba" class="form-check-input" type="checkbox" name="landOwned[]"
-                                    value="Rice Field">
+                                    value="Rice Field"
+                                    <?php echo in_array('Rice Field', explode(', ', $record[0]['landOwned'] ?? [])) ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Rice Field
                                 </label>
-                                <input name="landOwnedRiceFieldArea" placeholder="Enter area" disabled
-                                    style="display: none;" id="rice_area" class="form-control form-control-sm"
-                                    type="text" required>
+                                <input name="landOwnedRiceFieldArea" placeholder="Enter area"
+                                    <?php echo in_array('Rice Field', explode(', ', $record[0]['landOwned'] ?? [])) ? '' : 'disabled'; ?>
+                                    style="display: <?php echo in_array('Rice Field', explode(', ', $record[0]['landOwned'] ?? [])) ? 'block' : 'none'; ?>;"
+                                    value="<?php echo ($record[0]['landOwnedRiceFieldArea'] ?? null) ?>" id="rice_area"
+                                    class="form-control form-control-sm" type="text" required>
                             </div>
                             <div class="form-check">
                                 <input id="abb" class="form-check-input" type="checkbox" name="landOwned[]"
-                                    value="Corn Field">
+                                    value="Corn Field"
+                                    <?php echo in_array('Corn Field', explode(', ', $record[0]['landOwned'] ?? [])) ? 'checked' : ''; ?>>
+
                                 <label class="form-check-label">
                                     Corn Field
                                 </label>
-                                <input name="landOwnedCornFieldArea" placeholder="Enter area" disabled
-                                    style="display: none;" id="corn_area" class="form-control form-control-sm"
-                                    type="text" required>
+                                <input name="landOwnedCornFieldArea" placeholder="Enter area"
+                                    <?php echo in_array('Corn Field', explode(', ', $record[0]['landOwned'] ?? [])) ? '' : 'disabled'; ?>
+                                    style="display: <?php echo in_array('Corn Field', explode(', ', $record[0]['landOwned'] ?? [])) ? 'd-block' : 'd-none'; ?>;"
+                                    value="<?php echo ($record[0]['landOwnedCornFieldArea'] ?? null) ?>" id="corn_area"
+                                    class="form-control form-control-sm" type="text" required>
                             </div>
                             <div class="form-check">
-                                <input id="abbb" class="form-check-input" type="checkbox">
+                                <input id="abbb" class="form-check-input" type="checkbox"
+                                    <?php echo in_array('Others', explode(', ', $record[0]['landOwned'] ?? [])) ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Others, specify
                                 </label>
-                                <input name="landOwned[]" placeholder="Specify" disabled style="display: none;"
+                                <input name="landOwned[]" placeholder="Specify"
+                                    <?php echo in_array('Others', explode(', ', $record[0]['landOwned'] ?? [])) ? '' : 'disabled'; ?>
+                                    style="display: <?php echo in_array('Others', explode(', ', $record[0]['landOwned'] ?? [])) ? 'block' : 'none'; ?>;"
                                     id="othersLandOwned" class="form-control form-control-sm" type="text" required>
                             </div>
+
                             <script>
                             $("#aba").on("change", function() {
                                 $("#rice_area").toggle(0, function() {
@@ -1416,50 +1440,61 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <div class="col-12 col-md-6 mt-3">
                             <p class="fw-bold">Land</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="land[]" value="Lease">
+                                <input class="form-check-input" type="checkbox" name="land[]" value="Lease"
+                                    <?php echo in_array('Lease', explode(', ', $record[0]['land'] ?? [])) ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Lease
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="land[]" value="Teanant">
+                                <input class="form-check-input" type="checkbox" name="land[]" value="Teanant"
+                                    <?php echo in_array('Teanant', explode(', ', $record[0]['land'] ?? [])) ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Teanant
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input id="cc" class="form-check-input" type="checkbox" name="land[]" value="Caretaker">
+                                <input id="cc" class="form-check-input" type="checkbox" name="land[]" value="Caretaker"
+                                    <?php echo in_array('Caretaker', explode(', ', $record[0]['land'] ?? [])) ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Caretaker
                                 </label>
-                                <div id="sub_" style="display: none;">
+                                <div id="sub_"
+                                    style="display: <?php echo in_array('Caretaker', explode(', ', $record[0]['land'] ?? [])) ? 'block' : 'none'; ?>;">
                                     <div class="form-check">
-                                        <input id="_aba" class="form-check-input" type="checkbox">
+                                        <input id="_aba" class="form-check-input" type="checkbox"
+                                            <?php echo in_array('Rice Field', explode(', ', $record[0]['land'] ?? [])) ? 'checked' : ''; ?>>
                                         <label class="form-check-label">
                                             Rice Field
                                         </label>
                                         <input name="caretakerRiceArea" placeholder="Enter area" disabled
-                                            style="display: none;" id="_rice_area" class="form-control form-control-sm"
-                                            type="text" required>
+                                            style="display: <?php echo in_array('Rice Field', explode(', ', $record[0]['land'] ?? [])) ? 'block' : 'none'; ?>;"
+                                            id="_rice_area" class="form-control form-control-sm" type="text" required
+                                            value="<?php echo in_array('Rice Field', explode(', ', $record[0]['land'] ?? [])) ? $record[0]['caretakerRiceArea'] : ''; ?>">
                                     </div>
                                     <div class="form-check">
                                         <input id="_abb" class="form-check-input" type="checkbox" name="land[]"
-                                            value="Corn Field">
+                                            value="Corn Field"
+                                            <?php echo in_array('Corn Field', explode(', ', $record[0]['land'] ?? [])) ? 'checked' : ''; ?>>
                                         <label class="form-check-label">
                                             Corn Field
                                         </label>
                                         <input name="caretakerCornArea" placeholder="Enter area" disabled
-                                            style="display: none;" id="_corn_area" class="form-control form-control-sm"
-                                            type="text" required>
+                                            style="display: <?php echo in_array('Corn Field', explode(', ', $record[0]['land'] ?? [])) ? 'block' : 'none'; ?>;"
+                                            id="_corn_area" class="form-control form-control-sm" type="text" required
+                                            value="<?php echo in_array('Corn Field', explode(', ', $record[0]['land'] ?? [])) ? $record[0]['caretakerCornArea'] : ''; ?>">
                                     </div>
                                     <div class="form-check">
-                                        <input id="_abbb" class="form-check-input" type="checkbox">
+                                        <input id="_abbb" class="form-check-input" type="checkbox"
+                                            <?php echo in_array('Others, specify', explode(', ', $record[0]['land'] ?? [])) ? 'checked' : ''; ?>>
                                         <label class="form-check-label">
                                             Others, specify
                                         </label>
                                         <input name="caretakerOthersLandOwned" placeholder="Specify" disabled
-                                            style="display: none;" id="_othersLandOwned"
-                                            class="form-control form-control-sm" type="text" required>
+                                            style="display: <?php echo in_array('Others, specify', explode(', ', $record[0]['land'] ?? [])) ? 'block' : 'none'; ?>;"
+                                            id="_othersLandOwned" class="form-control form-control-sm" type="text"
+                                            required
+                                            value="<?php echo in_array('Others, specify', explode(', ', $record[0]['land'] ?? [])) ? $record[0]['caretakerOthersLandOwned'] : ''; ?>">
                                     </div>
                                     <script>
                                     $("#_aba").on("change", function() {
@@ -1489,45 +1524,52 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </script>
                         </div>
 
+
                     </div>
                     <div class="border  py-5 p-3 rounded bg-white col-12 col-md-6 my-2 row">
                         <div class="col-12 my-3">
                             <strong>Monthly Average Family Income</strong>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" required name="monthlyAverageFamilyIncome"
-                                    value="Below 5,000.00">
+                                    value="Below 5,000.00"
+                                    <?php echo ($record[0]['monthlyAverageFamilyIncome'] ?? null) === 'Below 5,000.00' ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     Below 5,000.00
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" required name="monthlyAverageFamilyIncome"
-                                    value="5,000.00 - 9,000.00">
+                                    value="5,000.00 - 9,000.00"
+                                    <?php echo ($record[0]['monthlyAverageFamilyIncome'] ?? null) === '5,000.00 - 9,000.00' ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     5,000.00 - 9,000.00
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" required name="monthlyAverageFamilyIncome"
-                                    value="10,000.00 - 29,000.00">
+                                    value="10,000.00 - 29,000.00"
+                                    <?php echo ($record[0]['monthlyAverageFamilyIncome'] ?? null) === '10,000.00 - 29,000.00' ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     10,000.00 - 29,000.00
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" required name="monthlyAverageFamilyIncome"
-                                    value="30,000.00 - 69,000.00">
+                                    value="30,000.00 - 69,000.00"
+                                    <?php echo ($record[0]['monthlyAverageFamilyIncome'] ?? null) === '30,000.00 - 69,000.00' ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     30,000.00 - 69,000.00
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" required name="monthlyAverageFamilyIncome"
-                                    value="70,000 above">
+                                    value="70,000 above"
+                                    <?php echo ($record[0]['monthlyAverageFamilyIncome'] ?? null) === '70,000 above' ? 'checked' : ''; ?>>
                                 <label class="form-check-label">
                                     70,000 above
                                 </label>
                             </div>
+
                         </div>
                         <div class="col-12 mt-5">
                             <button type="button" class="btn btn-danger" onclick="leavePage()">Cancel</button>
@@ -1538,7 +1580,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                                 }
                             }
                             </script>
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-success">Save update</button>
                         </div>
                     </div>
                 </div>
@@ -1546,7 +1588,7 @@ if(count($husband) == 0) header('Location: ./records.php');
         </form>
     </div>
     <?php 
-        require_once('handle_survey_form.php');
+        
     ?>
 </body>
 
