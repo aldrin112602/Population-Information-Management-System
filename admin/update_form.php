@@ -478,13 +478,13 @@ if(count($husband) == 0) header('Location: ./records.php');
                             foreach ($availableMethods as $method) {
                                 $isChecked = in_array($method, $familyPlanningMethods) ? 'checked' : '';
                                 ?>
-                                <div class="form-check">
-                                    <input <?php echo $isChecked; ?> class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
-                                        value="<?php echo $method; ?>">
-                                    <label class="form-check-label">
-                                        <?php echo $method; ?>
-                                    </label>
-                                </div>
+                            <div class="form-check">
+                                <input <?php echo $isChecked; ?> class="form-check-input" type="checkbox"
+                                    name="artificialFamilyPlanningMethod[]" value="<?php echo $method; ?>">
+                                <label class="form-check-label">
+                                    <?php echo $method; ?>
+                                </label>
+                            </div>
                             <?php } ?>
 
                         </div>
@@ -497,13 +497,13 @@ if(count($husband) == 0) header('Location: ./records.php');
                             foreach ($availablePermanentMethods as $method) {
                                 $isChecked = in_array($method, $permanentMethods) ? 'checked' : '';
                                 ?>
-                                <div class="form-check">
-                                    <input <?php echo $isChecked; ?> class="form-check-input" type="checkbox" name="permanentFamilyPlanningMethod[]"
-                                        value="<?php echo $method; ?>">
-                                    <label class="form-check-label">
-                                        <?php echo $method; ?>
-                                    </label>
-                                </div>
+                            <div class="form-check">
+                                <input <?php echo $isChecked; ?> class="form-check-input" type="checkbox"
+                                    name="permanentFamilyPlanningMethod[]" value="<?php echo $method; ?>">
+                                <label class="form-check-label">
+                                    <?php echo $method; ?>
+                                </label>
+                            </div>
                             <?php } ?>
                         </div>
                         <div class="col-12 col-md-6 my-3">
@@ -1178,37 +1178,43 @@ if(count($husband) == 0) header('Location: ./records.php');
                                             <th scope="row">Chicken</th>
                                             <td>
                                                 <input type="number" name="poultryNumberOfHeadsChicken"
-                                                    class="form-control">
+                                                    class="form-control"
+                                                    value="<?php echo $record[0]['poultryNumberOfHeadsChicken'] ?? null ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Duck</th>
                                             <td>
                                                 <input type="number" name="poultryNumberOfHeadsDuck"
-                                                    class="form-control">
+                                                    class="form-control"
+                                                    value="<?php echo $record[0]['poultryNumberOfHeadsDuck'] ?? null ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Geese</th>
                                             <td>
                                                 <input type="number" name="poultryNumberOfHeadsGeese"
-                                                    class="form-control">
+                                                    class="form-control"
+                                                    value="<?php echo $record[0]['poultryNumberOfHeadsGeese'] ?? null ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Turkey</th>
                                             <td>
                                                 <input type="number" name="poultryNumberOfHeadsTurkey"
-                                                    class="form-control">
+                                                    class="form-control"
+                                                    value="<?php echo $record[0]['poultryNumberOfHeadsTurkey'] ?? null ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Others, specify:</th>
                                             <td>
                                                 <input type="text" name="poultryOthers" placeholder="Please specify"
-                                                    class="form-control my-2">
+                                                    class="form-control my-2"
+                                                    value="<?php echo $record[0]['poultryOthers'] ?? null ?>">
                                                 <input type="number" name="poultryNumberOfHeadsOthers"
-                                                    placeholder="Enter # of Heads" class="form-control">
+                                                    placeholder="Enter # of Heads" class="form-control"
+                                                    value="<?php echo $record[0]['poultryNumberOfHeadsOthers'] ?? null ?>">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -1230,52 +1236,61 @@ if(count($husband) == 0) header('Location: ./records.php');
                                         <tr>
                                             <th scope="row">Pig</th>
                                             <td>
-                                                <input type="number" name="livestockNumberPig" class="form-control">
+                                                <input type="number" name="livestockNumberPig" class="form-control"
+                                                    value="<?php echo $record[0]['livestockNumberPig'] ?? null ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Goat</th>
                                             <td>
-                                                <input type="number" name="livestockNumberGoat" class="form-control">
+                                                <input type="number" name="livestockNumberGoat" class="form-control"
+                                                    value="<?php echo $record[0]['livestockNumberGoat'] ?? null ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Sheep</th>
                                             <td>
-                                                <input type="number" name="livestockNumberSheep" class="form-control">
+                                                <input type="number" name="livestockNumberSheep" class="form-control"
+                                                    value="<?php echo $record[0]['livestockNumberSheep'] ?? null ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Coat</th>
                                             <td>
-                                                <input type="number" name="livestockNumberCoat" class="form-control">
+                                                <input type="number" name="livestockNumberCoat" class="form-control"
+                                                    value="<?php echo $record[0]['livestockNumberCoat'] ?? null ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Carabao</th>
                                             <td>
-                                                <input type="number" name="livestockNumberCarabao" class="form-control">
+                                                <input type="number" name="livestockNumberCarabao" class="form-control"
+                                                    value="<?php echo $record[0]['livestockNumberCarabao'] ?? null ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Horse</th>
                                             <td>
-                                                <input type="number" name="livestockNumberHorse" class="form-control">
+                                                <input type="number" name="livestockNumberHorse" class="form-control"
+                                                    value="<?php echo $record[0]['livestockNumberHorse'] ?? null ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Others, specify:</th>
                                             <td>
                                                 <input type="text" name="othersLivestock" placeholder="Please specify"
-                                                    class="form-control my-2">
+                                                    class="form-control my-2"
+                                                    value="<?php echo $record[0]['othersLivestock'] ?? null ?>">
                                                 <input type="number" name="livestockNumberOthers"
-                                                    placeholder="Enter # of Heads" class="form-control">
+                                                    placeholder="Enter # of Heads" class="form-control"
+                                                    value="<?php echo $record[0]['livestockNumberOthers'] ?? null ?>">
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+
                     </div>
                     <div class="border  py-5 p-3 rounded bg-white col-12 col-md-6 my-2 row">
                         <div class="col-12 col-md-6">
