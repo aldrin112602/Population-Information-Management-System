@@ -471,64 +471,40 @@ if(count($husband) == 0) header('Location: ./records.php');
                     <div class="border  py-5 p-3 rounded bg-white col-12 col-md-6 my-2 row">
                         <div class="col-12 col-md-6">
                             <strong>Artificial Family Planning method</strong>
-                            <div class="form-check">
-                                <input
-                                    <?php echo ($record[0]['artificialFamilyPlanningMethod'] ?? null) == 'Pills' ? 'checked' : null ?>
-                                    class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
-                                    value="Pills">
-                                <label class="form-check-label">
-                                    Pills
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input
-                                    <?php echo ($record[0]['artificialFamilyPlanningMethod'] ?? null) == 'Condom' ? 'checked' : null ?>
-                                    class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
-                                    value="Condom">
-                                <label class="form-check-label">
-                                    Condom
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input
-                                    <?php echo ($record[0]['artificialFamilyPlanningMethod'] ?? null) == 'IUD' ? 'checked' : null ?>
-                                    class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
-                                    value="IUD">
-                                <label class="form-check-label">
-                                    IUD
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input
-                                    <?php echo ($record[0]['artificialFamilyPlanningMethod'] ?? null) == 'DMPA' ? 'checked' : null ?>
-                                    class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
-                                    value="DMPA">
-                                <label class="form-check-label">
-                                    DMPA
-                                </label>
-                            </div>
+                            <?php
+                            $familyPlanningMethods = explode(',', $record[0]['artificialFamilyPlanningMethod'] ?? '');
+                            $availableMethods = ['Pills', 'Condom', 'IUD', 'DMPA'];
+
+                            foreach ($availableMethods as $method) {
+                                $isChecked = in_array($method, $familyPlanningMethods) ? 'checked' : '';
+                                ?>
+                                <div class="form-check">
+                                    <input <?php echo $isChecked; ?> class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
+                                        value="<?php echo $method; ?>">
+                                    <label class="form-check-label">
+                                        <?php echo $method; ?>
+                                    </label>
+                                </div>
+                            <?php } ?>
+
                         </div>
                         <div class="col-12 col-md-6">
                             <strong>Permanent Family Planning method</strong>
-                            <div class="form-check">
-                                <input
-                                    <?php echo ($record[0]['permanentFamilyPlanningMethod'] ?? null) == 'Tubal Ligation' ? 'checked' : null ?>
-                                    class="form-check-input" type="checkbox" name="permanentFamilyPlanningMethod[]"
-                                    value="Tubal Ligation">
-                                <label class="form-check-label">
-                                    Tubal Ligation
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input
-                                    <?php echo ($record[0]['permanentFamilyPlanningMethod'] ?? null) == 'Vasectomy' ? 'checked' : null ?>
-                                    class="form-check-input" type="checkbox" name="permanentFamilyPlanningMethod[]"
-                                    value="Vasectomy">
-                                <label class="form-check-label">
-                                    Vasectomy
-                                </label>
-                            </div>
+                            <?php
+                            $permanentMethods = explode(',', $record[0]['permanentFamilyPlanningMethod'] ?? '');
+                            $availablePermanentMethods = ['Tubal Ligation', 'Vasectomy'];
 
+                            foreach ($availablePermanentMethods as $method) {
+                                $isChecked = in_array($method, $permanentMethods) ? 'checked' : '';
+                                ?>
+                                <div class="form-check">
+                                    <input <?php echo $isChecked; ?> class="form-check-input" type="checkbox" name="permanentFamilyPlanningMethod[]"
+                                        value="<?php echo $method; ?>">
+                                    <label class="form-check-label">
+                                        <?php echo $method; ?>
+                                    </label>
+                                </div>
+                            <?php } ?>
                         </div>
                         <div class="col-12 col-md-6 my-3">
                             <strong>Natural Family Planning method</strong>
@@ -591,129 +567,168 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <div class="col-12 col-md-6 my-3">
                             <strong>Have you attended Responsible Parenting Movement Class?</strong>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" required
+                                <input
+                                    <?php echo ($record[0]['attendedResponsibleParentingMovementClass'] ?? null) == 'Yes' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required
                                     name="attendedResponsibleParentingMovementClass" value="Yes">
                                 <label class="form-check-label">
                                     Yes
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" required
+                                <input
+                                    <?php echo ($record[0]['attendedResponsibleParentingMovementClass'] ?? null) == 'No' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required
                                     name="attendedResponsibleParentingMovementClass" value="No">
                                 <label class="form-check-label">
                                     No
                                 </label>
                             </div>
+
                         </div>
                     </div>
                     <div class="border  py-5 p-3 rounded bg-white col-12 col-md-6 my-2 row">
                         <div class="col-12 col-md-6">
                             <p class="fw-bold">Type of Housing Unit Occupied</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" required name="typeOfHousingUnitOccupied"
+                                <input
+                                    <?php echo ($record[0]['typeOfHousingUnitOccupied'] ?? null) == 'Owned' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required name="typeOfHousingUnitOccupied"
                                     value="Owned">
                                 <label class="form-check-label">
                                     Owned
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" required name="typeOfHousingUnitOccupied"
+                                <input
+                                    <?php echo ($record[0]['typeOfHousingUnitOccupied'] ?? null) == 'Rented' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required name="typeOfHousingUnitOccupied"
                                     value="Rented">
                                 <label class="form-check-label">
                                     Rented
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" required name="typeOfHousingUnitOccupied"
+                                <input
+                                    <?php echo ($record[0]['typeOfHousingUnitOccupied'] ?? null) == 'Caretaker' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required name="typeOfHousingUnitOccupied"
                                     value="Caretaker">
                                 <label class="form-check-label">
                                     Caretaker
                                 </label>
                             </div>
 
+
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
+                                <input
+                                    <?php echo ($record[0]['subTypeOfHousingUnitOccupied'] ?? null) == 'Permanent - concrete' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
                                     value="Permanent - concrete">
                                 <label class="form-check-label">
                                     Permanent - concrete
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
+                                <input
+                                    <?php echo ($record[0]['subTypeOfHousingUnitOccupied'] ?? null) == 'Temporary - wooden' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
                                     value="Temporary - wooden">
                                 <label class="form-check-label">
                                     Temporary - wooden
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
+                                <input
+                                    <?php echo ($record[0]['subTypeOfHousingUnitOccupied'] ?? null) == 'Makeshift - cogon/bamboo' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
                                     value="Makeshift - cogon/bamboo">
                                 <label class="form-check-label">
                                     Makeshift - cogon/bamboo
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
+                                <input
+                                    <?php echo ($record[0]['subTypeOfHousingUnitOccupied'] ?? null) == 'Single' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
                                     value="Single">
                                 <label class="form-check-label">
                                     Single
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
+                                <input
+                                    <?php echo ($record[0]['subTypeOfHousingUnitOccupied'] ?? null) == 'Duplex' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
                                     value="Duplex">
                                 <label class="form-check-label">
                                     Duplex
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
+                                <input
+                                    <?php echo ($record[0]['subTypeOfHousingUnitOccupied'] ?? null) == 'Commercial/industrial/agricultural' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
                                     value="Commercial/industrial/agricultural">
                                 <label class="form-check-label">
                                     Commercial/industrial/agricultural
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
+                                <input
+                                    <?php echo ($record[0]['subTypeOfHousingUnitOccupied'] ?? null) == 'Apartment/accessoria/condominium' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
                                     value="Apartment/accessoria/condominium">
                                 <label class="form-check-label">
                                     Apartment/accessoria/condominium
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
+                                <input
+                                    <?php echo ($record[0]['subTypeOfHousingUnitOccupied'] ?? null) == 'Improvised barong-barong' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="subTypeOfHousingUnitOccupied[]"
                                     value="Improvised barong-barong">
                                 <label class="form-check-label">
                                     Improvised barong-barong
                                 </label>
                             </div>
+
                         </div>
 
                         <div class="col-12 col-md-6">
                             <p class="fw-bold">Type of House Light used</p>
                             <div class="form-check">
-                                <input id="aa" class="form-check-input" type="radio" required
-                                    name="typeOfHouseLightUsed" value="Electricity">
+                                <input id="aa"
+                                    <?php echo ($record[0]['typeOfHouseLightUsed'] ?? null) == 'Electricity' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required name="typeOfHouseLightUsed"
+                                    value="Electricity">
                                 <label class="form-check-label">
                                     Electricity
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input id="aa" class="form-check-input" type="radio" required
-                                    name="typeOfHouseLightUsed" value="Gas Lamp">
+                                <input id="aa"
+                                    <?php echo ($record[0]['typeOfHouseLightUsed'] ?? null) == 'Gas Lamp' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required name="typeOfHouseLightUsed"
+                                    value="Gas Lamp">
                                 <label class="form-check-label">
                                     Gas Lamp
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input id="othersTypeOfHouseLightUsed" name="typeOfHouseLightUsed"
-                                    class="form-check-input" type="radio" required>
+                                <input id="othersTypeOfHouseLightUsed"
+                                    <?php echo ($record[0]['typeOfHouseLightUsed'] ?? null) == 'Others' ? 'checked' : null ?>
+                                    name="typeOfHouseLightUsed" class="form-check-input" type="radio" required>
                                 <label class="form-check-label">
                                     Others, specify
                                 </label>
-                                <input style="display: none;" id="othersTypeOfHouseLightUsedInput"
-                                    class="form-control form-control-sm" type="text" required disabled>
+                                <input
+                                    style="display: <?php echo ($record[0]['typeOfHouseLightUsed'] ?? null) == 'Others' ? 'block' : 'none'; ?>"
+                                    id="othersTypeOfHouseLightUsedInput" class="form-control form-control-sm"
+                                    type="text" required
+                                    value="<?php echo ($record[0]['typeOfHouseLightUsed'] ?? null) == 'Others' ? $record[0]['specifyTypeOfHouseLightUsed'] : ''; ?>"
+                                    <?php echo ($record[0]['typeOfHouseLightUsed'] ?? null) != 'Others' ? 'disabled' : ''; ?>>
                             </div>
+
                             <script>
                             $("#othersTypeOfHouseLightUsed").on("change", function() {
                                 $("#othersTypeOfHouseLightUsedInput").show().attr('disabled', false);
@@ -730,62 +745,82 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <div class="col-12 col-md-6 mt-4">
                             <p class="fw-bold">Type of Water Supply</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
+                                <input
+                                    <?php echo ($record[0]['typeOfWaterSupply'] ?? null) == 'Tap - (Inside house)' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
                                     value="Tap - (Inside house)">
                                 <label class="form-check-label">
                                     Tap - (Inside house)
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
-                                    value="Spring">
+                                <input
+                                    <?php echo ($record[0]['typeOfWaterSupply'] ?? null) == 'Spring' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="typeOfWaterSupply[]" value="Spring">
                                 <label class="form-check-label">
                                     Spring
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
+                                <input
+                                    <?php echo ($record[0]['typeOfWaterSupply'] ?? null) == 'Dug Well' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
                                     value="Dug Well">
                                 <label class="form-check-label">
                                     Dug Well
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
+                                <input
+                                    <?php echo ($record[0]['typeOfWaterSupply'] ?? null) == 'Deep Well' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
                                     value="Deep Well">
                                 <label class="form-check-label">
                                     Deep Well
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
+                                <input
+                                    <?php echo ($record[0]['typeOfWaterSupply'] ?? null) == 'Public Faucet' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
                                     value="Public Faucet">
                                 <label class="form-check-label">
                                     Public Faucet
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
+                                <input
+                                    <?php echo ($record[0]['typeOfWaterSupply'] ?? null) == 'Public Well' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="typeOfWaterSupply[]"
                                     value="Public Well">
                                 <label class="form-check-label">
                                     Public Well
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfWaterSupply[]" value="None">
+                                <input
+                                    <?php echo ($record[0]['typeOfWaterSupply'] ?? null) == 'None' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="typeOfWaterSupply[]" value="None">
                                 <label class="form-check-label">
                                     None
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input id="othersTypeOfWaterSupply" name="typeOfWaterSupply[]" class="form-check-input"
-                                    type="checkbox">
+                                <input
+                                    <?php echo ($record[0]['typeOfWaterSupply'] ?? null) == 'Others' ? 'checked' : null ?>
+                                    id="othersTypeOfWaterSupply" class="form-check-input" type="checkbox"
+                                    name="typeOfWaterSupply[]">
                                 <label class="form-check-label">
                                     Others, specify
                                 </label>
-                                <input disabled style="display: none;" id="othersTypeOfWaterSupplyInput"
-                                    class="form-control form-control-sm" type="text" required>
+                                <input
+                                    <?php echo ($record[0]['typeOfWaterSupply'] ?? null) != 'Others' ? 'disabled' : ''; ?>
+                                    style="display: <?php echo ($record[0]['typeOfWaterSupply'] ?? null) == 'Others' ? 'block' : 'none'; ?>"
+                                    id="othersTypeOfWaterSupplyInput" class="form-control form-control-sm" type="text"
+                                    required
+                                    value="<?php echo ($record[0]['typeOfWaterSupply'] ?? null) == 'Others' ? $record[0]['specifyTypeOfWaterSupply'] : ''; ?>">
                             </div>
+
                             <script>
                             $("#othersTypeOfWaterSupply").on("change", function() {
                                 $("#othersTypeOfWaterSupplyInput").toggle(0, function() {
@@ -798,39 +833,48 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <div class="col-12 col-md-6 mt-4">
                             <p class="fw-bold">Type of Toilet</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" required name="typeOfToilet"
+                                <input
+                                    <?php echo ($record[0]['typeOfToilet'] ?? null) == 'Water-sealed' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required name="typeOfToilet"
                                     value="Water-sealed">
                                 <label class="form-check-label">
                                     Water-sealed
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" required name="typeOfToilet"
+                                <input
+                                    <?php echo ($record[0]['typeOfToilet'] ?? null) == 'Water-sealed shared with other HH' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required name="typeOfToilet"
                                     value="Water-sealed shared with other HH">
                                 <label class="form-check-label">
                                     Water-sealed shared with other HH
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" required name="typeOfToilet"
+                                <input
+                                    <?php echo ($record[0]['typeOfToilet'] ?? null) == 'Closed Pit' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required name="typeOfToilet"
                                     value="Closed Pit">
                                 <label class="form-check-label">
                                     Closed Pit
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" required name="typeOfToilet"
-                                    value="Open Pit">
+                                <input
+                                    <?php echo ($record[0]['typeOfToilet'] ?? null) == 'Open Pit' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required name="typeOfToilet" value="Open Pit">
                                 <label class="form-check-label">
                                     Open Pit
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" required name="typeOfToilet" value="None">
+                                <input <?php echo ($record[0]['typeOfToilet'] ?? null) == 'None' ? 'checked' : null ?>
+                                    class="form-check-input" type="radio" required name="typeOfToilet" value="None">
                                 <label class="form-check-label">
                                     None
                                 </label>
                             </div>
+
                         </div>
 
                     </div>
@@ -838,163 +882,210 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <div class="col-12 col-md-6">
                             <p class="fw-bold">Type of Garbage Disposal</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
+                                <input
+                                    <?php echo in_array('Picked By Garbage Truck', explode(',', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
                                     value="Picked By Garbage Truck">
                                 <label class="form-check-label">
                                     Picked By Garbage Truck
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
+                                <input
+                                    <?php echo in_array('Waste Segregation', explode(',', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
                                     value="Waste Segregation">
                                 <label class="form-check-label">
                                     Waste Segregation
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
+                                <input
+                                    <?php echo in_array('Composting', explode(',', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
                                     value="Composting">
                                 <label class="form-check-label">
                                     Composting
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
+                                <input
+                                    <?php echo in_array('Burning', explode(',', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
                                     value="Burning">
                                 <label class="form-check-label">
                                     Burning
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
+                                <input
+                                    <?php echo in_array('Burying', explode(',', $record[0]['typeOfGarbageDisposal'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="typeOfGarbageDisposal[]"
                                     value="Burying">
                                 <label class="form-check-label">
                                     Burying
                                 </label>
                             </div>
+
+
                         </div>
                         <div class="col-12 col-md-6">
                             <p class="fw-bold">Communication Facility</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="communicationFacility[]"
+                                <input
+                                    <?php echo in_array('Cable', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Cable">
                                 <label class="form-check-label">
                                     Cable
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="communicationFacility[]"
+                                <input
+                                    <?php echo in_array('Television', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Television">
                                 <label class="form-check-label">
                                     Television
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="communicationFacility[]"
+                                <input
+                                    <?php echo in_array('Radio', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Radio">
                                 <label class="form-check-label">
                                     Radio
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="communicationFacility[]"
+                                <input
+                                    <?php echo in_array('Two-way Radio', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Two-way Radio">
                                 <label class="form-check-label">
                                     Two-way Radio
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="communicationFacility[]"
+                                <input
+                                    <?php echo in_array('Mobile Phone', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Mobile Phone">
                                 <label class="form-check-label">
                                     Mobile Phone
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="communicationFacility[]"
+                                <input
+                                    <?php echo in_array('Landline Phone', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="Landline Phone">
                                 <label class="form-check-label">
                                     Landline Phone
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="communicationFacility[]"
+                                <input
+                                    <?php echo in_array('None', explode(',', $record[0]['communicationFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="communicationFacility[]"
                                     value="None">
                                 <label class="form-check-label">
                                     None
                                 </label>
                             </div>
+
                         </div>
                         <div class="col-12 col-md-6 mt-4">
                             <p class="fw-bold">Transport Facility</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="transportFacility[]"
-                                    value="Bicycle">
+                                <input
+                                    <?php echo in_array('Bicycle', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="transportFacility[]" value="Bicycle">
                                 <label class="form-check-label">
                                     Bicycle
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="transportFacility[]"
+                                <input
+                                    <?php echo in_array('Motorcycle', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="transportFacility[]"
                                     value="Motorcycle">
                                 <label class="form-check-label">
                                     Motorcycle
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="transportFacility[]"
+                                <input
+                                    <?php echo in_array('Tricycle', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="transportFacility[]"
                                     value="Tricycle">
                                 <label class="form-check-label">
                                     Tricycle
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="transportFacility[]" value="Jeep">
+                                <input
+                                    <?php echo in_array('Jeep', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="transportFacility[]" value="Jeep">
                                 <label class="form-check-label">
                                     Jeep
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="transportFacility[]" value="Car">
+                                <input
+                                    <?php echo in_array('Car', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="transportFacility[]" value="Car">
                                 <label class="form-check-label">
                                     Car
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="transportFacility[]"
-                                    value="Truck">
+                                <input
+                                    <?php echo in_array('Truck', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="transportFacility[]" value="Truck">
                                 <label class="form-check-label">
                                     Truck
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="transportFacility[]" value="Van">
+                                <input
+                                    <?php echo in_array('Van', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="transportFacility[]" value="Van">
                                 <label class="form-check-label">
                                     Van
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="transportFacility[]"
+                                <input
+                                    <?php echo in_array('Kuliglig', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="transportFacility[]"
                                     value="Kuliglig">
                                 <label class="form-check-label">
                                     Kuliglig
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="transportFacility[]" value="None">
+                                <input
+                                    <?php echo in_array('None', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="transportFacility[]" value="None">
                                 <label class="form-check-label">
                                     None
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input id="othersTransportFacility" class="form-check-input" type="checkbox">
+                                <input id="othersTransportFacility"
+                                    <?php echo in_array('Others', explode(',', $record[0]['transportFacility'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox">
                                 <label class="form-check-label">
                                     Others, specify
                                 </label>
                                 <input disabled name="transportFacility[]" style="display: none;"
                                     id="othersTransportFacilityInput" class="form-control form-control-sm" type="text"
-                                    required>
+                                    required
+                                    <?php echo in_array('Others', explode(',', $record[0]['transportFacility'] ?? '')) ? 'value="' . $record[0]['transportFacilityOthers'] . '"' : ''; ?>>
                             </div>
+
                             <script>
                             $("#othersTransportFacility").on("change", function() {
                                 $("#othersTransportFacilityInput").toggle(0, function() {
@@ -1006,49 +1097,60 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <div class="col-12 col-md-6 mt-4">
                             <p class="fw-bold">Agricultural Products</p>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="agriculturalProduct[]"
-                                    value="Rice">
+                                <input
+                                    <?php echo in_array('Rice', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="agriculturalProduct[]" value="Rice">
                                 <label class="form-check-label">
                                     Rice
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="agriculturalProduct[]"
-                                    value="Corn">
+                                <input
+                                    <?php echo in_array('Corn', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="agriculturalProduct[]" value="Corn">
                                 <label class="form-check-label">
                                     Corn
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="agriculturalProduct[]"
+                                <input
+                                    <?php echo in_array('Banana', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="agriculturalProduct[]"
                                     value="Banana">
                                 <label class="form-check-label">
                                     Banana
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="agriculturalProduct[]"
+                                <input
+                                    <?php echo in_array('Taro/Gabi', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="agriculturalProduct[]"
                                     value="Taro/Gabi">
                                 <label class="form-check-label">
                                     Taro/Gabi
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="agriculturalProduct[]"
+                                <input
+                                    <?php echo in_array('Cassava', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    class="form-check-input" type="checkbox" name="agriculturalProduct[]"
                                     value="Cassava">
                                 <label class="form-check-label">
                                     Cassava
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input id="othersAgriculturalProduct" name="agriculturalProduct[]"
-                                    class="form-check-input" type="checkbox">
+                                <input id="othersAgriculturalProduct"
+                                    <?php echo in_array('Others', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'checked' : ''; ?>
+                                    name="agriculturalProduct[]" class="form-check-input" type="checkbox">
                                 <label class="form-check-label">
                                     Others, specify
                                 </label>
                                 <input disabled style="display: none;" id="othersAgriculturalProductInput"
-                                    class="form-control form-control-sm" type="text" required>
+                                    class="form-control form-control-sm" type="text" required
+                                    <?php echo in_array('Others', explode(',', $record[0]['agriculturalProduct'] ?? '')) ? 'value="' . $record[0]['agriculturalProductOthers'] . '"' : ''; ?>>
                             </div>
+
                             <script>
                             $("#othersAgriculturalProduct").on("change", function() {
                                 $("#othersAgriculturalProductInput").toggle(0, function() {
