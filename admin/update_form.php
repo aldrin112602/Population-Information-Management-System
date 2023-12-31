@@ -97,6 +97,8 @@
     <?php
 
 $husband = getRows("household_id='{$_GET['household_id']}'", "survey_form_records_husband");
+$wife = getRows("household_id='{$_GET['household_id']}'", "survey_form_records_wife");
+$record = getRows("household_id='{$_GET['household_id']}'", "survey_form_records");
 if(count($husband) == 0) header('Location: ./records.php');
 ?>
     <div class="container-fluid bg-white">
@@ -240,16 +242,18 @@ if(count($husband) == 0) header('Location: ./records.php');
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Occupation</label>
-                            <input value="<?php echo $husband[0]['occupation'] ?>" required type="text" class="form-control form-control-lg" name="occupation[]">
+                            <input value="<?php echo $husband[0]['occupation'] ?>" required type="text"
+                                class="form-control form-control-lg" name="occupation[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Place of work</label>
-                            <input value="<?php echo $husband[0]['placeOfWork'] ?>" required type="text" class="form-control form-control-lg" name="placeOfWork[]">
+                            <input value="<?php echo $husband[0]['placeOfWork'] ?>" required type="text"
+                                class="form-control form-control-lg" name="placeOfWork[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Religion</label>
-                            <input value="<?php echo $husband[0]['religion'] ?>" required list="religion_list" name="religion[]"
-                                class="form-control form-control-lg">
+                            <input value="<?php echo $husband[0]['religion'] ?>" required list="religion_list"
+                                name="religion[]" class="form-control form-control-lg">
                             <datalist id="religion_list">
                                 <?php
                                             $religions = array(
@@ -289,14 +293,19 @@ if(count($husband) == 0) header('Location: ./records.php');
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Ethnic Group</label>
-                            <input value="<?php echo $husband[0]['ethnicGroup'] ?>" required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                            <input value="<?php echo $husband[0]['ethnicGroup'] ?>" required type="text"
+                                class="form-control form-control-lg" name="ethnicGroup[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Choose an option:</label>
                             <select required class="form-select form-select-lg" name="option[]">
                                 <option value="" disabled selected></option>
-                                <option value="Living" <?php echo $husband[0]['life_status'] == 'Living' ? 'selected' : null ?>>Living</option>
-                                <option value="Disease" <?php echo $husband[0]['life_status'] == 'Disease' ? 'selected' : null ?>>Disease</option>
+                                <option value="Living"
+                                    <?php echo $husband[0]['life_status'] == 'Living' ? 'selected' : null ?>>Living
+                                </option>
+                                <option value="Disease"
+                                    <?php echo $husband[0]['life_status'] == 'Disease' ? 'selected' : null ?>>Disease
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -304,70 +313,106 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <h5 class="col-12 fw-bold">Wife Information</h5>
                         <div class="col-12 col-md-6 my-2">
                             <label>Name</label>
-                            <input value="" required type="text" class="form-control form-control-lg" name="name[]">
+                            <input value="<?php echo $wife[0]['name'] ?>" required type="text"
+                                class="form-control form-control-lg" name="name[]">
                             <input value="wife" type="hidden" class="form-control form-control-lg" name="type[]">
-
 
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Civil Status</label>
                             <select required class="form-select form-select-lg" name="status[]">
                                 <option selected disabled value=""></option>
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                                <option value="Divorced">Divorced</option>
-                                <option value="Widowed">Widowed</option>
-                                <option value="Live-in">Live-in</option>
+                                <option value="Single" <?php echo $wife[0]['status'] == 'Single' ? 'selected' : null ?>>
+                                    Single</option>
+                                <option value="Married"
+                                    <?php echo $wife[0]['status'] == 'Married' ? 'selected' : null ?>>Married
+                                </option>
+                                <option value="Divorced"
+                                    <?php echo $wife[0]['status'] == 'Divorced' ? 'selected' : null ?>>Divorced
+                                </option>
+                                <option value="Widowed"
+                                    <?php echo $wife[0]['status'] == 'Widowed' ? 'selected' : null ?>>Widowed
+                                </option>
+                                <option value="Live-in"
+                                    <?php echo $wife[0]['status'] == 'Live-in' ? 'selected' : null ?>>Live-in
+                                </option>
                             </select>
+
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Date of Birth</label>
-                            <input oninput="setAge(this, '#age2')" required type="date"
-                                class="form-control form-control-lg" name="dateOfBirth[]">
+                            <input value="<?php echo $wife[0]['dateOfBirth'] ?>" oninput="setAge(this, '#age')" required
+                                type="date" class="form-control form-control-lg" name="dateOfBirth[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Age</label>
-                            <input id="age2" readonly type="number" class="form-control form-control-lg" name="age[]">
+                            <input value="<?php echo $wife[0]['age'] ?>" id="age" readonly type="number"
+                                class="form-control form-control-lg" name="age[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Sex</label>
                             <select required class="form-select form-select-lg pointer-events-none" name="sex[]">
-                                <option value="Male">Male</option>
-                                <option selected value="Female">Female</option>
+                                <option value="Male" selected>Male</option>
+                                <option value="Female">Female</option>
                             </select>
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Birth Place</label>
-                            <input required type="text" class="form-control form-control-lg" name="birthPlace[]">
+                            <input value="<?php echo $wife[0]['birthPlace'] ?>" required type="text"
+                                class="form-control form-control-lg" name="birthPlace[]">
                         </div>
+
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Educational attainment</label>
                             <select required class="form-select form-select-lg" name="educationalAttainment[]">
                                 <option value="" disabled selected></option>
-                                <option value="no-schooling">No Schooling</option>
-                                <option value="elementary-school">Elementary School</option>
-                                <option value="middle-school">Middle School</option>
-                                <option value="high-school">High School</option>
-                                <option value="vocational-school">Vocational School</option>
-                                <option value="some-college">Some College</option>
-                                <option value="associate-degree">Associate Degree</option>
-                                <option value="bachelor-degree">Bachelor's Degree</option>
-                                <option value="master-degree">Master's Degree</option>
-                                <option value="doctoral-degree">Doctoral Degree</option>
+                                <option value="no-schooling"
+                                    <?php echo $wife[0]['educationalAttainment'] == 'no-schooling' ? 'selected' : null ?>>
+                                    No Schooling</option>
+                                <option value="elementary-school"
+                                    <?php echo $wife[0]['educationalAttainment'] == 'elementary-school' ? 'selected' : null ?>>
+                                    Elementary School</option>
+                                <option value="middle-school"
+                                    <?php echo $wife[0]['educationalAttainment'] == 'middle-school' ? 'selected' : null ?>>
+                                    Middle School</option>
+                                <option value="high-school"
+                                    <?php echo $wife[0]['educationalAttainment'] == 'high-school' ? 'selected' : null ?>>
+                                    High School</option>
+                                <option value="vocational-school"
+                                    <?php echo $wife[0]['educationalAttainment'] == 'vocational-school' ? 'selected' : null ?>>
+                                    Vocational School</option>
+                                <option value="some-college"
+                                    <?php echo $wife[0]['educationalAttainment'] == 'some-college' ? 'selected' : null ?>>
+                                    Some College</option>
+                                <option value="associate-degree"
+                                    <?php echo $wife[0]['educationalAttainment'] == 'associate-degree' ? 'selected' : null ?>>
+                                    Associate Degree</option>
+                                <option value="bachelor-degree"
+                                    <?php echo $wife[0]['educationalAttainment'] == 'bachelor-degree' ? 'selected' : null ?>>
+                                    Bachelor's Degree</option>
+                                <option value="master-degree"
+                                    <?php echo $wife[0]['educationalAttainment'] == 'master-degree' ? 'selected' : null ?>>
+                                    Master's Degree</option>
+                                <option value="doctoral-degree"
+                                    <?php echo $wife[0]['educationalAttainment'] == 'doctoral-degree' ? 'selected' : null ?>>
+                                    Doctoral Degree</option>
                             </select>
+
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Occupation</label>
-                            <input required type="text" class="form-control form-control-lg" name="occupation[]">
+                            <input value="<?php echo $wife[0]['occupation'] ?>" required type="text"
+                                class="form-control form-control-lg" name="occupation[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Place of work</label>
-                            <input required type="text" class="form-control form-control-lg" name="placeOfWork[]">
+                            <input value="<?php echo $wife[0]['placeOfWork'] ?>" required type="text"
+                                class="form-control form-control-lg" name="placeOfWork[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Religion</label>
-                            <input value="" required list="religion_list" name="religion[]"
-                                class="form-control form-control-lg">
+                            <input value="<?php echo $wife[0]['religion'] ?>" required list="religion_list"
+                                name="religion[]" class="form-control form-control-lg">
                             <datalist id="religion_list">
                                 <?php
                                             $religions = array(
@@ -383,7 +428,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                                                 "Hinduism",
                                                 "Judaism",
                                                 "Taoism",
-                                                'MCGI',
+                                                'Members of the Church of God International',
                                                 "Anitism",
                                                 "Bahá'í Faith",
                                                 "Confucianism",
@@ -394,7 +439,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                                                 "Brahma Kumaris",
                                                 "Theosophy",
                                                 "Scientology",
-                                                'Jewish',
+                                                'Jewish'
 
                                             );
 
@@ -407,14 +452,19 @@ if(count($husband) == 0) header('Location: ./records.php');
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Ethnic Group</label>
-                            <input required type="text" class="form-control form-control-lg" name="ethnicGroup[]">
+                            <input value="<?php echo $wife[0]['ethnicGroup'] ?>" required type="text"
+                                class="form-control form-control-lg" name="ethnicGroup[]">
                         </div>
                         <div class="col-12 col-md-6 my-2">
                             <label class="">Choose an option:</label>
                             <select required class="form-select form-select-lg" name="option[]">
                                 <option value="" disabled selected></option>
-                                <option value="Living">Living</option>
-                                <option value="Disease">Disease</option>
+                                <option value="Living"
+                                    <?php echo $wife[0]['life_status'] == 'Living' ? 'selected' : null ?>>Living
+                                </option>
+                                <option value="Disease"
+                                    <?php echo $wife[0]['life_status'] == 'Disease' ? 'selected' : null ?>>Disease
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -422,28 +472,36 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <div class="col-12 col-md-6">
                             <strong>Artificial Family Planning method</strong>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['artificialFamilyPlanningMethod'] ?? null) == 'Pills' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
                                     value="Pills">
                                 <label class="form-check-label">
                                     Pills
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['artificialFamilyPlanningMethod'] ?? null) == 'Condom' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
                                     value="Condom">
                                 <label class="form-check-label">
                                     Condom
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['artificialFamilyPlanningMethod'] ?? null) == 'IUD' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
                                     value="IUD">
                                 <label class="form-check-label">
                                     IUD
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['artificialFamilyPlanningMethod'] ?? null) == 'DMPA' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="artificialFamilyPlanningMethod[]"
                                     value="DMPA">
                                 <label class="form-check-label">
                                     DMPA
@@ -453,64 +511,82 @@ if(count($husband) == 0) header('Location: ./records.php');
                         <div class="col-12 col-md-6">
                             <strong>Permanent Family Planning method</strong>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="permanentFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['permanentFamilyPlanningMethod'] ?? null) == 'Tubal Ligation' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="permanentFamilyPlanningMethod[]"
                                     value="Tubal Ligation">
                                 <label class="form-check-label">
                                     Tubal Ligation
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="permanentFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['permanentFamilyPlanningMethod'] ?? null) == 'Vasectomy' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="permanentFamilyPlanningMethod[]"
                                     value="Vasectomy">
                                 <label class="form-check-label">
                                     Vasectomy
                                 </label>
                             </div>
+
                         </div>
                         <div class="col-12 col-md-6 my-3">
                             <strong>Natural Family Planning method</strong>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Basal Body Temperature (BBT)' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Basal Body Temperature (BBT)">
                                 <label class="form-check-label">
                                     Basal Body Temperature (BBT)
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Cervical Mucus or Billing Method' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Cervical Mucus or Billing Method">
                                 <label class="form-check-label">
                                     Cervical Mucus or Billing Method
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Sympto-Thermal Method' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Sympto-Thermal Method">
                                 <label class="form-check-label">
                                     Sympto-Thermal Method
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Lactational Amenorrhea Method (LAM)' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Lactational Amenorrhea Method (LAM)">
                                 <label class="form-check-label">
                                     Lactational Amenorrhea Method (LAM)
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Standard Days Method (SDM)' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Standard Days Method (SDM)">
                                 <label class="form-check-label">
                                     Standard Days Method (SDM)
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
+                                <input
+                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Two-day Method' ? 'checked' : null ?>
+                                    class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Two-day Method">
                                 <label class="form-check-label">
                                     Two-day Method
                                 </label>
                             </div>
+
                         </div>
                         <div class="col-12 col-md-6 my-3">
                             <strong>Have you attended Responsible Parenting Movement Class?</strong>
