@@ -508,9 +508,13 @@ if(count($husband) == 0) header('Location: ./records.php');
                         </div>
                         <div class="col-12 col-md-6 my-3">
                             <strong>Natural Family Planning method</strong>
+                            <?php
+                            $naturalFamilyPlanningMethods = explode(', ', $record[0]['naturalFamilyPlanningMethod'] ?? '') ?? [];
+                            ?>
+
                             <div class="form-check">
                                 <input
-                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Basal Body Temperature (BBT)' ? 'checked' : null ?>
+                                    <?php echo in_array('Basal Body Temperature (BBT)', $naturalFamilyPlanningMethods) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Basal Body Temperature (BBT)">
                                 <label class="form-check-label">
@@ -519,7 +523,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Cervical Mucus or Billing Method' ? 'checked' : null ?>
+                                    <?php echo in_array('Cervical Mucus or Billing Method', $naturalFamilyPlanningMethods) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Cervical Mucus or Billing Method">
                                 <label class="form-check-label">
@@ -528,7 +532,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Sympto-Thermal Method' ? 'checked' : null ?>
+                                    <?php echo in_array('Sympto-Thermal Method', $naturalFamilyPlanningMethods) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Sympto-Thermal Method">
                                 <label class="form-check-label">
@@ -537,7 +541,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Lactational Amenorrhea Method (LAM)' ? 'checked' : null ?>
+                                    <?php echo in_array('Lactational Amenorrhea Method (LAM)', $naturalFamilyPlanningMethods) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Lactational Amenorrhea Method (LAM)">
                                 <label class="form-check-label">
@@ -546,7 +550,7 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Standard Days Method (SDM)' ? 'checked' : null ?>
+                                    <?php echo in_array('Standard Days Method (SDM)', $naturalFamilyPlanningMethods) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Standard Days Method (SDM)">
                                 <label class="form-check-label">
@@ -555,13 +559,14 @@ if(count($husband) == 0) header('Location: ./records.php');
                             </div>
                             <div class="form-check">
                                 <input
-                                    <?php echo ($record[0]['naturalFamilyPlanningMethod'] ?? null) == 'Two-day Method' ? 'checked' : null ?>
+                                    <?php echo in_array('Two-day Method', $naturalFamilyPlanningMethods) ? 'checked' : ''; ?>
                                     class="form-check-input" type="checkbox" name="naturalFamilyPlanningMethod[]"
                                     value="Two-day Method">
                                 <label class="form-check-label">
                                     Two-day Method
                                 </label>
                             </div>
+
 
                         </div>
                         <div class="col-12 col-md-6 my-3">
