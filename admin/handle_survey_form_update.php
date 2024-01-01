@@ -6,15 +6,14 @@ require_once './audit_trails.php';
 if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
 
     $purok = filter_and_implode( $_POST[ 'purok' ] ?? '' );
-    $barangay = $_SESSION[ 'barangay' ];
-    $municipality = $_SESSION[ 'municipality' ];
-    $province = $_SESSION[ 'province' ];
+    $barangay = $_POST[ 'barangay' ];
+    $municipality = $_POST[ 'municipality' ];
+    $province = $_POST[ 'province' ];
 
-    $unique_id = $_SESSION[ 'unique_id' ];
+    // $unique_id = $_SESSION[ 'unique_id' ];
 
     
     $household_id = $_POST['household_id'] ?? NULL;
-    $belongs_to = $_POST['belongs_to'] ?? NULL;
     $household = $_POST['house$household'] ?? NULL;
 
     $name = $_POST[ 'name' ] ?? [];
@@ -143,33 +142,20 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
                         VALUES ('$household_id', '$household',  '$unique_id', '$belongs_to', '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
             if ( !mysqli_query( $conn, $sql ) ) $success = false;
             break;
-            case 'children':
-            $sql = "INSERT INTO survey_form_records_children (household_id, household, unique_id, belongs_to, life_status, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
-                        VALUES ('$household_id', '$household',  '$unique_id', '$belongs_to', '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
-            if ( !mysqli_query( $conn, $sql ) ) $success = false;
-            break;
-            default:
-            // household
-            $sql = "INSERT INTO survey_form_records_household_member (household_id, household, unique_id, belongs_to, life_status, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
-                        VALUES ('$household_id', '$household',  '$unique_id', '$belongs_to', '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
-            if ( !mysqli_query( $conn, $sql ) ) $success = false;
-
-            break;
         }
     }
 
-    $sql = "INSERT INTO survey_form_records (household_id, household, unique_id, belongs_to, purok, barangay, municipality, province, artificialFamilyPlanningMethod, permanentFamilyPlanningMethod, naturalFamilyPlanningMethod, attendedResponsibleParentingMovementClass, typeOfHousingUnitOccupied, subTypeOfHousingUnitOccupied, typeOfHouseLightUsed, typeOfWaterSupply, typeOfToilet, typeOfGarbageDisposal, communicationFacility, transportFacility, agriculturalProduct, poultryNumberOfHeadsChicken, poultryNumberOfHeadsDuck, poultryNumberOfHeadsGeese, poultryNumberOfHeadsTurkey, poultryOthers, poultryNumberOfHeadsOthers, livestockNumberPig, livestockNumberGoat, livestockNumberSheep, livestockNumberCoat, livestockNumberCarabao, livestockNumberHorse, othersLivestock, livestockNumberOthers, otherSourceOfIncome, fishpondOwned, fishpondOwnedArea, landOwned, landOwnedRiceFieldArea, landOwnedCornFieldArea, land, caretakerRiceArea, caretakerCornArea, caretakerOthersLandOwned, monthlyAverageFamilyIncome)
-            VALUES ('$household_id', '$household',  '$unique_id', '$belongs_to', '$purok', '$barangay', '$municipality', '$province', '$artificialFamilyPlanningMethod', '$permanentFamilyPlanningMethod', '$naturalFamilyPlanningMethod', '$attendedResponsibleParentingMovementClass', '$typeOfHousingUnitOccupied', '$subTypeOfHousingUnitOccupied', '$typeOfHouseLightUsed', '$typeOfWaterSupply', '$typeOfToilet', '$typeOfGarbageDisposal', '$communicationFacility', '$transportFacility', '$agriculturalProduct', '$poultryNumberOfHeadsChicken', '$poultryNumberOfHeadsDuck', '$poultryNumberOfHeadsGeese', '$poultryNumberOfHeadsTurkey', '$poultryOthers', '$poultryNumberOfHeadsOthers', '$livestockNumberPig', '$livestockNumberGoat', '$livestockNumberSheep', '$livestockNumberCoat', '$livestockNumberCarabao', '$livestockNumberHorse', '$othersLivestock', '$livestockNumberOthers', '$otherSourceOfIncome', '$fishpondOwned', '$fishpondOwnedArea', '$landOwned', '$landOwnedRiceFieldArea', '$landOwnedCornFieldArea', '$land', '$caretakerRiceArea', '$caretakerCornArea', '$caretakerOthersLandOwned', '$monthlyAverageFamilyIncome')";
+    $sql = "INSERT INTO survey_form_records (household, purok, barangay, municipality, province, artificialFamilyPlanningMethod, permanentFamilyPlanningMethod, naturalFamilyPlanningMethod, attendedResponsibleParentingMovementClass, typeOfHousingUnitOccupied, subTypeOfHousingUnitOccupied, typeOfHouseLightUsed, typeOfWaterSupply, typeOfToilet, typeOfGarbageDisposal, communicationFacility, transportFacility, agriculturalProduct, poultryNumberOfHeadsChicken, poultryNumberOfHeadsDuck, poultryNumberOfHeadsGeese, poultryNumberOfHeadsTurkey, poultryOthers, poultryNumberOfHeadsOthers, livestockNumberPig, livestockNumberGoat, livestockNumberSheep, livestockNumberCoat, livestockNumberCarabao, livestockNumberHorse, othersLivestock, livestockNumberOthers, otherSourceOfIncome, fishpondOwned, fishpondOwnedArea, landOwned, landOwnedRiceFieldArea, landOwnedCornFieldArea, land, caretakerRiceArea, caretakerCornArea, caretakerOthersLandOwned, monthlyAverageFamilyIncome)
+            VALUES ('$household', '$purok', '$barangay', '$municipality', '$province', '$artificialFamilyPlanningMethod', '$permanentFamilyPlanningMethod', '$naturalFamilyPlanningMethod', '$attendedResponsibleParentingMovementClass', '$typeOfHousingUnitOccupied', '$subTypeOfHousingUnitOccupied', '$typeOfHouseLightUsed', '$typeOfWaterSupply', '$typeOfToilet', '$typeOfGarbageDisposal', '$communicationFacility', '$transportFacility', '$agriculturalProduct', '$poultryNumberOfHeadsChicken', '$poultryNumberOfHeadsDuck', '$poultryNumberOfHeadsGeese', '$poultryNumberOfHeadsTurkey', '$poultryOthers', '$poultryNumberOfHeadsOthers', '$livestockNumberPig', '$livestockNumberGoat', '$livestockNumberSheep', '$livestockNumberCoat', '$livestockNumberCarabao', '$livestockNumberHorse', '$othersLivestock', '$livestockNumberOthers', '$otherSourceOfIncome', '$fishpondOwned', '$fishpondOwnedArea', '$landOwned', '$landOwnedRiceFieldArea', '$landOwnedCornFieldArea', '$land', '$caretakerRiceArea', '$caretakerCornArea', '$caretakerOthersLandOwned', '$monthlyAverageFamilyIncome')";
     if ( !mysqli_query( $conn, $sql ) ) $success = false;
 
     if ( $success ) {
-        logUser($_SESSION[ 'username' ], 'Form record saved successfully!');
         echo '
             <script>
                 $(document).ready(function() {
                     Swal.fire({
                         title: "Success!",
-                        text: "Form saved successfully",
+                        text: "Form updated successfully",
                         icon: "success",
                         onClose: function() {
                             window.open("./records.php", "_self");
@@ -180,7 +166,6 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
         ';
 
     } else {
-        logUser($_SESSION[ 'username' ], 'Error saving form record!');
         echo '
             <script>
                 $(document).ready(function() {

@@ -1589,7 +1589,7 @@ if(count($husband) == 0) header('Location: ./records.php');
         </form>
     </div>
     <?php 
-        
+        require_once('handle_survey_form_update.php');
     ?>
 </body>
 
