@@ -14,7 +14,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
 
     
     $household_id = $_POST['household_id'] ?? NULL;
-    $household = $_POST['house$household'] ?? NULL;
+    $household = $_POST['household'] ?? NULL;
 
     $name = $_POST[ 'name' ] ?? [];
     $name = explode( ', ', filter_and_implode( $name ) );
@@ -29,13 +29,13 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
     $type = explode( ', ', filter_and_implode( $type ) );
 
     $dateOfBirth = $_POST[ 'dateOfBirth' ] ?? [];
-    $dateOfBirth = explode( ',', filter_and_implode( $dateOfBirth ) );
+    $dateOfBirth = explode( ', ', filter_and_implode( $dateOfBirth ) );
 
     $age = $_POST[ 'age' ] ?? [];
     $age = explode( ', ', filter_and_implode( $age ) );
 
     $educationalAttainment = $_POST[ 'educationalAttainment' ] ?? [];
-    $educationalAttainment = explode( ',', filter_and_implode( $educationalAttainment ) );
+    $educationalAttainment = explode( ', ', filter_and_implode( $educationalAttainment ) );
 
     $sex = $_POST[ 'sex' ] ?? [];
     $sex = explode( ', ', filter_and_implode( $sex ) );
@@ -50,10 +50,10 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
     $placeOfWork = explode( ', ', filter_and_implode( $placeOfWork ) );
 
     $religion = $_POST[ 'religion' ] ?? [];
-    $religion = explode( ',', filter_and_implode( $religion ) );
+    $religion = explode( ', ', filter_and_implode( $religion ) );
 
     $ethnicGroup = $_POST[ 'ethnicGroup' ] ?? [];
-    $ethnicGroup = explode( ',', filter_and_implode( $ethnicGroup ) );
+    $ethnicGroup = explode( ', ', filter_and_implode( $ethnicGroup ) );
 
     $artificialFamilyPlanningMethod = $_POST[ 'artificialFamilyPlanningMethod' ] ?? [];
     $artificialFamilyPlanningMethod = filter_and_implode( $artificialFamilyPlanningMethod );
@@ -128,25 +128,127 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST') {
     $success = true;
 
     // husband, wife, children, household
-    for ( $i = 0; $i < count( $type ); $i++ ) {
-        $stat = $life_status[$i] ?? NULL;
+    // for ( $i = 0; $i < count( $type ); $i++ ) {
+    //     $stat = $life_status[$i] ?? NULL;
 
-        switch( trim( strtolower( $type[ $i ] ) ) ) {
-            case 'husband':
-            $sql = "INSERT INTO survey_form_records_husband (household_id, household, unique_id, belongs_to, life_status, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
-                        VALUES ('$household_id', '$household', '$unique_id', '$belongs_to', '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
-            if ( !mysqli_query( $conn, $sql ) ) $success = false;
+    //     switch( trim( strtolower( $type[ $i ] ) ) ) {
+    //         case 'husband':
+    //         $sql = "INSERT INTO survey_form_records_husband (household_id, household, unique_id, belongs_to, life_status, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
+    //                     VALUES ('$household_id', '$household', '$unique_id', '$belongs_to', '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
+    //         if ( !mysqli_query( $conn, $sql ) ) $success = false;
+    //         break;
+    //         case 'wife':
+    //         $sql = "INSERT INTO survey_form_records_wife (household_id, household, unique_id, belongs_to, life_status, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
+    //                     VALUES ('$household_id', '$household',  '$unique_id', '$belongs_to', '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
+    //         if ( !mysqli_query( $conn, $sql ) ) $success = false;
+    //         break;
+    //     }
+    // }
+
+    for ($i = 0; $i < count($type); $i++) {
+    $stat = $life_status[$i] ?? NULL;
+
+    switch (trim(strtolower($type[$i]))) {
+        case 'husband':
+            $sql = "UPDATE survey_form_records_husband SET
+                        life_status = '$stat',
+                        household = '$household',
+                        purok = '$purok',
+                        barangay = '$barangay',
+                        municipality = '$municipality',
+                        province = '$province',
+                        name = '{$name[$i]}',
+                        status = '{$status[$i]}',
+                        type = '{$type[$i]}',
+                        dateOfBirth = '{$dateOfBirth[$i]}',
+                        educationalAttainment = '{$educationalAttainment[$i]}',
+                        age = '{$age[$i]}',
+                        sex = '{$sex[$i]}',
+                        birthPlace = '{$birthPlace[$i]}',
+                        occupation = '{$occupation[$i]}',
+                        placeOfWork = '{$placeOfWork[$i]}',
+                        religion = '{$religion[$i]}',
+                        ethnicGroup = '{$ethnicGroup[$i]}'
+                    WHERE household_id = '$household_id'";
+            if (!mysqli_query($conn, $sql)) $success = false;
             break;
-            case 'wife':
-            $sql = "INSERT INTO survey_form_records_wife (household_id, household, unique_id, belongs_to, life_status, purok, barangay, municipality, province, name, status, type, dateOfBirth, educationalAttainment, age, sex, birthPlace, occupation, placeOfWork, religion, ethnicGroup)
-                        VALUES ('$household_id', '$household',  '$unique_id', '$belongs_to', '$stat', '$purok', '$barangay', '$municipality', '$province', '{$name[$i]}', '{$status[$i]}', '{$type[$i]}', '{$dateOfBirth[$i]}', '{$educationalAttainment[$i]}', '{$age[$i]}', '{$sex[$i]}', '{$birthPlace[$i]}', '{$occupation[$i]}', '{$placeOfWork[$i]}', '{$religion[$i]}', '{$ethnicGroup[$i]}')";
-            if ( !mysqli_query( $conn, $sql ) ) $success = false;
+
+        case 'wife':
+            $sql = "UPDATE survey_form_records_wife SET
+                        life_status = '$stat',
+                        household = '$household',
+                        purok = '$purok',
+                        barangay = '$barangay',
+                        municipality = '$municipality',
+                        province = '$province',
+                        name = '{$name[$i]}',
+                        status = '{$status[$i]}',
+                        type = '{$type[$i]}',
+                        dateOfBirth = '{$dateOfBirth[$i]}',
+                        educationalAttainment = '{$educationalAttainment[$i]}',
+                        age = '{$age[$i]}',
+                        sex = '{$sex[$i]}',
+                        birthPlace = '{$birthPlace[$i]}',
+                        occupation = '{$occupation[$i]}',
+                        placeOfWork = '{$placeOfWork[$i]}',
+                        religion = '{$religion[$i]}',
+                        ethnicGroup = '{$ethnicGroup[$i]}'
+                    WHERE household_id = '$household_id'";
+            if (!mysqli_query($conn, $sql)) $success = false;
             break;
-        }
     }
+}
 
-    $sql = "INSERT INTO survey_form_records (household, purok, barangay, municipality, province, artificialFamilyPlanningMethod, permanentFamilyPlanningMethod, naturalFamilyPlanningMethod, attendedResponsibleParentingMovementClass, typeOfHousingUnitOccupied, subTypeOfHousingUnitOccupied, typeOfHouseLightUsed, typeOfWaterSupply, typeOfToilet, typeOfGarbageDisposal, communicationFacility, transportFacility, agriculturalProduct, poultryNumberOfHeadsChicken, poultryNumberOfHeadsDuck, poultryNumberOfHeadsGeese, poultryNumberOfHeadsTurkey, poultryOthers, poultryNumberOfHeadsOthers, livestockNumberPig, livestockNumberGoat, livestockNumberSheep, livestockNumberCoat, livestockNumberCarabao, livestockNumberHorse, othersLivestock, livestockNumberOthers, otherSourceOfIncome, fishpondOwned, fishpondOwnedArea, landOwned, landOwnedRiceFieldArea, landOwnedCornFieldArea, land, caretakerRiceArea, caretakerCornArea, caretakerOthersLandOwned, monthlyAverageFamilyIncome)
-            VALUES ('$household', '$purok', '$barangay', '$municipality', '$province', '$artificialFamilyPlanningMethod', '$permanentFamilyPlanningMethod', '$naturalFamilyPlanningMethod', '$attendedResponsibleParentingMovementClass', '$typeOfHousingUnitOccupied', '$subTypeOfHousingUnitOccupied', '$typeOfHouseLightUsed', '$typeOfWaterSupply', '$typeOfToilet', '$typeOfGarbageDisposal', '$communicationFacility', '$transportFacility', '$agriculturalProduct', '$poultryNumberOfHeadsChicken', '$poultryNumberOfHeadsDuck', '$poultryNumberOfHeadsGeese', '$poultryNumberOfHeadsTurkey', '$poultryOthers', '$poultryNumberOfHeadsOthers', '$livestockNumberPig', '$livestockNumberGoat', '$livestockNumberSheep', '$livestockNumberCoat', '$livestockNumberCarabao', '$livestockNumberHorse', '$othersLivestock', '$livestockNumberOthers', '$otherSourceOfIncome', '$fishpondOwned', '$fishpondOwnedArea', '$landOwned', '$landOwnedRiceFieldArea', '$landOwnedCornFieldArea', '$land', '$caretakerRiceArea', '$caretakerCornArea', '$caretakerOthersLandOwned', '$monthlyAverageFamilyIncome')";
+
+
+    $sql = "UPDATE survey_form_records SET
+                household = '$household',
+                purok = '$purok',
+                barangay = '$barangay',
+                municipality = '$municipality',
+                province = '$province',
+                artificialFamilyPlanningMethod = '$artificialFamilyPlanningMethod',
+                permanentFamilyPlanningMethod = '$permanentFamilyPlanningMethod',
+                naturalFamilyPlanningMethod = '$naturalFamilyPlanningMethod',
+                attendedResponsibleParentingMovementClass = '$attendedResponsibleParentingMovementClass',
+                typeOfHousingUnitOccupied = '$typeOfHousingUnitOccupied',
+                subTypeOfHousingUnitOccupied = '$subTypeOfHousingUnitOccupied',
+                typeOfHouseLightUsed = '$typeOfHouseLightUsed',
+                typeOfWaterSupply = '$typeOfWaterSupply',
+                typeOfToilet = '$typeOfToilet',
+                typeOfGarbageDisposal = '$typeOfGarbageDisposal',
+                communicationFacility = '$communicationFacility',
+                transportFacility = '$transportFacility',
+                agriculturalProduct = '$agriculturalProduct',
+                poultryNumberOfHeadsChicken = '$poultryNumberOfHeadsChicken',
+                poultryNumberOfHeadsDuck = '$poultryNumberOfHeadsDuck',
+                poultryNumberOfHeadsGeese = '$poultryNumberOfHeadsGeese',
+                poultryNumberOfHeadsTurkey = '$poultryNumberOfHeadsTurkey',
+                poultryOthers = '$poultryOthers',
+                poultryNumberOfHeadsOthers = '$poultryNumberOfHeadsOthers',
+                livestockNumberPig = '$livestockNumberPig',
+                livestockNumberGoat = '$livestockNumberGoat',
+                livestockNumberSheep = '$livestockNumberSheep',
+                livestockNumberCoat = '$livestockNumberCoat',
+                livestockNumberCarabao = '$livestockNumberCarabao',
+                livestockNumberHorse = '$livestockNumberHorse',
+                othersLivestock = '$othersLivestock',
+                livestockNumberOthers = '$livestockNumberOthers',
+                otherSourceOfIncome = '$otherSourceOfIncome',
+                fishpondOwned = '$fishpondOwned',
+                fishpondOwnedArea = '$fishpondOwnedArea',
+                landOwned = '$landOwned',
+                landOwnedRiceFieldArea = '$landOwnedRiceFieldArea',
+                landOwnedCornFieldArea = '$landOwnedCornFieldArea',
+                land = '$land',
+                caretakerRiceArea = '$caretakerRiceArea',
+                caretakerCornArea = '$caretakerCornArea',
+                caretakerOthersLandOwned = '$caretakerOthersLandOwned',
+                monthlyAverageFamilyIncome = '$monthlyAverageFamilyIncome'
+            WHERE household_id = '$household_id'";
+
+
+    
     if ( !mysqli_query( $conn, $sql ) ) $success = false;
 
     if ( $success ) {

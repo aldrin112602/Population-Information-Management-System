@@ -16,7 +16,8 @@ function send_mail($email, $bodytemplate, $subject = 'Login Verification: Your O
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = base64_decode('Y2FiYWxsZXJvYWxkcmluMDJAZ21haWwuY29t');                $mail->Password = base64_decode('dHB6Zm53Zm5kb2RqZnpoeQ==');
+            $mail->Username   = base64_decode('Y2FiYWxsZXJvYWxkcmluMDJAZ21haWwuY29t');                
+            $mail->Password = base64_decode('dHB6Zm53Zm5kb2RqZnpoeQ==');
             $mail->SMTPSecure = 'ssl';
             $mail->Port       = 465;
             $mail->setFrom( base64_decode('Y2FiYWxsZXJvYWxkcmluMDJAZ21haWwuY29t'), 'PIMS', true );
